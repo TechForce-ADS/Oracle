@@ -25,7 +25,7 @@ const TelaLista = ({ navigation }) => {
       {menuAberto && (
         <View style={styles.menu}>
 
-          <Text style={styles.MenuText}>Menu Item 1</Text>
+          <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro') }>Cadastrar novo Parceiro</Text>
           <Text style={styles.MenuText}>Menu Item 2</Text>
           <Text style={styles.MenuText}>Menu Item 3</Text>
           <Text style={styles.MenuText}>Menu Item 4</Text>
