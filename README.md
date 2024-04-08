@@ -180,7 +180,7 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
  ### Sprint 4</a> - 27/05 - 15/06</p>
 
 
- > Feira de Soluções 27/06
+ ### Feira de Soluções 27/06
 
 
  
@@ -229,23 +229,8 @@ Passo a passo:
 # Sprint
 
 - >  <a href=" "> Protótipo
- 
-- >  <a href=" "> 1° Sprint
-- >  <a href=" "> 2° Sprint
-- >  <a href=" "> 3° Sprint
-- >  <a href=" "> 4° Sprint
+
   
 # Burndown do Projeto
 
-> 1° Sprint
 
-<img src = " "/>
- 
-> 2° Sprint
-<img src = " "/> 
-  
-> 3° Sprint
-<img src= " " />
-
- > 4° Sprint
-<img src= " " />
