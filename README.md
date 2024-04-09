@@ -57,10 +57,17 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
     <td><a href="https://github.com/deborataira"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="30px"></a></td>
     <td>Dominante</td>
   </tr>
+   <tr>
+    <td>Pedro Seraggi</td>
+    <td>SM</td>
+     <td><a href=""><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30px"></a></td>
+    <td><a href="https://github.com/PedroSeraggi"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="30px"></a></td>
+    <td>Estável</td>
+  </tr>
   
   <tr>
     <td>João Pedro Lopes</td>
-    <td>SM</td>
+    <td>ST</td>
     <td><a href="https://br.linkedin.com/in/marinaangela"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30px"></td>
     <td><a href=""><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="30px"></a></td>
     <td>Estável</td>
@@ -80,16 +87,8 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
     <td><a href="https://www.linkedin.com/in/marinaangela/"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30px"></a></td>
     <td><a href="https://github.com/MarinaAraujoMaciel"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="30px"></a></td>
     <td>Dominante</td>
-  </tr>
-  
-  
-  <tr>
-    <td>Pedro Seraggi</td>
-    <td>ST</td>
-     <td><a href=""><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30px"></a></td>
-    <td><a href="https://github.com/PedroSeraggi"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="30px"></a></td>
-    <td>Estável</td>
-  </tr>
+  </tr>  
+ 
   
    <tr>
     <td>Brener Freire</td>
@@ -158,11 +157,11 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
 # Cronograma e Sprint
 
-<img src = "https://github.com/TechForce-ADS/imagens/blob/main/calendario-api-oracle.png" />
+<img src = "https://github.com/TechForce-ADS/imagens/blob/main/calendario-oracle.png" />
 
 > Sprint:
 
- <img src = "" >
+ <img src = "https://github.com/TechForce-ADS/imagens/blob/main/cronograma-oracle.png" >
  
  ### Sprint 1</a> - 25/03 - 14/04</p>
  > <p>:x:  </p>
@@ -204,7 +203,7 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 > - Slack (Comunicação do PO com a empresa)
 
 # Backlog do Produto 
-<img src = "" />
+<img src = "https://github.com/TechForce-ADS/imagens/blob/main/product-oracle.png" />
 
 # Manual do Usuário
 Acesse o manual do usuário:
