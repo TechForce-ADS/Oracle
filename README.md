@@ -1,4 +1,4 @@
-<img src= "https://github.com/TechForce-ADS/imagens/blob/main/oracle.png" height="200" width="400"/> 
+![image](https://github.com/TechForce-ADS/Oracle/assets/92901837/a9ef180c-be55-4b40-a1a6-2930109149bf)<img src= "https://github.com/TechForce-ADS/imagens/blob/main/oracle.png" height="200" width="400"/> 
 
 # Projeto API - Oracle
 Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
@@ -33,9 +33,6 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
 - <a href ="#metodologia"> Metodologia </a>
 - <a href ="#cronograma-e-sprint"> Cronograma e Sprints </a>
 - <a href ="#tecnologia-utilizadas"> Tecnologias Utilizadas </a>
-- <a href ="#manual-do-usuário"> Manual do usuário </a>
-- <a href ="#como-rodar-o-projeto"> Como rodar o projeto? </a>
-- <a href ="#modelagem-de-banco-de-dados"> Modelagem do Banco de Dados</a>
 - <a href ="#sprint"> Sprints </a>
 - <a href ="#burndown-do-projeto"> Burndown do Projeto </a>
 
@@ -164,20 +161,32 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
  <img src = "https://github.com/TechForce-ADS/imagens/blob/main/cronograma-oracle.png" >
  
  ### Sprint 1</a> - 25/03 - 14/04</p>
- > <p>:x:  </p>
- > <p>:x:  </p>
- > <p>:x: </p>
- > <p>:x: </p>
- > <p>:x: </p>
+ > <p>:x: Criação do protótipo </p>
+ > <p>:x: Criação do Banco de dados </p>
+ > <p>:x: Tela de Cadastro dos parceiros</p>
+ > <p>:x: Tela de gerenciamento de informações (expertises)</p>
+ > <p>:x: Função de deletar, editar e visualizar os parceiros</p>
+ > <p>:x: Criação da estrutura base (Front-end)</p>
+ > <p>:x: Tela de login</p>
+ > <p>:x: Autenticação por email</p>
+
 
   ### Sprint 2</a> - 15/04 - 05/05</p>
-
+ > <p>:x: Atualizações do desenvolvimento dos parceiros</p>
+ > <p>:x: Criação do Dashboard </p>
+ > <p>:x: Gestão do Desempenho com os dados de cada parceiro </p>
+ > <p>:x: Implementação das funções: Filtrar, Paginar e Pesquisar </p>
 
  ### Sprint 3</a> - 06/05 - 26/05</p>
+ > <p>:x: Tela de login com diferenciação por níveis  </p>
+ > <p>:x:  Relatórios sobre parceiros por produto implementado</p>
+ > <p>:x: Modelagem de Banco de Dados</p>
 
 
  ### Sprint 4</a> - 27/05 - 15/06</p>
-
+ > <p>:x: Manual do Usuário </p>
+ > <p>:x: Documentação Técnica da Estrutura do Sistema </p>
+ > <p>:x: Documentação API </p>
 
  ### Feira de Soluções 27/06
 
@@ -188,41 +197,26 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 # Tecnologia Utilizadas
 
 
-<img src =""/>
+<img src ="https://github.com/TechForce-ADS/imagens/blob/main/BACKLOG.png"/>
  
 
 ## 
 
 
-> - 
-> - 
-> - 
-> - 
-> - Pacote Office (Documentação)
+> - MongoDB (Banco de Dados)
+> - React-Native (Front-end)
+> - JavaScript (Front-end)
+> - Git (Commit)
+> - Figma (Protótipo)
+> - Expo
+> - Discord (Comunicação entre membros)
+> - Pacote Office (Documentação e organização)
 > - GitHub (Repositório)
 > - Slack (Comunicação do PO com a empresa)
 
 # Backlog do Produto 
 <img src = "https://github.com/TechForce-ADS/imagens/blob/main/product-oracle.png" />
 
-# Manual do Usuário
-Acesse o manual do usuário:
-- >  <a href=""> Manual do usuário
- 
-
-# Como rodar o projeto?
-> Tecnologias necessárias para rodar o projeto:
->
-
-Passo a passo:
-
-# Documentação Técnica da Estruturação do Sistema
-
-# Documentação API
-
-# Modelagem de Banco de Dados
-  
-<img src = ""/> 
 
 
 # Sprint
