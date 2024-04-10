@@ -1,4 +1,4 @@
-![image](https://github.com/TechForce-ADS/Oracle/assets/92901837/a9ef180c-be55-4b40-a1a6-2930109149bf)<img src= "https://github.com/TechForce-ADS/imagens/blob/main/oracle.png" height="200" width="400"/> 
+<img src= "https://github.com/TechForce-ADS/imagens/blob/main/oracle.png" height="200" width="400"/> 
 
 # Projeto API - Oracle
 Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
