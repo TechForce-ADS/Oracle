@@ -156,7 +156,8 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 <img src = "https://github.com/TechForce-ADS/imagens/blob/main/product-oracle.png" />
 
 # User Stories
-![user-stories-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/078a3f84-2ef7-4497-9605-d4326e785160)
+![user-stories-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/5e4af7b4-381f-4909-977a-641fb67b3cf2)
+
 
 
 # Épico e Sprints
