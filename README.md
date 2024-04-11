@@ -11,14 +11,12 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
     <td>Periodo/Curso</td>
     <td>Professor M2</td>
     <td>Professor P2</td>
-    <td> Contato Cliente </td>
   </tr>
   <tr>
-    <td> Marcio Sousa </td>
+    <td> Oracle</td>
     <td> 5º ADS (Análise e Desenvolvimento de Sistemas) </td>
     <td> Jean Carlos Lourenço Costa</td>
     <td> Gerson da Penha Neto  </td>
-    <td> marcio.sousa@oracle.com </td>
   </tr>
 </table>
 </br>
@@ -31,7 +29,9 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
 - <a href ="#objetivo"> Objetivo </a>
 - <a href ="#requisito-da-aplicação"> Requisitos da Aplicação </a>
 - <a href ="#metodologia"> Metodologia </a>
-- <a href ="#cronograma-e-sprint"> Cronograma e Sprints </a>
+- <a href ="#backlog-do-produto"> Backlog do Produto </a>
+- <a href ="#user-stories"> User Stories </a>
+- <a href ="#epico-e-sprints"> Épico e Sprints </a>
 - <a href ="#tecnologia-utilizadas"> Tecnologias Utilizadas </a>
 - <a href ="#sprint"> Sprints </a>
 - <a href ="#burndown-do-projeto"> Burndown do Projeto </a>
@@ -150,11 +150,18 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
 # Metodologia
 
-- SCRUM 
+- SCRUM
 
-# Cronograma e Sprint
+# Backlog do Produto 
+<img src = "https://github.com/TechForce-ADS/imagens/blob/main/product-oracle.png" />
 
-<img src = "https://github.com/TechForce-ADS/imagens/blob/main/calendario-oracle.png" />
+# User Stories
+![user-stories-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/078a3f84-2ef7-4497-9605-d4326e785160)
+
+
+# Épico e Sprints
+
+![epico-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/c5be78b4-34d0-4cb1-8341-c1178062f4c1)
 
 > Sprint:
 
@@ -164,8 +171,12 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
  > <p>:x: Criação do protótipo </p>
  > <p>:x: Criação do Banco de dados </p>
  > <p>:x: Tela de Cadastro dos parceiros</p>
- > <p>:x: Tela de gerenciamento de informações (expertises)</p>
- > <p>:x: Função de deletar, editar e visualizar os parceiros</p>
+ - User Storie: Como administrador, quero cadastrar meus parceiros da Oracle para avaliar suas expertises 
+ > <p>:x: Tela de gerenciamento de informações e expertises</p>
+ - User Storie: Como administrador, preciso ter acesso as informações e expertises de cada parceiro 
+ > <p>:x: Função de criar, atualizar e deletar os parceiros e seus dados cadastrais </p>
+ - User Storie: Como administrador, necessito deletar as informações de um parceiro que não colaborará com a Oracle
+ 
  > <p>:x: Criação da estrutura base (Front-end)</p>
  > <p>:x: Tela de login</p>
  > <p>:x: Autenticação por email</p>
@@ -173,21 +184,34 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
   ### Sprint 2</a> - 15/04 - 05/05</p>
  > <p>:x: Atualizações do desenvolvimento dos parceiros</p>
+ - User Storie: Como administrador, necessito atualizar as expertises de um parceiro que teve um novo
+alcance durante o semestre 
  > <p>:x: Criação do Dashboard </p>
+ - User Storie: Como Administrador, gostaria de visualizar de maneira mais rápida o desempenho de meus
+parceiros
  > <p>:x: Gestão do Desempenho com os dados de cada parceiro </p>
+ - User Storie:Como Administrador, quero ver gráficos e dados de cada um dos meus parceiros para ver seu
+desempenho
  > <p>:x: Implementação das funções: Filtrar, Paginar e Pesquisar </p>
+- User Storie: Como administrador, gostaria de pesquisar parceiros que o nome comecem com a letra 'D'
 
  ### Sprint 3</a> - 06/05 - 26/05</p>
  > <p>:x: Tela de login com diferenciação por níveis  </p>
+ - User Storie: Como administrador master, quero que cada um dos meus administradores tenham permissões
+diferentes
  > <p>:x:  Relatórios sobre parceiros por produto implementado</p>
+ - User Storie: Como administrador, quero ter relatórios detalhados para ver externamente da aplicação
  > <p>:x: Modelagem de Banco de Dados</p>
-
+- User Storie: Como administrador, gostaria de visualizar como o banco de dados foi pensado
 
  ### Sprint 4</a> - 27/05 - 15/06</p>
  > <p>:x: Manual do Usuário </p>
+ - User Storie: Como administrador, preciso de ajuda para entender como funciona a aplicação
  > <p>:x: Documentação Técnica da Estrutura do Sistema </p>
+  - User Storie: Como administrador, preciso ter acesso a um documento que mostre as tecnologias usadas
  > <p>:x: Documentação API </p>
-
+ - User Storie: Como administrador, necessito de uma documentação que contemple tudo que foi feito
+durante a API 
  ### Feira de Soluções 27/06
 
 
@@ -214,8 +238,7 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 > - GitHub (Repositório)
 > - Slack (Comunicação do PO com a empresa)
 
-# Backlog do Produto 
-<img src = "https://github.com/TechForce-ADS/imagens/blob/main/product-oracle.png" />
+
 
 
 
