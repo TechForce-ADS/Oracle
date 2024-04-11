@@ -164,9 +164,7 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
 ![epico-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/c5be78b4-34d0-4cb1-8341-c1178062f4c1)
 
-> Sprint:
-
- <img src = "https://github.com/TechForce-ADS/imagens/blob/main/cronograma-oracle.png" >
+> Sprint Backlog:
  
  ### Sprint 1</a> - 25/03 - 14/04</p>
  > <p>:x: Criação do protótipo </p>
