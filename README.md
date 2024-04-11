@@ -167,7 +167,7 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 > Sprint Backlog:
  
  ### Sprint 1</a> - 25/03 - 14/04</p>
- > <p>:x: Criação do protótipo </p>
+ > <p>:white_check_mark: Criação do protótipo </p>
  > <p>:x: Criação do Banco de dados </p>
  > <p>:x: Tela de Cadastro dos parceiros</p>
  - User Storie: Como administrador, quero cadastrar meus parceiros da Oracle para avaliar suas expertises 
@@ -175,10 +175,9 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
  - User Storie: Como administrador, preciso ter acesso as informações e expertises de cada parceiro 
  > <p>:x: Função de criar, atualizar e deletar os parceiros e seus dados cadastrais </p>
  - User Storie: Como administrador, necessito deletar as informações de um parceiro que não colaborará com a Oracle
- 
- > <p>:x: Criação da estrutura base (Front-end)</p>
- > <p>:x: Tela de login</p>
- > <p>:x: Autenticação por email</p>
+ > <p>:white_check_mark: Criação da estrutura base (Front-end)</p>
+ > <p>:white_check_mark: Tela de login</p>
+
 
 
   ### Sprint 2</a> - 15/04 - 05/05</p>
@@ -202,7 +201,9 @@ diferentes
  - User Storie: Como administrador, quero ter relatórios detalhados para ver externamente da aplicação
  > <p>:x: Modelagem de Banco de Dados</p>
 - User Storie: Como administrador, gostaria de visualizar como o banco de dados foi pensado
+ > <p>:x: Autenticação por email</p> 
 
+ 
  ### Sprint 4</a> - 27/05 - 15/06</p>
  > <p>:x: Manual do Usuário </p>
  - User Storie: Como administrador, preciso de ajuda para entender como funciona a aplicação
