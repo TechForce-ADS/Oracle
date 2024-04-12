@@ -15,10 +15,9 @@ const Login = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-    console.log(email)
-    console.log(password)
+    const ip = "colocar o ip do seu pc"
     try {
-      const response = await fetch('http://192.168.15.36:3001/api/users/login', {
+      const response = await fetch(`http://${ip}:3001/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
