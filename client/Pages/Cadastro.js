@@ -5,7 +5,6 @@ import MenuIcon from '../img/menu.png';
 import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-
 const Cadastro = ({ navigation }) => {
     const [menuAberto, setMenuAberto] = useState(false);
     const [sexo, setSexo] = useState(null);
@@ -15,10 +14,66 @@ const Cadastro = ({ navigation }) => {
         {label: 'Feminino', value: 'feminino'},
         {label: 'Outro', value: 'outro'}
     ]);
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [number, setNumber] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [address, setAddress] = useState('');
 
     const toggleMenu = () => {
         setMenuAberto(!menuAberto);
     };
+
+    const handleEmailChange = (text) => {
+        setEmail(text);
+      };
+
+      const handleNameChange = (text) => {
+        setName(text);
+      };
+
+      const handleLastNameChange = (text) => {
+        setLastName(text);
+      };
+
+      const handleNumberChange = (text) => {
+        setNumber(text);
+      };
+
+      const handleCpfChange = (text) => {
+        setCpf(text);
+      };
+
+      const handleAddressChange = (text) => {
+        setAddress(text);
+      };
+    
+      // Function to handle login
+      const handleRegister = async () => {
+        const ip = "colocar o ip do seu pc"
+        try {
+          const response = await fetch(`http://${ip}:3001/api/partners/register`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email,name,lastName,number,sexo,cpf,address }),
+          });
+    
+          const data = await response.json();
+    
+          if (response.ok) {
+            navigation.navigate('Login');
+          } else {
+            // Handle login failure
+            Alert.alert('Error', data.error);
+          }
+        } catch (error) {
+          console.error('Error registering:', error);
+          Alert.alert('Error', 'Internal server error');
+        }
+      };
 
     return (
         <View style={{ flex: 1, backgroundColor: '#312D2A', alignItems: 'center' }}>
@@ -46,12 +101,20 @@ const Cadastro = ({ navigation }) => {
             <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
                 <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
                     <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Nome:</Text>
-                    <TextInput style={styles.inputNome}>
+                    <TextInput style={styles.inputNome}
+                       placeholder='Nome'  
+                       value={name}    
+                       onChangeText={handleNameChange}              
+                    >
                     </TextInput>
                 </View>
                 <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
                     <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Sobrenome:</Text>
-                    <TextInput style={styles.inputNome}>
+                    <TextInput style={styles.inputNome}
+                    placeholder='Sobrenome'  
+                    value={lastName}    
+                    onChangeText={handleLastNameChange} 
+                    >
                     </TextInput>
                 </View>
             </View>
@@ -61,7 +124,11 @@ const Cadastro = ({ navigation }) => {
             <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
                 <View style={{ width: '65%', height: 100, justifyContent: 'center', padding: 12 }}>
                     <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Email:</Text>
-                    <TextInput style={styles.inputNome}>
+                    <TextInput style={styles.inputNome}
+                    placeholder='Email'
+                    value={email}
+                    onChangeText={handleEmailChange}
+                    >
                     </TextInput>
                 </View>
                 <View style={{ width: '35%', height: 100, justifyContent: 'center', padding: 12 }}>
@@ -84,23 +151,35 @@ const Cadastro = ({ navigation }) => {
             <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
                 <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
                     <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Numero:</Text>
-                    <TextInput style={styles.inputNome}>
+                    <TextInput style={styles.inputNome}
+                    placeholder='Número'
+                    value={number}
+                    onChangeText={handleNumberChange}
+                    >
                     </TextInput>
                 </View>
                 <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
                     <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>CPF:</Text>
-                    <TextInput style={styles.inputNome}>
+                    <TextInput style={styles.inputNome}
+                    placeholder='CPF'
+                    value={cpf}
+                    onChangeText={handleCpfChange}
+                    >
                     </TextInput>
                 </View>
             </View>
             <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
                 <View style={{ width: '100%', height: 100, justifyContent: 'center', padding: 12 }}>
                     <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Endereço:</Text>
-                    <TextInput style={styles.inputNome}>
+                    <TextInput style={styles.inputNome}
+                    placeholder='Endereço'
+                    value={address}
+                    onChangeText={handleAddressChange}
+                    >
                     </TextInput>
                 </View>
             </View>
-            <TouchableOpacity style={{ width: 150, height: 40, backgroundColor: '#BDB46A', borderRadius: 10, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity onPress={handleRegister} style={{ width: 150, height: 40, backgroundColor: '#BDB46A', borderRadius: 10, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '100' }}>Cadastrar</Text>
             </TouchableOpacity>
         </View>
