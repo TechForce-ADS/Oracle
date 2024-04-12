@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {listPartners} = require('../data/repositories/PartnerRepository.js');
+const {deletePartner} = require('../data/repositories/PartnerRepository.js');
 
 const RegisterPartnerUC = require('../useCases/partner/RegisterPartnerUC.js')
 
@@ -33,6 +34,24 @@ router.get('/partnerList', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+router.delete("/delete/:_id", async (req, res) => {
+  try {
+    const partnerId = req.params._id;
+    
+    // Chamar a função para deletar o parceiro
+    const result = await deletePartner(partnerId);
+
+    // Responder com a mensagem de sucesso
+    res.status(200).json(result);
+  } catch (error) {
+    // Se ocorrer um erro, retornar um erro 500
+    console.error(error);
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+});
+
 
 
 module.exports = router;

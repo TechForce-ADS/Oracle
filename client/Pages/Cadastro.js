@@ -64,7 +64,7 @@ const Cadastro = ({ navigation }) => {
           const data = await response.json();
     
           if (response.ok) {
-            navigation.navigate('Login');
+            navigation.navigate('TelaLista');
           } else {
             // Handle login failure
             Alert.alert('Error', data.error);

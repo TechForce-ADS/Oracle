@@ -1,53 +1,85 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput } from 'react-native';
-import axios from 'axios';
+import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import Logo from '../img/LogoSemFundo.png';
 import Pen from '../img/pen.png';
 import MenuIcon from '../img/menu.png';
 import Trash from '../img/trash.png';
 import Search from '../img/search.png';
-import Swal from 'sweetalert';
+
+
+const ip = "192.168.15.99" //COLOCAR O IP DO SEU APARELHO (Aparece me baixo quando roda o android)
 
 const TelaLista = ({ navigation }) => {
+
   const [menuAberto, setMenuAberto] = useState(false);
   const [partners, setPartners] = useState([]);
   const toggleMenu = () => {
     setMenuAberto(!menuAberto);
   };
-
-  const excluirPartner = async (id) => {
-    Swal({
-      title: 'Você tem certeza?',
-      text: 'Esta ação não poderá ser revertida!',
-      icon: 'warning',
-      buttons: ['Cancelar', 'Excluir'],
-      dangerMode: true,
-    }).then(async (willDelete) => {
-      if (willDelete) {
-        try {
-          await axios.delete(`http://localhost:3001/api/partners/${id}`);
-          const updatedPartner = partners.filter((partner) => partner._id !== id); 
-          setPartners(updatedPartner);
-        } catch (error) {
-          console.error('Erro ao excluir partner:', error);
-        }
-      }
-    });
+  const excluirPartner = async (_id) => {
+    Alert.alert(
+      'Você tem certeza?',
+      'Esta ação não poderá ser revertida!',
+      [
+        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
+        { text: 'Excluir', onPress: () => excluirConfirmed(_id) },
+      ],
+      { cancelable: true }
+    );
   };
-
+  
+  const excluirConfirmed = async (_id) => {
+    try {
+      await fetch(`http://${ip}:3001/api/partners/delete/${_id}`, {
+        method: 'DELETE',
+      });
+      const updatedPartner = partners.filter((partner) => partner._id !== _id);
+      setPartners(updatedPartner);
+    } catch (error) {
+      console.error('Erro ao excluir partner:', error);
+    }
+  };
+  
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`http://localhost:3001/api/partners/partnerList `);
-        setPartners(response.data);
+        const response = await fetch(`http://${ip}:3001/api/partners/partnerList`);
+        if (!response.ok) {
+          throw new Error('Erro ao buscar partners');
+        }
+        const data = await response.json();
+        setPartners(data);
       } catch (error) {
         console.error('Erro ao buscar partners:', error);
       }
     }
     fetchData();
+
+    if (menuAberto) {
+      setMenuAberto(false);
+    }
   }, []);
+  
 
-
+  useFocusEffect(
+    React.useCallback(() => {
+      async function fetchData() {
+        try {
+          const response = await fetch(`http://${ip}:3001/api/partners/partnerList`);
+          if (!response.ok) {
+            throw new Error('Erro ao buscar partners');
+          }
+          const data = await response.json();
+          setPartners(data);
+        } catch (error) {
+          console.error('Erro ao buscar partners:', error);
+        }
+      }
+      
+    }, [])// Adicione 'menuAberto' como dependência para reexecutar o efeito quando ele mudar
+  )
+  
 
   return (
     <View style={{ flex: 1, backgroundColor: '#312D2A', alignItems: 'center' }}>
@@ -79,7 +111,7 @@ const TelaLista = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       {partners.map((partner) => (
-        <View style={styles.container} key={partner.id}>
+        <View style={styles.container} key={partner._id}>
           <View style={{ width: 200, height: '100%' }}>
             <Text style={{ fontSize: 18 }}>{partner.name} {partner.lastName}</Text>
             <Text style={{ fontSize: 10 }}>{partner.email}</Text>
@@ -88,9 +120,10 @@ const TelaLista = ({ navigation }) => {
             <TouchableOpacity style={styles.editarBTN}>
               <Image source={Pen} style={styles.Icons} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.deletarBTN} onPress={() => excluirPartner(partner.id)}>
+            <TouchableOpacity style={styles.deletarBTN} onPress={() => excluirPartner(partner._id)}>
               <Image source={Trash} style={styles.Icons} />
             </TouchableOpacity>
+
           </View>
         </View>
       ))}
@@ -220,6 +253,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     color: 'black',
     paddingLeft: 50,
+
+    
 
   },
 
