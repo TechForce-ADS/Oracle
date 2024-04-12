@@ -2,11 +2,12 @@ POST http://localhost:3001/api/users/register HTTP/1.1
 content-type: application/json
 
 {
-    "email":"teste@gmail.com",
-    "name":"usuário",
+    "email":"alberto@gmail.com",
+    "name":"alberto",
     "lastName":"1",
     "number":"28",
+    "sexo":"Masc",
     "cpf":"123456789",
     "address":"endereço",
-    "password":"abc123456789"
+    "password":"123"
 }

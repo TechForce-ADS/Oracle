@@ -5,9 +5,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password:{
-    type:String,
-    required:true
+  password: {
+    type: String,
+    required: true
   },
   name: {
     type: String,
@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
   },
   isAdmin: {
     type: Boolean,
-    default: false 
+    default: false
   }
 });
 
@@ -43,6 +43,7 @@ const User = mongoose.model('User', userSchema);
 
 
 const partnerSchema = new mongoose.Schema({
+
   email: {
     type: String,
     required: true,
@@ -75,4 +76,4 @@ const partnerSchema = new mongoose.Schema({
 
 const Partner = mongoose.model('Partner', partnerSchema);
 
-module.exports = {User, userSchema,Partner, partnerSchema};
+module.exports = { User, userSchema, Partner, partnerSchema };

@@ -49,9 +49,9 @@ const Cadastro = ({ navigation }) => {
         setAddress(text);
       };
     
-      // Function to handle login
+    
       const handleRegister = async () => {
-        const ip = "colocar o ip do seu pc"
+        const ip = "192.168.15.99"
         try {
           const response = await fetch(`http://${ip}:3001/api/partners/register`, {
             method: 'POST',

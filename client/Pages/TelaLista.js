@@ -1,17 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput } from 'react-native';
+import axios from 'axios';
 import Logo from '../img/LogoSemFundo.png';
 import Pen from '../img/pen.png';
 import MenuIcon from '../img/menu.png';
 import Trash from '../img/trash.png';
 import Search from '../img/search.png';
+import Swal from 'sweetalert';
 
 const TelaLista = ({ navigation }) => {
   const [menuAberto, setMenuAberto] = useState(false);
-
+  const [partners, setPartners] = useState([]);
   const toggleMenu = () => {
     setMenuAberto(!menuAberto);
   };
+
+  const excluirPartner = async (id) => {
+    Swal({
+      title: 'Você tem certeza?',
+      text: 'Esta ação não poderá ser revertida!',
+      icon: 'warning',
+      buttons: ['Cancelar', 'Excluir'],
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        try {
+          await axios.delete(`http://localhost:3001/api/partners/${id}`);
+          const updatedPartner = partners.filter((partner) => partner._id !== id); 
+          setPartners(updatedPartner);
+        } catch (error) {
+          console.error('Erro ao excluir partner:', error);
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/partners/partnerList `);
+        setPartners(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar partners:', error);
+      }
+    }
+    fetchData();
+  }, []);
+
+
 
   return (
     <View style={{ flex: 1, backgroundColor: '#312D2A', alignItems: 'center' }}>
@@ -25,8 +61,8 @@ const TelaLista = ({ navigation }) => {
       {menuAberto && (
         <View style={styles.menu}>
 
-          <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro') }>Cadastrar novo Parceiro</Text>
-          <Text style={styles.MenuText} onPress={() => navigation.navigate('TelaLista') }>Lista de Parceiros</Text>
+          <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
+          <Text style={styles.MenuText} onPress={() => navigation.navigate('TelaLista')}>Lista de Parceiros</Text>
           <Text style={styles.MenuText}>Menu Item 3</Text>
           <Text style={styles.MenuText}>Menu Item 4</Text>
 
@@ -42,31 +78,29 @@ const TelaLista = ({ navigation }) => {
           <Text>A - Z</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={styles.container}>
-        <View style={{ width: 200, height: '100%' }}>
-          <Text style={{ fontSize: 18, }}>Cristiano Ronaldo</Text>
-          <Text style={{ fontSize: 10, }}>Parceiro nivel - Avançado</Text>
+      {partners.map((partner) => (
+        <View style={styles.container} key={partner.id}>
+          <View style={{ width: 200, height: '100%' }}>
+            <Text style={{ fontSize: 18 }}>{partner.name} {partner.lastName}</Text>
+            <Text style={{ fontSize: 10 }}>{partner.email}</Text>
+          </View>
+          <View style={{ width: 125, height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
+            <TouchableOpacity style={styles.editarBTN}>
+              <Image source={Pen} style={styles.Icons} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.deletarBTN} onPress={() => excluirPartner(partner.id)}>
+              <Image source={Trash} style={styles.Icons} />
+            </TouchableOpacity>
+          </View>
         </View>
-
-
-
-
-        <View style={{ width: 125, height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-
-          <TouchableOpacity style={styles.editarBTN}>
-            <Image source={Pen} style={styles.Icons} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.deletarBTN}>
-            <Image source={Trash} style={styles.Icons} />
-          </TouchableOpacity>
-
-        </View>
-      </View>
-
+      ))}
 
 
     </View>
+
+
+
+
   );
 };
 
@@ -186,7 +220,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     color: 'black',
     paddingLeft: 50,
-    
+
   },
 
 });

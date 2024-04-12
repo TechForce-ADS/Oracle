@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const {listPartners} = require('../data/repositories/PartnerRepository.js');
+
 const RegisterPartnerUC = require('../useCases/partner/RegisterPartnerUC.js')
 
 router.post('/register', async (req, res) => {
@@ -21,5 +23,16 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+router.get('/partnerList', async (req, res) => {
+  try {
+    const partners = await listPartners();
+    res.status(200).json(partners);
+  } catch (error) {
+    console.error('Error listing partners:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 module.exports = router;

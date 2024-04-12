@@ -17,6 +17,18 @@ async function registerPartner(partnerData) {
     }
   }
 
+  async function listPartners() {
+    try {
+      const partners = await Partner.find({});
+      return partners;
+    } catch (error) {
+      console.error('Error listing partners:', error);
+      throw new Error('Failed to list partners');
+    }
+  }
+  
+  
 module.exports = {
-    registerPartner
+    registerPartner,
+    listPartners
 };
