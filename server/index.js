@@ -4,6 +4,7 @@ const PORT = 3001;
 const { connect } = require('./src/data/database');
 const cors = require('cors');
 const RegisterAdminUC = require('./src/useCases/user/RegisterAdminUC')
+const bcrypt = require('bcrypt')
 
 // Middleware
 app.use(express.json());
@@ -30,10 +31,12 @@ connect()
 // Instantiate and create admins
 async function createPreBuiltAdmins() {
   try {
-    const admin1 = new RegisterAdminUC('micaeladm@email.com', 'abc123456789', 'micael', true);
+    const salt = await bcrypt.genSalt(10)
+    const password = await bcrypt.hash('abc123456789',salt)
+    const admin1 = new RegisterAdminUC('micaeladm@email.com', password, 'Micael','Carvalho','28','123456789','endereço', true);
     const Admin1 = await admin1.create();
 
-    const admin2 = new RegisterAdminUC('breneradm@email.com', 'abc123456789', 'brener', true);
+    const admin2 = new RegisterAdminUC('breneradm@email.com', password, 'Brener','Freire','28','123456789','endereço', true);
     const Admin2 = await admin2.create();
 
     if(Admin1 || Admin2){

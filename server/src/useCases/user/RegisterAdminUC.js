@@ -1,10 +1,14 @@
 const {registerAdmin} = require('../../data/repositories/UserRepository.js');
 
 class RegisterAdminUC {
-  constructor(email, password,username,isAdmin) {
+  constructor(email,password,name,lastName,number,cpf,address,isAdmin) {
     this.email = email;
     this.password = password;
-    this.username = username;
+    this.name = name;
+    this.lastName = lastName;
+    this.number = number;
+    this.cpf = cpf;
+    this.address = address;
     this.isAdmin = isAdmin;
   }
 
@@ -13,7 +17,11 @@ class RegisterAdminUC {
       const adminData = {
         email: this.email,
         password: this.password,
-        username:this.username,
+        name:this.name,
+        lastName:this.lastName,
+        number:this.number,
+        cpf:this.cpf,
+        address:this.address,
         isAdmin:this.isAdmin
       };
       

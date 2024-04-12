@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 
 async function registerUser(userData) {
   try {
-    const existingUser = await User.findOne({ $or: [{ email: userData.email }, { username: userData.username }] });
+    const existingUser = await User.findOne({ email: userData.email});
     if (existingUser) {
       return false
     }
@@ -20,7 +20,7 @@ async function registerUser(userData) {
 
 async function registerAdmin(adminData) {
   try {
-    const existingAdmin = await User.findOne({ $or: [{ email: adminData.email }, { username: adminData.username }] });
+    const existingAdmin = await User.findOne({ email: adminData.email });
     if (existingAdmin) {
       return false
     }
@@ -42,10 +42,10 @@ async function loginUser(userData) {
       if (await bcrypt.compare(userData.password,user.password)){
         return user
       }else{
-        throw new Error("incorrect password")
+        return false
       }
     }else{
-      throw new Error("user not found")
+      return false
     }
   } catch (error) {
     console.error('Error logging user:', error);

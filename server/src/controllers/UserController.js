@@ -8,9 +8,14 @@ router.post('/register', async (req, res) => {
   const salt = await bcrypt.genSalt(10)
   try {
     const email = req.body.email;
-    const username = req.body.username;
     const password = await bcrypt.hash(req.body.password,salt)
-    const registerUC = new RegisterUserUC(email, password,username); 
+    const name = req.body.name;
+    const lastName = req.body.lastName;
+    const sexo = req.body.sexo;
+    const number = req.body.number;
+    const cpf = req.body.cpf;
+    const address = req.body.address;
+    const registerUC = new RegisterUserUC(email,password,name,lastName,sexo,number,cpf,address); 
     const newUser = await registerUC.create();
     if (newUser){
       res.status(201).json(newUser);
@@ -27,7 +32,9 @@ router.post('/login', async (req, res) => {
     const {email, password} = req.body;
     const loginUserUC = new LoginUserUC(email, password); 
     const loggedUser = await loginUserUC.login();
-    res.status(200).json(loggedUser);
+    if (loggedUser){
+      res.status(200).json(loggedUser);
+    }
   } catch (error) {
     console.error('Error logging: ', error);
     res.status(500).json({ error: 'Internal server error' });
