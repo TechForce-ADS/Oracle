@@ -46,9 +46,30 @@ async function registerPartner(partnerData) {
     }
   }
   
+
+
+  async function updatePartner(partnerId, updateData) {
+    try {
+      // Atualizar o parceiro pelo ID usando os dados fornecidos
+      const result = await Partner.findByIdAndUpdate(partnerId, updateData, { new: true });
+  
+      if (!result) {
+        throw new Error('Parceiro não encontrado');
+      }
+  
+      // Retornar o parceiro atualizado
+      return result;
+    } catch (error) {
+      // Logar o erro e retornar um erro 500
+      console.error('Erro ao atualizar parceiro:', error);
+      throw new Error('Erro interno do servidor');
+    }
+  }
+  
   
 module.exports = {
     registerPartner,
     listPartners,
+    updatePartner,
     deletePartner
 };
