@@ -120,7 +120,9 @@ const TelaLista = ({ navigation }) => {
           <Text>A - Z</Text>
         </TouchableOpacity>
       </View>
-      {partners.map((partner) => (
+
+      {/* Partner List */}
+      {sortedPartners.map((partner) => (
         <View style={styles.container} key={partner._id}>
           <View style={{ width: 200, height: '100%' }}>
             <Text style={{ fontSize: 18 }}>{partner.name} {partner.lastName}</Text>
