@@ -9,7 +9,6 @@ const EditarParceiro = ({ navigation, route }) => {
     const [menuAberto, setMenuAberto] = useState(false);
     const [sexo, setSexo] = useState(null);
     const [partnerData, setPartnerData] = useState(route.params?.partnerToEdit || {});
-
     const [email, setEmail] = useState(partnerData.email || '');
     const [name, setName] = useState(partnerData.name || '');
     const [lastName, setLastName] = useState(partnerData.lastName || '');
@@ -147,7 +146,7 @@ const EditarParceiro = ({ navigation, route }) => {
                     setItems={setItems}
                     style={styles.dropdown}
                     dropDownContainerStyle={styles.dropdownContainer}
-                    zIndex={1000} // Garantir que o dropdown fique acima de outros componentes
+                    zIndex={1000} 
                     zIndexInverse={1000}
                     placeholder="Sexo hihi"
                 />

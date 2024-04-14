@@ -51,6 +51,10 @@ const TelaLista = ({ navigation }) => {
     navigation.navigate('EditarParceiro', { partnerToEdit: partner });
   };
 
+  const vizualizar = (partner) => {
+    navigation.navigate('Expertise', { partnerToSee: partner });
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       async function fetchData() {
@@ -90,7 +94,7 @@ const TelaLista = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#312D2A', alignItems: 'center' }}>
-      {/* Header */}
+
       <View style={styles.header}>
         <Image source={Logo} style={styles.logo} />
         <TouchableOpacity onPress={toggleMenu}>
@@ -123,20 +127,22 @@ const TelaLista = ({ navigation }) => {
 
       {/* Partner List */}
       {sortedPartners.map((partner) => (
-        <View style={styles.container} key={partner._id}>
-          <View style={{ width: 200, height: '100%' }}>
-            <Text style={{ fontSize: 18 }}>{partner.name} {partner.lastName}</Text>
-            <Text style={{ fontSize: 10 }}>{partner.email}</Text>
+        <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
+          <View style={styles.container}>
+            <View style={{ width: 200, height: '100%' }}>
+              <Text style={{ fontSize: 18 }}>{partner.name} {partner.lastName}</Text>
+              <Text style={{ fontSize: 10 }}>{partner.email}</Text>
+            </View>
+            <View style={{ width: 125, height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
+              <TouchableOpacity style={styles.editarBTN} onPress={() => editarPartner(partner)}>
+                <Image source={Pen} style={styles.Icons} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.deletarBTN} onPress={() => excluirPartner(partner._id)}>
+                <Image source={Trash} style={styles.Icons} />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={{ width: 125, height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-            <TouchableOpacity style={styles.editarBTN} onPress={() => editarPartner(partner)}>
-              <Image source={Pen} style={styles.Icons} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.deletarBTN} onPress={() => excluirPartner(partner._id)}>
-              <Image source={Trash} style={styles.Icons} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );
