@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
+import Modal from 'react-native-modal';
 import Logo from '../img/LogoVermelha.png';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleEmailChange = (text) => {
     setEmail(text);
@@ -14,8 +17,12 @@ const Login = ({ navigation }) => {
     setPassword(text);
   };
 
+  const toggleErrorModal = () => {
+    setErrorModalVisible(!errorModalVisible);
+  };
+
   const handleLogin = async () => {
-    const ip = "192.168.15.99"
+    const ip = "192.168.15.6"
     try {
       const response = await fetch(`http://${ip}:3001/api/users/login`, {
         method: 'POST',
@@ -30,11 +37,13 @@ const Login = ({ navigation }) => {
       if (response.ok) {
         navigation.navigate('TelaLista');
       } else {
-        Alert.alert('Error', data.error);
+        setErrorMessage('Usuário ou senha incorretos');
+        toggleErrorModal();
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      Alert.alert('Error', 'Internal server error');
+      setErrorMessage('Erro interno do servidor');
+      toggleErrorModal();
     }
   };
 
@@ -80,6 +89,15 @@ const Login = ({ navigation }) => {
           </View>
         </View>
       </View>
+
+      <Modal isVisible={errorModalVisible} onBackdropPress={toggleErrorModal} style={styles.errorModal}>
+        <View style={styles.errorModalContent}>
+          <Text style={styles.errorModalMessage}>{errorMessage}</Text>
+          <TouchableOpacity style={styles.errorModalCloseButton} onPress={toggleErrorModal}>
+            <Text style={styles.errorModalCloseButtonText}>Fechar</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -138,9 +156,36 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
 
+  errorModalContent: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    width: 300,
+    marginTop: -30
+  },
 
+  errorModalMessage: {
+    color: 'black' //
+  },
 
+  errorModalCloseButton: {
+    backgroundColor: '#B70D0D', 
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 10 
+  },
+
+  errorModalCloseButtonText: {
+    color: '#FFF',
+    fontWeight: 'bold'
+  },
+  
+  errorModal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 })
-
 
 export default Login;

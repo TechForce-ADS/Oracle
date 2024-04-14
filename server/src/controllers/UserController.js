@@ -29,16 +29,19 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   console.log("login route called")
   try {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
     const loginUserUC = new LoginUserUC(email, password); 
     const loggedUser = await loginUserUC.login();
-    if (loggedUser){
-      res.status(200).json(loggedUser);
+    if (loggedUser) {
+      res.status(200).json(loggedUser); // Login bem-sucedido
+    } else {
+      res.status(400).json({ error: 'Usuário ou senha incorretos' }); // Usuário ou senha incorretos
     }
   } catch (error) {
-    console.error('Error logging: ', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Erro ao fazer login:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' }); // Erro interno do servidor
   }
 });
+
 
 module.exports = router;

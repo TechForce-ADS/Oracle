@@ -2,7 +2,7 @@ POST http://localhost:3001/api/users/register HTTP/1.1
 content-type: application/json
 
 {
-    "email":"alberto@gmail.com",
+    "email":"micael@gmail.com",
     "name":"alberto",
     "lastName":"1",
     "number":"28",
