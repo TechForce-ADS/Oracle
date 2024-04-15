@@ -245,7 +245,7 @@ durante a API
 
 # Sprint
 
-- >  <a href=" "> Protótipo
+- >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Protótipo
 
   
 # Burndown do Projeto
