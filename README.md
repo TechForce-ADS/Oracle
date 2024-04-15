@@ -162,21 +162,22 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
 # Épico e Sprints
 
-![epico-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/c5be78b4-34d0-4cb1-8341-c1178062f4c1)
+![EPICO-ORACLE (2)](https://github.com/TechForce-ADS/Oracle/assets/101806264/f77144ce-2dd3-4f67-ac05-62093a6bf186)
+
 
 > Sprint Backlog:
  
  ### Sprint 1</a> - 25/03 - 14/04</p>
- > <p>:white_check_mark: Criação do protótipo </p>
- > <p>:x: Criação do Banco de dados </p>
- > <p>:x: Tela de Cadastro dos parceiros</p>
+  <p>:white_check_mark: Criação do protótipo </p>
+  <p>:white_check_mark: Criação do Banco de dados </p>
+  <p>:white_check_mark: Tela de Cadastro dos parceiros</p>
  - User Storie: Como administrador, quero cadastrar meus parceiros da Oracle para avaliar suas expertises 
- > <p>:x: Tela de gerenciamento de informações e expertises</p>
+ <p>:white_check_mark: Tela de gerenciamento de informações e expertises</p>
  - User Storie: Como administrador, preciso ter acesso as informações e expertises de cada parceiro 
- > <p>:x: Função de criar, atualizar e deletar os parceiros e seus dados cadastrais </p>
+  <p>:white_check_mark: Função de criar, atualizar e deletar os parceiros e seus dados cadastrais </p>
  - User Storie: Como administrador, necessito deletar as informações de um parceiro que não colaborará com a Oracle
- > <p>:white_check_mark: Criação da estrutura base (Front-end)</p>
- > <p>:white_check_mark: Tela de login</p>
+  <p>:white_check_mark: Criação da estrutura base (Front-end)</p>
+  <p>:white_check_mark: Tela de login</p>
 
 
 
@@ -229,7 +230,7 @@ durante a API
 
 > - MongoDB (Banco de Dados)
 > - React-Native (Front-end)
-> - JavaScript (Front-end)
+> - JavaScript (Front-end  e Back-end)
 > - Git (Commit)
 > - Figma (Protótipo)
 > - Expo
@@ -248,5 +249,9 @@ durante a API
 
   
 # Burndown do Projeto
+> 1° Sprint
+![burndown-oracle](https://github.com/TechForce-ADS/Oracle/assets/101806264/fbfe684f-64d9-4272-8441-3e1538e15ed2)
+
+
 
 
