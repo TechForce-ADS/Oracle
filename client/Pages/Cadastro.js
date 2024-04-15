@@ -142,9 +142,9 @@ const Cadastro = ({ navigation }) => {
                     setItems={setItems}
                     style={styles.dropdown}
                     dropDownContainerStyle={styles.dropdownContainer}
-                    zIndex={1000} // Garantir que o dropdown fique acima de outros componentes
+                    zIndex={1000} 
                     zIndexInverse={1000}
-                    placeholder="Sexo hihi"
+                    placeholder="Sexo"
                 />
                 </View>
             </View>

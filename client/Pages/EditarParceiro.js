@@ -148,7 +148,7 @@ const EditarParceiro = ({ navigation, route }) => {
                     dropDownContainerStyle={styles.dropdownContainer}
                     zIndex={1000} 
                     zIndexInverse={1000}
-                    placeholder="Sexo hihi"
+                    placeholder="Sexo"
                 />
                 </View>
             </View>

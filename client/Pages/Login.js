@@ -9,6 +9,8 @@ const Login = ({ navigation }) => {
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const ip = "192.168.15.99"
+
   const handleEmailChange = (text) => {
     setEmail(text);
   };
@@ -22,7 +24,7 @@ const Login = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-    const ip = "192.168.15.6"
+    
     try {
       const response = await fetch(`http://${ip}:3001/api/users/login`, {
         method: 'POST',

@@ -7,7 +7,7 @@ import MenuIcon from '../img/menu.png';
 import Trash from '../img/trash.png';
 import Search from '../img/search.png';
 
-const ip = "192.168.15.6";
+const ip = "192.168.15.99";
 
 const TelaLista = ({ navigation }) => {
   const [menuAberto, setMenuAberto] = useState(false);
