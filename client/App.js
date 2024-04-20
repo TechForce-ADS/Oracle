@@ -7,6 +7,7 @@ import TelaLista from './Pages/TelaLista';
 import Cadastro from './Pages/Cadastro';
 import EditarParceiro from './Pages/EditarParceiro';
 import Expertise from './Pages/Expertise';
+import Informacoes from './Pages/Informacoes';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +19,7 @@ export default function App() {
         <Stack.Screen name="TelaLista" component={TelaLista} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="EditarParceiro" component={EditarParceiro} />
-        <Stack.Screen name="Expertise" component={Expertise} />
+        <Stack.Screen name="Informacoes" component={Informacoes} />
       </Stack.Navigator>
     </NavigationContainer>
   );

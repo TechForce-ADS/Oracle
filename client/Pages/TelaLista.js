@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
+import { View, Image, ImageBackground,  TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Logo from '../img/LogoSemFundo.png';
-import Pen from '../img/pen.png';
+import Ver from '../img/click.png';
 import MenuIcon from '../img/menu.png';
-import Trash from '../img/trash.png';
 import Search from '../img/search.png';
+import User from '../img/User.png';
 
 const ip = "192.168.15.99";
 
@@ -23,36 +23,15 @@ const TelaLista = ({ navigation }) => {
     setMenuAberto(false);
   };
 
-  const excluirPartner = async (_id) => {
-    Alert.alert(
-      'Você tem certeza?',
-      'Esta ação não poderá ser revertida!',
-      [
-        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
-        { text: 'Excluir', onPress: () => excluirConfirmed(_id) },
-      ],
-      { cancelable: true }
-    );
-  };
 
-  const excluirConfirmed = async (_id) => {
-    try {
-      await fetch(`http://${ip}:3001/api/partners/delete/${_id}`, {
-        method: 'DELETE',
-      });
-      const updatedPartner = partners.filter((partner) => partner._id !== _id);
-      setPartners(updatedPartner);
-    } catch (error) {
-      console.error('Erro ao excluir partner:', error);
-    }
-  };
+
 
   const editarPartner = (partner) => {
     navigation.navigate('EditarParceiro', { partnerToEdit: partner });
   };
 
   const vizualizar = (partner) => {
-    navigation.navigate('Expertise', { partnerToSee: partner });
+    navigation.navigate('Informacoes', { partnerToSee: partner });
   };
 
   useFocusEffect(
@@ -93,7 +72,7 @@ const TelaLista = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#312D2A', alignItems: 'center' }}>
+    <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center'}}>
 
       <View style={styles.header}>
         <Image source={Logo} style={styles.logo} />
@@ -129,17 +108,18 @@ const TelaLista = ({ navigation }) => {
       {sortedPartners.map((partner) => (
         <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
           <View style={styles.container}>
-            <View style={{ width: 200, height: '100%' }}>
-              <Text style={{ fontSize: 18 }}>{partner.name} {partner.lastName}</Text>
-              <Text style={{ fontSize: 10 }}>{partner.email}</Text>
+            <View style={styles.UserPhoto}>
+            <Image source={User}  />
             </View>
-            <View style={{ width: 125, height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-              <TouchableOpacity style={styles.editarBTN} onPress={() => editarPartner(partner)}>
-                <Image source={Pen} style={styles.Icons} />
+            <View style={styles.TextName}>
+              <Text style={{ fontSize: 16, textTransform:'uppercase',color:'#FFF', letterSpacing:1 }}>{partner.name} {partner.lastName}</Text>
+              <Text style={{ fontSize: 16, color:'#FFF', letterSpacing:1 }}>Nivel - </Text>
+            </View>
+            <View style={{width: 30, height: '100%', marginTop:10 }}>
+            <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
+                <Image source={Ver} style={styles.Icons} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.deletarBTN} onPress={() => excluirPartner(partner._id)}>
-                <Image source={Trash} style={styles.Icons} />
-              </TouchableOpacity>
+
             </View>
           </View>
         </TouchableOpacity>
@@ -153,7 +133,7 @@ const TelaLista = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#E32124',
+    backgroundColor: '#50100c',
     width: '100%',
     height: 70,
     alignItems: 'center',
@@ -178,7 +158,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: 200,
-    backgroundColor: '#E32124',
+    backgroundColor: '#50100c',
     alignItems: 'center',
     justifyContent: 'space-evenly',
     zIndex: 2024,
@@ -190,42 +170,37 @@ const styles = StyleSheet.create({
     color: 'white'
   },
 
+  UserPhoto: {
+    width: 105,
+    height: 100,
+    borderRadius: 15,
+    resizeMode:'cover'
+  },
+
+
+  TextName:{
+    width: 200,
+    height: '100%',
+    display:'flex',
+    justifyContent:'space-evenly',
+  
+  },
+
 
   container: {
-    padding: 12,
     borderRadius: 15,
-    backgroundColor: '#DCDCDC',
-    borderWidth: 3,
-    borderColor: '#B1ABAB',
+    backgroundColor: '#584848',
+    borderWidth: 1.3,
+    borderColor: '#7b7574',
     width: 350,
-    height: 75,
+    height: 100,
     display: 'flex',
     flexDirection: 'row',
     marginTop: 20,
-  },
-
-  editarBTN: {
-    backgroundColor: '#F0E68C',
-    width: 30,
-    height: 30,
-    borderWidth: 2,
-    borderColor: '#D4CB79',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
+    filter: 'blur(8px)',
   },
 
 
-  deletarBTN: {
-    backgroundColor: '#E5B7B7',
-    width: 30,
-    height: 30,
-    borderWidth: 2,
-    borderColor: '#D6A4A4',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
 
   FilterBTN: {
     backgroundColor: '#FFFFFF',
@@ -240,10 +215,11 @@ const styles = StyleSheet.create({
 
 
   Icons: {
-
-    width: 20,
-    height: 20,
+  
+    width: 35,
+    height: 35,
     resizeMode: 'contain',
+    
   },
 
   SearchIcon: {

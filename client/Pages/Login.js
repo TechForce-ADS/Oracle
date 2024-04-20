@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Modal from 'react-native-modal';
-import Logo from '../img/LogoVermelha.png';
+import Logo from '../img/LogoN.png';
+
+
+
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -24,7 +27,7 @@ const Login = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-    
+
     try {
       const response = await fetch(`http://${ip}:3001/api/users/login`, {
         method: 'POST',
@@ -50,47 +53,57 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#312D2A' }}>
-      <View style={styles.container}>
-        <View style={styles.LogoContainer}>
-          <View style={{
-            shadowColor: '#000',
-            shadowOffset: { width: 8, height: 3 },
-            shadowOpacity: 0.3,
-            shadowRadius: 7,
-          }}>
-            <Image source={Logo} style={{ width: 175, height: 60 }} />
-          </View>
+    <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#1C2120', padding: 20 }}>
 
-          <View style={styles.Textos}>
-            <Text style={{ fontSize: 30, color: '#363636', fontWeight: '100' }}>Login</Text>
+      <View style={styles.LogoContainer}>
 
-            <TextInput
-              style={styles.input}
-              placeholder='Email'
-              value={email}
-              onChangeText={handleEmailChange}
-            />
-            <TextInput
-              secureTextEntry={true}
-              style={styles.input}
-              placeholder='Senha'
-              value={password}
-              onChangeText={handlePasswordChange}
-            />
-
-            <TouchableOpacity style={styles.LogarBTN} onPress={handleLogin}>
-              <Text style={{ color: '#FFF8F8', textAlign: 'center', fontSize: 16 }}>Entrar</Text>
-            </TouchableOpacity>
-
-            <Text
-              onPress={() => navigation.navigate('ForgotPasswordScreen')}
-              style={{ color: '#8F8C8C', fontSize: 16, fontWeight: '200', textDecorationLine: 'underline' }}>
-              Esqueceu sua senha?
-            </Text>
-          </View>
-        </View>
+        <Image source={Logo} style={{ width: 175, height: 160, }} />
       </View>
+      <View style={styles.ContainerLogin}>
+        <View style={styles.Textos}>
+          <Text style={{ fontSize: 32, color: '#fff', fontWeight: 'bold' }}>Entrar</Text>
+          <Text style={{ fontSize: 12, color: '#fff', fontWeight: '900' }}>Faça o login para continuar</Text>
+        </View>
+        <View style={styles.Labels}>
+          <Text style={{ fontSize: 11, color: '#fff', fontWeight: '100', letterSpacing: 2 }}>EMAIL</Text>
+        </View>
+        <TextInput
+          style={styles.input}
+          placeholder='Email'
+          value={email}
+          onChangeText={handleEmailChange}
+          placeholderTextColor={'#fff'}
+        />
+
+        <View style={styles.Labels}>
+          <Text style={{ fontSize: 11, color: '#fff', fontWeight: '100', letterSpacing: 2 }}>SENHA</Text>
+        </View>
+
+        <TextInput
+          secureTextEntry={true}
+          style={styles.input}
+          placeholder='Senha'
+          value={password}
+          onChangeText={handlePasswordChange}
+          placeholderTextColor={'#fff'}
+
+        />
+
+        <TouchableOpacity style={styles.LogarBTN} onPress={handleLogin}>
+          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontWeight: '900' }}>Entrar</Text>
+        </TouchableOpacity>
+
+        <Text
+          onPress={() => navigation.navigate('ForgotPasswordScreen')}
+          style={{ color: '#8F8C8C', fontSize: 10, fontWeight: '200', marginTop: 5 }}>
+          Esqueceu sua senha?
+        </Text>
+        <Text
+          style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
+          Você não possui uma conta?<Text  style={{ color: '#782e29', fontSize: 12, fontWeight: '200'}}> Criar uma conta</Text>
+        </Text>
+      </View>
+
 
       <Modal isVisible={errorModalVisible} onBackdropPress={toggleErrorModal} style={styles.errorModal}>
         <View style={styles.errorModalContent}>
@@ -110,53 +123,66 @@ Login.navigationOptions = {
 
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    borderRadius: 25,
-    backgroundColor: '#FEF5F5',
-    width: 350,
-    height: 500,
+
+  ContainerLogin: {
+
+    width: "80%",
+    height: 600,
+    marginTop: 70,
     display: 'flex',
-    flexDirection: 'column',
-    boxShadow: '10px 10px 17px 6px rgba(128, 0, 0, 0.4)'
-  },
-
-  LogoContainer: {
     alignItems: 'center',
-    width: 350,
-    display: 'flex',
-    flexDirection: 'column',
-    transform: 'translateY(-25px)'
 
-  },
 
-  input: {
-    width: 285,
-    height: 50,
-    backgroundColor: '#D9D9D9',
-    padding: 12
+
   },
 
 
   Textos: {
-    width: 300,
-    height: 400,
-    //backgroundColor:'red',
+    height: 85,
+    width: "100%",
     display: 'flex',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-
+    alignItems: 'center'
 
   },
+
+  Labels: {
+    height: 20,
+    width: "83%",
+    display: 'flex',
+  },
+
+
+
+
+  input: {
+    width: 250,
+    height: 50,
+    backgroundColor: '#937170',
+    color: '#fff',
+    paddingLeft: 15,
+    borderRadius: 18,
+    marginBottom: 10,
+
+  },
+
 
   LogarBTN: {
-    backgroundColor: '#BDB46A',
-    width: 125,
-    height: 40,
+    height: 45,
+    width: "83%",
+    backgroundColor: '#FFF',
     justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
+    display: 'flex',
+    marginTop: 10,
+    borderRadius: 5,
   },
+
+  LogoContainer: {
+    width: "100%",
+    height: 122,
+    display: 'flex',
+    alignItems: 'center',
+  },
+
 
   errorModalContent: {
     backgroundColor: 'white',
@@ -172,22 +198,23 @@ const styles = StyleSheet.create({
   },
 
   errorModalCloseButton: {
-    backgroundColor: '#B70D0D', 
+    backgroundColor: '#B70D0D',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
-    marginTop: 10 
+    marginTop: 10
   },
 
   errorModalCloseButtonText: {
     color: '#FFF',
     fontWeight: 'bold'
   },
-  
+
   errorModal: {
     justifyContent: 'center',
     alignItems: 'center'
   },
+
 })
 
 export default Login;
