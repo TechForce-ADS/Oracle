@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import Logo from '../img/LogoN.png';
+import {
+  useFonts, Poppins_100Thin,
+  Poppins_200ExtraLight,
+  Poppins_300Light, Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold
+} from '@expo-google-fonts/poppins'
 
 
 
@@ -13,6 +20,21 @@ const Login = ({ navigation }) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const ip = "192.168.15.99"
+
+
+  const [fonteLoaded] = useFonts({
+    Poppins_100Thin,
+    Poppins_200ExtraLight,
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold
+  })
+
+
+  if (!fonteLoaded) {
+    return null;
+  }
 
   const handleEmailChange = (text) => {
     setEmail(text);
@@ -53,19 +75,20 @@ const Login = ({ navigation }) => {
   };
 
   return (
+    <ScrollView>
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#1C2120', padding: 20 }}>
-
+      
       <View style={styles.LogoContainer}>
 
         <Image source={Logo} style={{ width: 175, height: 160, }} />
       </View>
       <View style={styles.ContainerLogin}>
         <View style={styles.Textos}>
-          <Text style={{ fontSize: 32, color: '#fff', fontWeight: 'bold' }}>Entrar</Text>
-          <Text style={{ fontSize: 12, color: '#fff', fontWeight: '900' }}>Faça o login para continuar</Text>
+          <Text style={{ fontSize: 30, color: '#fff', fontFamily:'Poppins_700Bold' }}>Entrar</Text>
+          <Text style={{ fontSize: 12, color: '#fff', fontWeight: '800' }}>Faça o login para continuar</Text>
         </View>
         <View style={styles.Labels}>
-          <Text style={{ fontSize: 11, color: '#fff', fontWeight: '100', letterSpacing: 2 }}>EMAIL</Text>
+          <Text style={{ fontSize: 12, color: '#fff',  fontFamily:'Poppins_300Light', letterSpacing: 2 }}>EMAIL</Text>
         </View>
         <TextInput
           style={styles.input}
@@ -76,7 +99,7 @@ const Login = ({ navigation }) => {
         />
 
         <View style={styles.Labels}>
-          <Text style={{ fontSize: 11, color: '#fff', fontWeight: '100', letterSpacing: 2 }}>SENHA</Text>
+          <Text style={{ fontSize: 12, color: '#fff',  fontFamily:'Poppins_300Light', letterSpacing: 2 }}>SENHA</Text>
         </View>
 
         <TextInput
@@ -90,7 +113,7 @@ const Login = ({ navigation }) => {
         />
 
         <TouchableOpacity style={styles.LogarBTN} onPress={handleLogin}>
-          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontWeight: '900' }}>Entrar</Text>
+          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Entrar</Text>
         </TouchableOpacity>
 
         <Text
@@ -100,7 +123,7 @@ const Login = ({ navigation }) => {
         </Text>
         <Text
           style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
-          Você não possui uma conta?<Text  style={{ color: '#782e29', fontSize: 12, fontWeight: '200'}}> Criar uma conta</Text>
+          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}> Criar uma conta</Text>
         </Text>
       </View>
 
@@ -114,6 +137,7 @@ const Login = ({ navigation }) => {
         </View>
       </Modal>
     </View>
+    </ScrollView>
   );
 };
 
@@ -162,6 +186,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderRadius: 18,
     marginBottom: 10,
+    fontFamily:'Poppins_300Light'
 
   },
 

@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   menuIcon: {
-    width: 25,
-    height: 25,
+    width: 50,
+    height: 50,
   },
   menu: {
     position: 'absolute',

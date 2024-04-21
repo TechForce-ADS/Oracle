@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
 import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
 import { Picker } from '@react-native-picker/picker';
@@ -10,9 +10,9 @@ const Cadastro = ({ navigation }) => {
     const [sexo, setSexo] = useState(null);
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState([
-        {label: 'Masculino', value: 'masculino'},
-        {label: 'Feminino', value: 'feminino'},
-        {label: 'Outro', value: 'outro'}
+        { label: 'Masculino', value: 'masculino' },
+        { label: 'Feminino', value: 'feminino' },
+        { label: 'Outro', value: 'outro' }
     ]);
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -27,161 +27,170 @@ const Cadastro = ({ navigation }) => {
 
     const handleEmailChange = (text) => {
         setEmail(text);
-      };
+    };
 
-      const handleNameChange = (text) => {
+    const handleNameChange = (text) => {
         setName(text);
-      };
+    };
 
-      const handleLastNameChange = (text) => {
+    const handleLastNameChange = (text) => {
         setLastName(text);
-      };
+    };
 
-      const handleNumberChange = (text) => {
+    const handleNumberChange = (text) => {
         setNumber(text);
-      };
+    };
 
-      const handleCpfChange = (text) => {
+    const handleCpfChange = (text) => {
         setCpf(text);
-      };
+    };
 
-      const handleAddressChange = (text) => {
+    const handleAddressChange = (text) => {
         setAddress(text);
-      };
-    
-    
-      const handleRegister = async () => {
+    };
+
+
+    const handleRegister = async () => {
         const ip = "192.168.15.99"
         try {
-          const response = await fetch(`http://${ip}:3001/api/partners/register`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email,name,lastName,number,sexo,cpf,address }),
-          });
-    
-          const data = await response.json();
-    
-          if (response.ok) {
-            navigation.navigate('TelaLista');
-          } else {
-            // Handle login failure
-            Alert.alert('Error', data.error);
-          }
+            const response = await fetch(`http://${ip}:3001/api/partners/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, name, lastName, number, sexo, cpf, address }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                navigation.navigate('TelaLista');
+            } else {
+                // Handle login failure
+                Alert.alert('Error', data.error);
+            }
         } catch (error) {
-          console.error('Error registering:', error);
-          Alert.alert('Error', 'Internal server error');
+            console.error('Error registering:', error);
+            Alert.alert('Error', 'Internal server error');
         }
-      };
+    };
 
     return (
-        <View style={{ flex: 1, backgroundColor: '#312D2A', alignItems: 'center' }}>
+
+        <View style={{ flex: 1, backgroundColor: '#1C2120', alignItems: 'center' }}>
+
             <View style={styles.header}>
-                <Image source={Logo} style={styles.logo} />
+            
                 <TouchableOpacity onPress={toggleMenu}>
                     <Image source={MenuIcon} style={styles.menuIcon} />
                 </TouchableOpacity>
+                <Image source={Logo} style={styles.logo} />
             </View>
 
             {menuAberto && (
                 <View style={styles.menu}>
 
                     <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
-                    <Text style={styles.MenuText} onPress={() => navigation.navigate('TelaLista') }>Lista de Parceiros</Text>
+                    <Text style={styles.MenuText} onPress={() => navigation.navigate('TelaLista')}>Lista de Parceiros</Text>
                     <Text style={styles.MenuText}>Menu Item 3</Text>
                     <Text style={styles.MenuText}>Menu Item 4</Text>
 
                 </View>
             )}
+            <ScrollView>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
+                    <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 10, marginLeft: 12, }} />
+                    <View>
+                        <Text style={{ width: 175, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Cadastro de parceiro</Text>
+                    </View>
+                    <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 12, marginLeft: 10, }} />
+                </View>
+                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
+                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>Nome:</Text>
+                        <TextInput style={styles.inputNome}
+                            placeholder='Nome'
+                            value={name}
+                            onChangeText={handleNameChange}
+                        >
+                        </TextInput>
+                    </View>
+                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>Sobrenome:</Text>
+                        <TextInput style={styles.inputNome}
+                            placeholder='Sobrenome'
+                            value={lastName}
+                            onChangeText={handleLastNameChange}
+                        >
+                        </TextInput>
+                    </View>
+                </View>
 
-            <View style={{ width: '100%', height: 50, padding: 12 }}>
-                <Text style={{ color: "#FFFFFF", fontSize: 20, }}>Cadastrar novo Parceiro</Text>
-            </View>
-            <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Nome:</Text>
-                    <TextInput style={styles.inputNome}
-                       placeholder='Nome'  
-                       value={name}    
-                       onChangeText={handleNameChange}              
-                    >
-                    </TextInput>
-                </View>
-                <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Sobrenome:</Text>
-                    <TextInput style={styles.inputNome}
-                    placeholder='Sobrenome'  
-                    value={lastName}    
-                    onChangeText={handleLastNameChange} 
-                    >
-                    </TextInput>
-                </View>
-            </View>
 
 
-
-            <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                <View style={{ width: '65%', height: 100, justifyContent: 'center', padding: 12 }}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Email:</Text>
-                    <TextInput style={styles.inputNome}
-                    placeholder='Email'
-                    value={email}
-                    onChangeText={handleEmailChange}
-                    >
-                    </TextInput>
+                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
+                    <View style={{ width: '65%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>Email:</Text>
+                        <TextInput style={styles.inputNome}
+                            placeholder='Email'
+                            value={email}
+                            onChangeText={handleEmailChange}
+                        >
+                        </TextInput>
+                    </View>
+                    <View style={{ width: '35%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>Sexo:</Text>
+                        <DropDownPicker
+                            open={open}
+                            value={sexo}
+                            items={items}
+                            setOpen={setOpen}
+                            setValue={setSexo}
+                            setItems={setItems}
+                            style={styles.dropdown}
+                            dropDownContainerStyle={styles.dropdownContainer}
+                            zIndex={1000}
+                            zIndexInverse={1000}
+                            placeholder="Sexo"
+                        />
+                    </View>
                 </View>
-                <View style={{ width: '35%', height: 100, justifyContent: 'center', padding: 12 }}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Sexo:</Text>
-                    <DropDownPicker
-                    open={open}
-                    value={sexo}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setSexo}
-                    setItems={setItems}
-                    style={styles.dropdown}
-                    dropDownContainerStyle={styles.dropdownContainer}
-                    zIndex={1000} 
-                    zIndexInverse={1000}
-                    placeholder="Sexo"
-                />
+                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
+                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>Numero:</Text>
+                        <TextInput style={styles.inputNome}
+                            placeholder='Número'
+                            value={number}
+                            onChangeText={handleNumberChange}
+                        >
+                        </TextInput>
+                    </View>
+                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>CPF:</Text>
+                        <TextInput style={styles.inputNome}
+                            placeholder='CPF'
+                            value={cpf}
+                            onChangeText={handleCpfChange}
+                        >
+                        </TextInput>
+                    </View>
                 </View>
-            </View>
-            <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Numero:</Text>
-                    <TextInput style={styles.inputNome}
-                    placeholder='Número'
-                    value={number}
-                    onChangeText={handleNumberChange}
-                    >
-                    </TextInput>
+                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
+                    <View style={{ width: '100%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>Endereço:</Text>
+                        <TextInput style={styles.inputNome}
+                            placeholder='Endereço'
+                            value={address}
+                            onChangeText={handleAddressChange}
+                        >
+                        </TextInput>
+                    </View>
                 </View>
-                <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>CPF:</Text>
-                    <TextInput style={styles.inputNome}
-                    placeholder='CPF'
-                    value={cpf}
-                    onChangeText={handleCpfChange}
-                    >
-                    </TextInput>
-                </View>
-            </View>
-            <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                <View style={{ width: '100%', height: 100, justifyContent: 'center', padding: 12 }}>
-                    <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '100' }}>Endereço:</Text>
-                    <TextInput style={styles.inputNome}
-                    placeholder='Endereço'
-                    value={address}
-                    onChangeText={handleAddressChange}
-                    >
-                    </TextInput>
-                </View>
-            </View>
-            <TouchableOpacity onPress={handleRegister} style={{ width: 150, height: 40, backgroundColor: '#BDB46A', borderRadius: 10, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '100' }}>Cadastrar</Text>
+            </ScrollView>
+            <TouchableOpacity onPress={handleRegister} style={styles.cadastrarBTN}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Cadastrar</Text>
             </TouchableOpacity>
+
         </View>
 
 
@@ -194,43 +203,52 @@ const Cadastro = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: '#E32124',
+        backgroundColor: '#50100c',
         width: '100%',
         height: 70,
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
         paddingHorizontal: 20,
-    },
-    logo: {
-        width: 150,
+      },
+      logo: {
+        width: 110,
         height: 25,
         resizeMode: 'contain',
-    },
+    marginLeft:85
+      },
 
-    menuIcon: {
-        width: 25,
-        height: 25,
-    },
-
+      menuIcon: {
+        width: 50,
+        height: 50,
+      },
     menu: {
         position: 'absolute',
         top: 70,
         left: 0,
         width: '100%',
         height: 200,
-        backgroundColor: '#E32124',
+        backgroundColor: '#50100c',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         zIndex: 2024,
+    
+    
+      },
+    
+      MenuText: {
+        color: 'white',
+        fontFamily: 'Poppins_300Light',
+        fontSize:16
+      },
 
+
+    label: {
+        color: '#FFFFFF',
+        fontSize: 14,
+
+        fontFamily: 'Poppins_300Light'
 
     },
-
-    MenuText: {
-        color: 'white'
-    },
-
 
     container: {
         padding: 12,
@@ -250,13 +268,25 @@ const styles = StyleSheet.create({
         height: 35,
         backgroundColor: '#DCDCDC',
         paddingLeft: 10,
-        borderRadius: 9
+        borderRadius: 9,
+        fontFamily: 'Poppins_300Light'
     },
     dropdown: {
         backgroundColor: '#DCDCDC',
         borderRadius: 9,
-        minHeight:40,
+        minHeight: 40,
+
     },
+    cadastrarBTN: {
+        height: 45,
+        width: "40%",
+        backgroundColor: '#FFF',
+        justifyContent: 'center',
+        display: 'flex',
+        borderRadius: 5,
+        marginBottom: 12
+    },
+
 
 
 });

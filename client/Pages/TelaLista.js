@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, ImageBackground,  TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
+import { View, Image, ScrollView, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Logo from '../img/LogoSemFundo.png';
 import Ver from '../img/click.png';
@@ -22,9 +22,6 @@ const TelaLista = ({ navigation }) => {
   const handleCloseMenu = () => {
     setMenuAberto(false);
   };
-
-
-
 
   const editarPartner = (partner) => {
     navigation.navigate('EditarParceiro', { partnerToEdit: partner });
@@ -72,18 +69,18 @@ const TelaLista = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center'}}>
-
+    <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
       <View style={styles.header}>
-        <Image source={Logo} style={styles.logo} />
+       
         <TouchableOpacity onPress={toggleMenu}>
           <Image source={MenuIcon} style={styles.menuIcon} />
         </TouchableOpacity>
+        <Image source={Logo} style={styles.logo} />
       </View>
 
       {menuAberto && (
         <View style={styles.menu}>
-          <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
+          <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar Parceiro</Text>
           <Text style={styles.MenuText} onPress={() => navigation.navigate('TelaLista')}>Lista de Parceiros</Text>
           <Text style={styles.MenuText}>Menu Item 3</Text>
           <Text style={styles.MenuText}>Menu Item 4</Text>
@@ -104,30 +101,29 @@ const TelaLista = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Partner List */}
-      {sortedPartners.map((partner) => (
-        <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
-          <View style={styles.container}>
-            <View style={styles.UserPhoto}>
-            <Image source={User}  />
+      <ScrollView>
+        {sortedPartners.map((partner) => (
+          <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
+            <View style={styles.container}>
+              <View style={styles.UserPhoto}>
+                <Image source={User} />
+              </View>
+              <View style={styles.TextName}>
+                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_300Light' }}>{partner.name} {partner.lastName}</Text>
+                <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_700Bold' }}>Nivel - </Text>
+              </View>
+              <View style={{ width: 30, height: '100%', marginTop: 10 }}>
+                <TouchableOpacity key={partner._id} onPress={() => editarPartner(partner)}>
+                  <Image source={Ver} style={styles.Icons} />
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.TextName}>
-              <Text style={{ fontSize: 16, textTransform:'uppercase',color:'#FFF', letterSpacing:1 }}>{partner.name} {partner.lastName}</Text>
-              <Text style={{ fontSize: 16, color:'#FFF', letterSpacing:1 }}>Nivel - </Text>
-            </View>
-            <View style={{width: 30, height: '100%', marginTop:10 }}>
-            <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
-                <Image source={Ver} style={styles.Icons} />
-              </TouchableOpacity>
-
-            </View>
-          </View>
-        </TouchableOpacity>
-      ))}
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
 };
-
 
 
 
@@ -138,18 +134,18 @@ const styles = StyleSheet.create({
     height: 70,
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
   logo: {
-    width: 150,
+    width: 110,
     height: 25,
     resizeMode: 'contain',
+    marginLeft:85
   },
 
   menuIcon: {
-    width: 25,
-    height: 25,
+    width: 50,
+    height: 50,
   },
 
   menu: {
@@ -167,7 +163,9 @@ const styles = StyleSheet.create({
   },
 
   MenuText: {
-    color: 'white'
+    color: 'white',
+    fontFamily: 'Poppins_300Light',
+    fontSize:16
   },
 
   UserPhoto: {
@@ -183,6 +181,7 @@ const styles = StyleSheet.create({
     height: '100%',
     display:'flex',
     justifyContent:'space-evenly',
+    fontFamily:'Poppins_700Bold'
   
   },
 
