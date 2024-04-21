@@ -6,7 +6,7 @@ import Login from './Pages/Login';
 import TelaLista from './Pages/TelaLista';
 import Cadastro from './Pages/Cadastro';
 import EditarParceiro from './Pages/EditarParceiro';
-import Expertise from './Pages/Expertise';
+import CadastroConta from './Pages/CadastroConta';
 import Informacoes from './Pages/Informacoes';
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +20,7 @@ export default function App() {
         <Stack.Screen name="Cadastro" component={Cadastro} />
         <Stack.Screen name="EditarParceiro" component={EditarParceiro} />
         <Stack.Screen name="Informacoes" component={Informacoes} />
+        <Stack.Screen name="CadastroConta" component={CadastroConta} />
       </Stack.Navigator>
     </NavigationContainer>
   );

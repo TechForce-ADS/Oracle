@@ -13,11 +13,9 @@ import {
 
 
 
-const Login = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorModalVisible, setErrorModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+const CadastroConta = ({ navigation }) => {
+ 
+
 
   const ip = "192.168.15.99"
 
@@ -34,45 +32,9 @@ const Login = ({ navigation }) => {
 
   if (!fonteLoaded) {
     return null;
-  }
+  } 
 
-  const handleEmailChange = (text) => {
-    setEmail(text);
-  };
-
-  const handlePasswordChange = (text) => {
-    setPassword(text);
-  };
-
-  const toggleErrorModal = () => {
-    setErrorModalVisible(!errorModalVisible);
-  };
-
-  const handleLogin = async () => {
-
-    try {
-      const response = await fetch(`http://${ip}:3001/api/users/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        navigation.navigate('TelaLista');
-      } else {
-        setErrorMessage('Usuário ou senha incorretos');
-        toggleErrorModal();
-      }
-    } catch (error) {
-      console.error('Error logging in:', error);
-      setErrorMessage('Erro interno do servidor');
-      toggleErrorModal();
-    }
-  };
+  
 
   return (
     <ScrollView>
@@ -84,17 +46,25 @@ const Login = ({ navigation }) => {
       </View>
       <View style={styles.ContainerLogin}>
         <View style={styles.Textos}>
-          <Text style={{ fontSize: 30, color: '#fff', fontFamily:'Poppins_700Bold' }}>Entrar</Text>
-          <Text style={{ fontSize: 12, color: '#fff', fontWeight: '800' }}>Faça o login para continuar</Text>
+          <Text style={{ fontSize: 26, color: '#fff', fontFamily:'Poppins_700Bold', textAlign:'center' }}>Crie sua nova conta</Text>
+          <Text style={{ fontSize: 12, color: '#fff', fontFamily:'Poppins_300Light', }}>Já possui uma conta? <Text onPress={() => navigation.navigate('Login')}>Clique aqui</Text></Text>
         </View>
+        <View style={styles.Labels}>
+          <Text style={{ fontSize: 12, color: '#fff',  fontFamily:'Poppins_300Light', letterSpacing: 2 }}>NOME</Text>
+        </View>
+        <TextInput
+          style={styles.input}
+          placeholder='Nome'
+          placeholderTextColor={'#fff'}
+        />
+
+
         <View style={styles.Labels}>
           <Text style={{ fontSize: 12, color: '#fff',  fontFamily:'Poppins_300Light', letterSpacing: 2 }}>EMAIL</Text>
         </View>
         <TextInput
           style={styles.input}
           placeholder='Email'
-          value={email}
-          onChangeText={handleEmailChange}
           placeholderTextColor={'#fff'}
         />
 
@@ -106,43 +76,26 @@ const Login = ({ navigation }) => {
           secureTextEntry={true}
           style={styles.input}
           placeholder='Senha'
-          value={password}
-          onChangeText={handlePasswordChange}
+          
+         
           placeholderTextColor={'#fff'}
 
         />
 
-        <TouchableOpacity style={styles.LogarBTN} onPress={handleLogin}>
-          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Entrar</Text>
+        <TouchableOpacity style={styles.LogarBTN} >
+          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Criar</Text>
         </TouchableOpacity>
 
-        <Text
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-          style={{ color: '#8F8C8C', fontSize: 10, fontWeight: '200', marginTop: 5 }}>
-          Esqueceu sua senha?
-        </Text>
-        <Text
-          style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
-          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastroConta')}> Criar uma conta</Text>
-        </Text>
+        
       </View>
-
-
-      <Modal isVisible={errorModalVisible} onBackdropPress={toggleErrorModal} style={styles.errorModal}>
-        <View style={styles.errorModalContent}>
-          <Text style={styles.errorModalMessage}>{errorMessage}</Text>
-          <TouchableOpacity style={styles.errorModalCloseButton} onPress={toggleErrorModal}>
-            <Text style={styles.errorModalCloseButtonText}>Fechar</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+      
     </View>
     </ScrollView>
   );
 };
 
-Login.navigationOptions = {
-  title: 'Login',
+CadastroConta.navigationOptions = {
+  title: 'CadastroConta',
 }
 
 
@@ -181,14 +134,14 @@ const styles = StyleSheet.create({
   input: {
     width: 250,
     height: 50,
-    backgroundColor: '#937170',
+    backgroundColor: 'rgba(147, 113, 112, 0.3)', 
     color: '#fff',
     paddingLeft: 15,
     borderRadius: 18,
     marginBottom: 10,
-    fontFamily:'Poppins_300Light'
-
+    fontFamily: 'Poppins_300Light'
   },
+  
 
 
   LogarBTN: {
@@ -242,4 +195,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Login;
+export default CadastroConta;
