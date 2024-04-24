@@ -15,3 +15,8 @@
 - 5° Tela - Tela de informações do parceiro 
 - 6° Tela - Tela de cadastro de novos parceiros
 ![prototipo-3-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/947da92d-4e81-4223-b184-292f1decc0c3)
+
+
+# 1° Sprint
+- Vídeo da Primeira Sprint
+    https://youtu.be/J11hILLQCvU
