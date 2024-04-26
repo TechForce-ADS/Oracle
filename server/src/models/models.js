@@ -33,10 +33,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isAdmin: {
-    type: Boolean,
-    default: false
-  }
 });
 
 const User = mongoose.model('User', userSchema);
@@ -74,6 +70,71 @@ const partnerSchema = new mongoose.Schema({
   }
 });
 
+const consultantSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true
+  },
+});
+
+const adminSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  isAdminMain: {
+    type: Boolean,
+    default: false
+  },
+  adminConsultant: {
+    type: Boolean,
+    default: false
+  },
+});
+
+const courseSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String
+  },
+  time: {
+    type: String
+  },
+  image: {
+    type: String
+  }
+});
+
+const courseRegistrationSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  course: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Course'
+  },
+  courseCompleted: {
+    type: Boolean,
+    required: true
+  },
+});
+
+const Course = mongoose.model('Course', courseSchema);
+
+const Admin = mongoose.model('Admin', adminSchema);
+
 const Partner = mongoose.model('Partner', partnerSchema);
 
-module.exports = { User, userSchema, Partner, partnerSchema };
+module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema};
