@@ -60,13 +60,20 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  cpf: {
+  cnpj: {
     type: String,
     required: true,
   },
   address: {
     type: String,
     required: true,
+  },
+  nivel: {
+    type: String,
+    required: true,
+  },
+  observation: {
+    type: String,
   }
 });
 
