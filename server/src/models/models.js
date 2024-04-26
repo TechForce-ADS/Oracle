@@ -131,10 +131,12 @@ const courseRegistrationSchema = new mongoose.Schema({
   },
 });
 
+const CourseRegistration = mongoose.model('CourseRegistration', courseRegistrationSchema);
+
 const Course = mongoose.model('Course', courseSchema);
 
 const Admin = mongoose.model('Admin', adminSchema);
 
 const Partner = mongoose.model('Partner', partnerSchema);
 
-module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema};
+module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema, CourseRegistration, courseRegistrationSchema };
