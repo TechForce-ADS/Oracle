@@ -23,6 +23,9 @@ connect()
     const partnerController = require('./src/controllers/PartnerController');
     app.use('/api/partners', partnerController);
 
+    const coursesController = require('./src/controllers/CoursesController');
+    app.use('api/courses', coursesController);
+
    
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);

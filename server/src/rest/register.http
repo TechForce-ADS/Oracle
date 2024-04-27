@@ -1,13 +1,9 @@
-POST http://localhost:3001/api/users/register HTTP/1.1
+POST http://localhost:3001/api/courses/register HTTP/1.1
 content-type: application/json
 
 {
-    "email":"micael@gmail.com",
-    "name":"alberto",
-    "lastName":"1",
-    "number":"28",
-    "sexo":"Masc",
-    "cpf":"123456789",
-    "address":"endereço",
-    "password":"123"
+    "name": "administração",
+    "description": "administração e etc",
+    "time": "10h",
+    "image": "image.url"
 }
