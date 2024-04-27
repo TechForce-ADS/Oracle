@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 
-import Logo from '../img/LogoSemFundo.png';
-import MenuIcon from '../img/menu.png';
 import User from '../img/User.png';
+import Navbar from '../Components/Navbar';
 
 
 export default function Informacoes({ navigation, route }) {
@@ -66,22 +65,7 @@ export default function Informacoes({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={toggleMenu}>
-          <Image source={MenuIcon} style={styles.menuIcon} />
-        </TouchableOpacity>
-        <Image source={Logo} style={styles.logo} />
-      </View>
-
-      {menuAberto && (
-        <View style={styles.menu}>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Lista de Parceiros</Text>
-          <Text style={styles.menuText}>Menu Item 3</Text>
-          <Text style={styles.menuText}>Menu Item 4</Text>
-        </View>
-      )}
-
+      <Navbar />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.User}>
           <Image source={User} />
@@ -128,25 +112,7 @@ export default function Informacoes({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#50100c',
-    width: '100%',
-    height: 70,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-  },
-  logo: {
-    width: 110,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft: 85
-  },
-
-  menuIcon: {
-    width: 50,
-    height: 50,
-  },
+ 
 
   User: {
     width: '90%',
@@ -161,27 +127,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-  menu: {
-    position: 'absolute',
-    top: 70,
-    left: 0,
-    width: '100%',
-    height: 200,
-    backgroundColor: '#50100c',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    zIndex: 2024,
-
-
-  },
-
-  menuText: {
-    color: 'white',
-    fontFamily: 'Poppins_300Light',
-    fontSize: 16
-  },
-
 
 
   container: {

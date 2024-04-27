@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import Logo from '../img/LogoSemFundo.png';
 import Ver from '../img/click.png';
-import MenuIcon from '../img/menu.png';
 import Search from '../img/search.png';
 import User from '../img/User.png';
+import Navbar from '../Components/Navbar';
+
 
 const ip = "192.168.15.99";
 
@@ -69,23 +69,10 @@ const TelaLista = ({ navigation }) => {
   };
 
   return (
+    
     <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
-      <View style={styles.header}>
-       
-        <TouchableOpacity onPress={toggleMenu}>
-          <Image source={MenuIcon} style={styles.menuIcon} />
-        </TouchableOpacity>
-        <Image source={Logo} style={styles.logo} />
-      </View>
+      <Navbar />  
 
-      {menuAberto && (
-        <View style={styles.menu}>
-          <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar Parceiro</Text>
-          <Text style={styles.MenuText} onPress={() => navigation.navigate('TelaLista')}>Lista de Parceiros</Text>
-          <Text style={styles.MenuText}>Menu Item 3</Text>
-          <Text style={styles.MenuText}>Menu Item 4</Text>
-        </View>
-      )}
 
       {/* Search Bar */}
       <View style={{ width: 350, height: 70, paddingTop: 20, justifyContent: 'space-between', display: 'flex', flexDirection: 'row' }}>
@@ -128,45 +115,7 @@ const TelaLista = ({ navigation }) => {
 
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#50100c',
-    width: '100%',
-    height: 70,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-  },
-  logo: {
-    width: 110,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft:85
-  },
 
-  menuIcon: {
-    width: 50,
-    height: 50,
-  },
-
-  menu: {
-    position: 'absolute',
-    top: 70,
-    left: 0,
-    width: '100%',
-    height: 200,
-    backgroundColor: '#50100c',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    zIndex: 2024,
-
-
-  },
-
-  MenuText: {
-    color: 'white',
-    fontFamily: 'Poppins_300Light',
-    fontSize:16
-  },
 
   UserPhoto: {
     width: 105,

@@ -3,6 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert, Scro
 import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Navbar from '../Components/Navbar';
 
 
 
@@ -82,24 +83,7 @@ const EditarParceiro = ({ navigation, route }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#1C2120', alignItems: 'center' }}>
-            <View style={styles.header}>
-                
-                <TouchableOpacity onPress={toggleMenu}>
-                    <Image source={MenuIcon} style={styles.menuIcon} />
-                </TouchableOpacity>
-                <Image source={Logo} style={styles.logo} />
-            </View>
-
-            {menuAberto && (
-                <View style={styles.menu}>
-
-                    <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
-                    <Text style={styles.MenuText} onPress={() => navigation.navigate('TelaLista')}>Lista de Parceiros</Text>
-                    <Text style={styles.MenuText}>Menu Item 3</Text>
-                    <Text style={styles.MenuText}>Menu Item 4</Text>
-
-                </View>
-            )}
+             <Navbar />
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
                     <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 10, marginLeft: 16, }} />
@@ -204,46 +188,7 @@ const EditarParceiro = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#50100c',
-        width: '100%',
-        height: 70,
-        alignItems: 'center',
-        flexDirection: 'row',
-        paddingHorizontal: 20,
-      },
-      logo: {
-        width: 110,
-        height: 25,
-        resizeMode: 'contain',
-        marginLeft:85
-      },
-
-      menuIcon: {
-        width: 50,
-        height: 50,
-      },
-
-    menu: {
-        position: 'absolute',
-        top: 70,
-        left: 0,
-        width: '100%',
-        height: 200,
-        backgroundColor: '#50100c',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        zIndex: 2024,
-    
-    
-      },
-    
-      MenuText: {
-        color: 'white',
-        fontFamily: 'Poppins_300Light',
-        fontSize:16
-      },
-
+   
     label: {
         color: '#FFFFFF',
         fontSize: 14,

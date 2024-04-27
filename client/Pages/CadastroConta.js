@@ -109,10 +109,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
 
-
-
   },
-
 
   Textos: {
     height: 85,
@@ -127,9 +124,6 @@ const styles = StyleSheet.create({
     width: "83%",
     display: 'flex',
   },
-
-
-
 
   input: {
     width: 250,
