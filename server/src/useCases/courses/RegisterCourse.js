@@ -1,7 +1,7 @@
 const {registerCourses} = require('../../data/repositories/CoursesRepository');
 
 class RegisterCourseUC{
-    constructor(name, description, time,image) {
+    constructor(name, description, time, image) {
         this.name = name;
         this.description = description;
         this.time = time;

@@ -23,8 +23,6 @@ export default function Cursos() {
 
         <TouchableOpacity style={expanded ? styles.expandedCurso : styles.Curso}
           onPress={toggleExpand}>
-
-
           <View style={styles.Titulo}>
             <Text style={{ color: '#fff', fontSize: 18, fontFamily: 'Poppins_300Light' }}>Introduction to MongoDB</Text>
           </View>
@@ -41,6 +39,26 @@ export default function Cursos() {
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
+
+        <TouchableOpacity style={expanded ? styles.expandedCurso : styles.Curso}
+          onPress={toggleExpand}>
+          <View style={styles.Titulo}>
+            <Text style={{ color: '#fff', fontSize: 18, fontFamily: 'Poppins_300Light' }}>Introduction to MongoDB 2 </Text>
+          </View>
+
+          <View style={styles.Descricao}>
+            <Text style={{ color: '#fff', fontSize: 14, fontFamily: 'Poppins_300Light' }}>The Introduction to MongoDB course guides you through the foundational skills and knowledge you need to get started with MongoDB. This includes connecting to a MongoDB database, how to conduct simple CRUD operations, and key topics such as aggregation, indexing, data modeling, and transactions.</Text>
+          </View>
+          <View style={styles.Botoes}>
+            <TouchableOpacity style={styles.VerMaisBTN}>
+              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Ver mais</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.EngressarBTN}>
+              <Text style={{ color: '#FFF', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Iniciar</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
 
 
       </ScrollView>

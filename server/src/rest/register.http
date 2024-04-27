@@ -4,6 +4,6 @@ content-type: application/json
 {
     "name": "administração",
     "description": "administração e etc",
-    "time": "10h",
-    "image": "image.url"
-}
+    "time": "10:00",
+    "image": "imal"
+} 

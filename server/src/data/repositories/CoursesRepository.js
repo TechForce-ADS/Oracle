@@ -1,4 +1,4 @@
-const {Course} = require('../../models/models');
+const { Course } = require('../../models/models');
 
 async function registerCourses(courseData) {
     try {
