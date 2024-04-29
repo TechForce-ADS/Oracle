@@ -3,8 +3,7 @@ import { View, Image, TouchableOpacity, ScrollView, StyleSheet, Text } from 'rea
 import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
 import User from '../img/User.png';
-
-
+import {ip} from "@env";
 
 export default function PerfilCompleto({ navigation, route }) {
   const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});

@@ -6,8 +6,8 @@ import Ver from '../img/click.png';
 import MenuIcon from '../img/menu.png';
 import Search from '../img/search.png';
 import User from '../img/User.png';
+import {ip} from "@env";
 
-const ip = "192.168.15.99";
 
 const TelaLista = ({ navigation }) => {
   const [menuAberto, setMenuAberto] = useState(false);

@@ -4,6 +4,7 @@ import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
 import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {ip} from "@env";
 
 const Cadastro = ({ navigation }) => {
     const [menuAberto, setMenuAberto] = useState(false);
@@ -51,7 +52,6 @@ const Cadastro = ({ navigation }) => {
 
 
     const handleRegister = async () => {
-        const ip = "192.168.15.99"
         try {
             const response = await fetch(`http://${ip}:3001/api/partners/register`, {
                 method: 'POST',

@@ -9,6 +9,7 @@ import {
   Poppins_500Medium,
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
+import {ip} from "@env";
 
 
 
@@ -18,8 +19,6 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
-  const ip = "192.168.15.99"
 
 
   const [fonteLoaded] = useFonts({

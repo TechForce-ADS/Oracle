@@ -9,6 +9,7 @@ import {
   Poppins_500Medium,
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
+import {ip} from "@env";
 
 
 
@@ -17,7 +18,6 @@ const CadastroConta = ({ navigation }) => {
  
 
 
-  const ip = "192.168.15.99"
 
 
   const [fonteLoaded] = useFonts({

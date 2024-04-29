@@ -5,11 +5,10 @@ import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Pop
 import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
 import User from '../img/User.png';
-
+import {ip} from "@env";
 
 export default function Informacoes({ navigation, route }) {
 
-  const ip = "192.168.15.99";
 
   const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
   const [menuAberto, setMenuAberto] = useState(false);
