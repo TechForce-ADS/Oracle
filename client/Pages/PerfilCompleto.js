@@ -4,6 +4,8 @@ import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
 import User from '../img/User.png';
 import {ip} from "@env";
+import Navbar from '../Components/Navbar';
+
 
 export default function PerfilCompleto({ navigation, route }) {
   const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
@@ -15,22 +17,7 @@ export default function PerfilCompleto({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-       
-        <TouchableOpacity onPress={toggleMenu}>
-          <Image source={MenuIcon} style={styles.menuIcon} />
-        </TouchableOpacity>
-        <Image source={Logo} style={styles.logo} />
-      </View>
-
-      {menuAberto && (
-        <View style={styles.menu}>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Lista de Parceiros</Text>
-          <Text style={styles.menuText}>Menu Item 3</Text>
-          <Text style={styles.menuText}>Menu Item 4</Text>
-        </View>
-      )}
+      <Navbar />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.User}>

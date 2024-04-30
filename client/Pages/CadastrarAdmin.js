@@ -11,7 +11,7 @@ import Navbar from '../Components/Navbar';
 
 
 
-const TelaLista = ({ navigation }) => {
+const CadastrarAdmin = ({ navigation }) => {
   const [menuAberto, setMenuAberto] = useState(false);
   const [partners, setPartners] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -236,4 +236,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default TelaLista;
+export default CadastrarAdmin;

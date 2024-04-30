@@ -9,6 +9,8 @@ import EditarParceiro from './Pages/EditarParceiro';
 import CadastroConta from './Pages/CadastroConta';
 import Informacoes from './Pages/Informacoes';
 import PerfilCompleto from './Pages/PerfilCompleto';
+import Cursos from './Pages/Cursos';
+import CadastrarAdmin from './Pages/CadastrarAdmin';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +24,9 @@ export default function App() {
         <Stack.Screen name="EditarParceiro" component={EditarParceiro} />
         <Stack.Screen name="Informacoes" component={Informacoes} />
         <Stack.Screen name="CadastroConta" component={CadastroConta} />
+        <Stack.Screen name="Cursos" component={Cursos} />
         <Stack.Screen name="PerfilCompleto" component={PerfilCompleto} />
+        <Stack.Screen name="CadastrarAdmin" component={CadastrarAdmin} />
       </Stack.Navigator>
     </NavigationContainer>
   );

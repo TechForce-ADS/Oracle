@@ -4,7 +4,10 @@ import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
 import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {ip} from "@env";
+import { ip } from "@env";
+import Navbar from '../Components/Navbar';
+
+
 
 const Cadastro = ({ navigation }) => {
     const [menuAberto, setMenuAberto] = useState(false);
@@ -79,24 +82,7 @@ const Cadastro = ({ navigation }) => {
 
         <View style={{ flex: 1, backgroundColor: '#1C2120', alignItems: 'center' }}>
 
-            <View style={styles.header}>
-            
-                <TouchableOpacity onPress={toggleMenu}>
-                    <Image source={MenuIcon} style={styles.menuIcon} />
-                </TouchableOpacity>
-                <Image source={Logo} style={styles.logo} />
-            </View>
-
-            {menuAberto && (
-                <View style={styles.menu}>
-
-                    <Text style={styles.MenuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
-                    <Text style={styles.MenuText} onPress={() => navigation.navigate('TelaLista')}>Lista de Parceiros</Text>
-                    <Text style={styles.MenuText}>Menu Item 3</Text>
-                    <Text style={styles.MenuText}>Menu Item 4</Text>
-
-                </View>
-            )}
+            <Navbar />
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
                     <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 10, marginLeft: 12, }} />
@@ -209,18 +195,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         paddingHorizontal: 20,
-      },
-      logo: {
+    },
+    logo: {
         width: 110,
         height: 25,
         resizeMode: 'contain',
-    marginLeft:85
-      },
+        marginLeft: 85
+    },
 
-      menuIcon: {
+    menuIcon: {
         width: 50,
         height: 50,
-      },
+    },
     menu: {
         position: 'absolute',
         top: 70,
@@ -231,15 +217,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
         zIndex: 2024,
-    
-    
-      },
-    
-      MenuText: {
+
+
+    },
+
+    MenuText: {
         color: 'white',
         fontFamily: 'Poppins_300Light',
-        fontSize:16
-      },
+        fontSize: 16
+    },
 
 
     label: {

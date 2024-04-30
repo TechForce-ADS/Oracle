@@ -18,22 +18,7 @@ async function registerUser(userData) {
   }
 }
 
-async function registerAdmin(adminData) {
-  try {
-    const existingAdmin = await User.findOne({ email: adminData.email });
-    if (existingAdmin) {
-      return false
-    }
-    const newUser = new User(adminData);
-    
-    await newUser.save();
 
-    return newUser;
-  } catch (error) {
-    console.error('Error registering admin:', error);
-    throw new Error('Failed to register admin');
-  }
-}
 
 async function loginUser(userData) {
   try {
@@ -55,6 +40,5 @@ async function loginUser(userData) {
 
 module.exports = {
     registerUser,
-    loginUser,
-    registerAdmin
+    loginUser
 };

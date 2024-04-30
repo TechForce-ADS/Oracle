@@ -10,9 +10,8 @@ import {
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
 import {ip} from "@env";
-
-
-
+import Navbar from '../Components/Navbar';
+import CookieManager from '@react-native-cookies/cookies';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -57,10 +56,10 @@ const Login = ({ navigation }) => {
         },
         body: JSON.stringify({ email, password }),
       });
-
-      const data = await response.json();
+     
 
       if (response.ok) {
+        
         navigation.navigate('TelaLista');
       } else {
         setErrorMessage('Usuário ou senha incorretos');

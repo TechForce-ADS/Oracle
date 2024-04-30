@@ -101,10 +101,6 @@ const adminSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  adminConsultant: {
-    type: Boolean,
-    default: false
-  },
 });
 
 const courseSchema = new mongoose.Schema({
