@@ -102,15 +102,11 @@ CadastroConta.navigationOptions = {
 const styles = StyleSheet.create({
 
   ContainerLogin: {
-
     width: "80%",
     height: 600,
     marginTop: 70,
     display: 'flex',
     alignItems: 'center',
-
-
-
   },
 
 
@@ -127,9 +123,6 @@ const styles = StyleSheet.create({
     width: "83%",
     display: 'flex',
   },
-
-
-
 
   input: {
     width: 250,

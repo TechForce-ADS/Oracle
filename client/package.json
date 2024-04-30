@@ -11,14 +11,15 @@
   "dependencies": {
     "@expo-google-fonts/dm-sans": "^0.2.3",
     "@expo-google-fonts/poppins": "^0.2.3",
+    "@react-native-community/cookies": "^5.0.1",
     "@react-native-cookies/cookies": "^6.2.1",
-    "@react-native-picker/picker": "^2.7.2",
+    "@react-native-picker/picker": "2.6.1",
     "@react-navigation/drawer": "^6.6.15",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
-    "expo": "~50.0.14",
+    "expo": "^50.0.17",
     "expo-app-loading": "^2.1.1",
     "expo-barcode-scanner": "^12.9.3",
     "expo-font": "~11.10.3",
@@ -27,9 +28,8 @@
     "react-dom": "^18.2.0",
     "react-native": "0.73.6",
     "react-native-cookies": "^3.3.0",
-    "react-native-dotenv": "^3.4.11",
     "react-native-dropdown-picker": "^5.4.6",
-    "react-native-gesture-handler": "^2.16.0",
+    "react-native-gesture-handler": "2.14.0",
     "react-native-masked-text": "^1.13.0",
     "react-native-modal": "^13.0.1",
     "react-native-select-dropdown": "^4.0.0",
@@ -38,7 +38,8 @@
     "sweetalert": "^2.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "react-native-dotenv": "^3.4.11"
   },
   "private": true
 }

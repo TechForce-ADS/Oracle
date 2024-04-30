@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 20,
+    zIndex: 2,
   },
   logo: {
     width: 110,

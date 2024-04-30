@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
-import Logo from '../img/LogoSemFundo.png';
-import MenuIcon from '../img/menu.png';
-import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { ip } from "@env";
 import Navbar from '../Components/Navbar';
@@ -176,64 +173,17 @@ const Cadastro = ({ navigation }) => {
             <TouchableOpacity onPress={handleRegister} style={styles.cadastrarBTN}>
                 <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Cadastrar</Text>
             </TouchableOpacity>
-
         </View>
-
-
-
-
 
 
     );
 };
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#50100c',
-        width: '100%',
-        height: 70,
-        alignItems: 'center',
-        flexDirection: 'row',
-        paddingHorizontal: 20,
-    },
-    logo: {
-        width: 110,
-        height: 25,
-        resizeMode: 'contain',
-        marginLeft: 85
-    },
-
-    menuIcon: {
-        width: 50,
-        height: 50,
-    },
-    menu: {
-        position: 'absolute',
-        top: 70,
-        left: 0,
-        width: '100%',
-        height: 200,
-        backgroundColor: '#50100c',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        zIndex: 2024,
-
-
-    },
-
-    MenuText: {
-        color: 'white',
-        fontFamily: 'Poppins_300Light',
-        fontSize: 16
-    },
-
-
     label: {
         color: '#FFFFFF',
         fontSize: 14,
-
         fontFamily: 'Poppins_300Light'
-
     },
 
     container: {

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, ScrollView, StyleSheet, Text } from 'react-native';
-import Logo from '../img/LogoSemFundo.png';
-import MenuIcon from '../img/menu.png';
 import User from '../img/User.png';
 import {ip} from "@env";
 import Navbar from '../Components/Navbar';
@@ -40,26 +38,7 @@ export default function PerfilCompleto({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#50100c',
-    width: '100%',
-    height: 70,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-  },
-  logo: {
-    width: 110,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft: 85
-  },
-
-  menuIcon: {
-    width: 50,
-    height: 50,
-  },
-
+ 
   User: {
     width: '90%',
     height: 150,
@@ -86,12 +65,6 @@ const styles = StyleSheet.create({
     zIndex: 2024,
 
 
-  },
-
-  menuText: {
-    color: 'white',
-    fontFamily: 'Poppins_300Light',
-    fontSize: 16
   },
 
 

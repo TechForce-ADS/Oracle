@@ -11,7 +11,7 @@ import {
 } from '@expo-google-fonts/poppins'
 import {ip} from "@env";
 import Navbar from '../Components/Navbar';
-import CookieManager from '@react-native-cookies/cookies';
+//import CookieManager from '@react-native-cookies/cookies';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
   const handleLogin = async () => {
 
     try {
-      const response = await fetch(`http://${ip}:3001/api/users/login`, {
+      const response = await fetch(`http://192.168.15.99:3001/api/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

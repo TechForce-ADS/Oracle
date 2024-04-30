@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../Components/Navbar';
-
-
-import Logo from '../img/LogoSemFundo.png';
-import MenuIcon from '../img/menu.png';
 import User from '../img/User.png';
 import { ip } from "@env";
 
@@ -115,26 +111,7 @@ export default function Informacoes({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#50100c',
-    width: '100%',
-    height: 70,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-  },
-  logo: {
-    width: 110,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft: 85
-  },
-
-  menuIcon: {
-    width: 50,
-    height: 50,
-  },
-
+  
   User: {
     width: '90%',
     height: 150,
@@ -162,14 +139,6 @@ const styles = StyleSheet.create({
 
 
   },
-
-  menuText: {
-    color: 'white',
-    fontFamily: 'Poppins_300Light',
-    fontSize: 16
-  },
-
-
 
   container: {
     flex: 1,

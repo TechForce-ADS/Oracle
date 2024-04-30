@@ -115,46 +115,7 @@ const TelaLista = ({ navigation }) => {
 
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#50100c',
-    width: '100%',
-    height: 70,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-  },
-  logo: {
-    width: 110,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft:85
-  },
-
-  menuIcon: {
-    width: 50,
-    height: 50,
-  },
-
-  menu: {
-    position: 'absolute',
-    top: 70,
-    left: 0,
-    width: '100%',
-    height: 200,
-    backgroundColor: '#50100c',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    zIndex: 2024,
-
-
-  },
-
-  MenuText: {
-    color: 'white',
-    fontFamily: 'Poppins_300Light',
-    fontSize:16
-  },
-
+  
   UserPhoto: {
     width: 105,
     height: 100,
@@ -183,7 +144,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     marginTop: 20,
-    filter: 'blur(8px)',
   },
 
 
