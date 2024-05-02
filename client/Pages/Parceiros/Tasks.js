@@ -27,15 +27,15 @@ const Tasks = ({ }) => {
             <Checkbox  onChange={handleCheckboxChange} />
           </View>
           <View style={styles.tarefa} >
-            <Text style={styles.tituloTask}>Titulo da Task 1</Text>
+            <Text style={styles.tituloTask}>Titulo da Task 2</Text>
             <Checkbox  onChange={handleCheckboxChange} />
           </View>
           <View style={styles.tarefa} >
-            <Text style={styles.tituloTask}>Titulo da Task 1</Text>
+            <Text style={styles.tituloTask}>Titulo da Task 3</Text>
             <Checkbox  onChange={handleCheckboxChange} />
           </View>
           <View style={styles.tarefa} >
-            <Text style={styles.tituloTask}>Titulo da Task 1</Text>
+            <Text style={styles.tituloTask}>Titulo da Task 4</Text>
             <Checkbox  onChange={handleCheckboxChange} />
           </View>
         </View>

@@ -135,6 +135,37 @@ const courseSchema = new mongoose.Schema({
   }
 });
 
+
+const expertiseSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true
+  }
+  
+});
+
+
+
+const tasksSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true
+  },
+  date:{
+    type:Date,
+  },
+  conclusion:{
+    type: Boolean,
+    required: true,
+    default: false,
+  }  ,
+  expertise: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Expertise'
+  },
+
+});
+
 const courseRegistrationSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -154,8 +185,10 @@ const CourseRegistration = mongoose.model('CourseRegistration', courseRegistrati
 
 const Course = mongoose.model('Course', courseSchema);
 
+const Expertise = mongoose.model('Expertise', expertiseSchema);
+
 const Admin = mongoose.model('Admin', adminSchema);
 
 const Partner = mongoose.model('Partner', partnerSchema);
 
-module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema, CourseRegistration, courseRegistrationSchema };
+module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema, CourseRegistration, courseRegistrationSchema, Expertise, expertiseSchema };
