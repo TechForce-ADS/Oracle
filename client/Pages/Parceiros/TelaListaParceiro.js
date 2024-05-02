@@ -12,7 +12,6 @@ import Navbar from '../Components/Navbar';
 
 
 const TelaLista = ({ navigation }) => {
-  const [menuAberto, setMenuAberto] = useState(false);
   const [partners, setPartners] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
@@ -23,10 +22,6 @@ const TelaLista = ({ navigation }) => {
 
   const handleCloseMenu = () => {
     setMenuAberto(false);
-  };
-
-  const editarPartner = (partner) => {
-    navigation.navigate('EditarParceiro', { partnerToEdit: partner });
   };
 
   const vizualizar = (partner) => {

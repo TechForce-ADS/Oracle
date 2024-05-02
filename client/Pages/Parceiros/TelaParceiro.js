@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
-import Navbar from '../Components/Navbar';
-import User from '../img/User.png';
+import Navbar from '../../Components/NavbarParceiro';
+import User from '../../img/User.png';
 import { ip } from "@env";
+import * as Progress from 'react-native-progress';
 
-export default function Informacoes({ navigation, route }) {
-
+export default function TelaParceiro({ navigation, route }) {
 
   const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
-  const [menuAberto, setMenuAberto] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [fonteLoaded] = useFonts({
     Poppins_100Thin,
@@ -19,13 +18,9 @@ export default function Informacoes({ navigation, route }) {
     Poppins_500Medium
   });
 
-  if (!fonteLoaded) {
-    return null;
-  }
-
-  const toggleMenu = () => {
-    setMenuAberto(!menuAberto);
-  };
+  useEffect(() => {
+    setPartnerData(route.params?.partnerToSee || {});
+  }, [route.params?.partnerToSee]);
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -52,13 +47,94 @@ export default function Informacoes({ navigation, route }) {
       await fetch(`http://${ip}:3001/api/partners/delete/${_id}`, {
         method: 'DELETE',
       });
-      // Após a exclusão, limpe os dados do parceiro
+      
       setPartnerData({});
-      navigation.navigate('TelaLista');
+      navigation.navigate('LoginParceiro');
     } catch (error) {
       console.error('Erro ao excluir parceiro:', error);
       Alert.alert("Erro", "Algo deu errado ao tentar excluir o parceiro.");
     }
+  };
+
+  const adquirirExpertise = (expertiseKey) => {
+    Alert.alert(
+      'Adquirir Expertise',
+      `Deseja adquirir a expertise ${expertiseKey}?`,
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel'
+        },
+        {
+          text: 'Adquirir',
+          onPress: () => adquirirExpertiseConfirmado(expertiseKey),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const adquirirExpertiseConfirmado = async (expertiseKey) => {
+    try {
+      await updateExpertise(partnerData._id, expertiseKey, true);
+      // Atualiza o estado local do parceiro
+      setPartnerData(prevData => ({
+        ...prevData,
+        [expertiseKey]: true
+      }));
+      Alert.alert(
+        'Sucesso',
+        `A expertise ${expertiseKey} foi adquirida com sucesso!`
+      );
+    } catch (error) {
+      console.error('Erro ao adquirir expertise:', error);
+      Alert.alert(
+        'Erro',
+        'Houve um erro ao tentar adquirir a expertise. Por favor, tente novamente.'
+      );
+    }
+  };
+
+  const updateExpertise = async (partnerId, expertiseKey, value) => {
+    try {
+      const response = await fetch(`http://${ip}:3001/api/partners/updateExpertise/${partnerId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          expertise: expertiseKey,
+          value: value
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar expertise');
+      }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  const renderExpertise = (key, label, progress) => {
+    const isAcquired = partnerData[key];
+    return (
+      <TouchableOpacity style={styles.tarefa} onPress={() => navigation.navigate('Tasks')}>
+        <View style={styles.TitleExpertise}><Text style={{ fontFamily: 'Poppins_300Light', color: '#fff' }}>{label}</Text></View>
+        <View style={styles.ProgressBar}>
+          {isAcquired ? (
+            <>
+              <Text style={{ color: 'white', marginLeft: 12, fontFamily: 'Poppins_300Light' }}>{progress} %</Text>
+              <Progress.Bar progress={progress / 100} width={200} color='#FF4700' backgroundColor='#FFF' />
+            </>
+          ) : (
+            <TouchableOpacity onPress={() => adquirirExpertise(key)}>
+              <Text style={{ color: 'white', marginLeft: 12, fontFamily: 'Poppins_300Light' }}>Adquirir</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -83,7 +159,7 @@ export default function Informacoes({ navigation, route }) {
             <Text style={styles.heading}>Nome Responsavel: <Text style={styles.Info}>{partnerData.nameResponsavel} </Text></Text>
             <Text style={styles.heading}>Email: <Text style={styles.Info}> {partnerData.email}</Text></Text>
             <Text style={styles.heading}>CNPJ: : <Text style={styles.Info}>{partnerData.cnpj}</Text></Text>
-            
+
             <View style={styles.botoes}>
               <TouchableOpacity style={styles.EditarBTN} onPress={() => editarPartner(partnerData)}>
                 <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Editar</Text>
@@ -102,16 +178,18 @@ export default function Informacoes({ navigation, route }) {
           </View>
           <View style={{ width: 150, height: 2, backgroundColor: 'white', marginRight: 12, marginLeft: 12, }} />
         </View>
-        <View style={styles.tarefa}></View>
-        <View style={styles.tarefa}></View>
-        <View style={styles.tarefa}></View>
+        {renderExpertise('Expertise1', 'Cloud Build', 0)}
+        {renderExpertise('Expertise2', 'Cloud Sell', 0)}
+        {renderExpertise('Expertise3', 'Service Expertise', 0)}
+        {renderExpertise('Expertise4', 'Industry Healthcare Expertise', 0)}
       </ScrollView>
     </View>
   );
 }
 
+
 const styles = StyleSheet.create({
-  
+
   User: {
     width: '90%',
     height: 150,
@@ -126,18 +204,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  menu: {
-    position: 'absolute',
-    top: 70,
-    left: 0,
-    width: '100%',
-    height: 200,
-    backgroundColor: '#50100c',
+
+  TitleExpertise: {
+    width: "100%",
+    height: 20,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-    zIndex: 2024,
-
-
+    display: "flex",
   },
 
   container: {
@@ -227,7 +299,13 @@ const styles = StyleSheet.create({
   },
 
 
-
+  ProgressBar: {
+    width:'100%',
+    display:'flex',
+    flexDirection:'row-reverse',
+    justifyContent:'center',
+    alignItems:'center'
+  },
 
   Info: {
     color: '#fff',
@@ -244,6 +322,11 @@ const styles = StyleSheet.create({
     padding: 12,
     borderWidth: 1.3,
     borderColor: '#7b7574',
-    marginTop: 20
+    marginTop: 20,
+    display:'flex',
+    flexDirection:'column',
+    alignItems:'center',
+    justifyContent:'space-evenly'
+
   },
 });

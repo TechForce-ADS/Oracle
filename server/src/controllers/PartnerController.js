@@ -3,19 +3,37 @@ const router = express.Router();
 const {listPartners} = require('../data/repositories/PartnerRepository.js');
 const {deletePartner} = require('../data/repositories/PartnerRepository.js');
 const {updatePartner} = require('../data/repositories/PartnerRepository.js');
+const {updatePartnerExpertise} = require('../data/repositories/PartnerRepository.js');
+const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
+const bcrypt = require('bcrypt')
 
 const RegisterPartnerUC = require('../useCases/partner/RegisterPartnerUC.js')
 
+router.post('/updateExpertise/:_id', async (req, res) => {
+  try {
+    const partnerId = req.params._id;
+    const { expertise, value } = req.body;
+
+    const updatedPartner = await updatePartnerExpertise(partnerId, expertise, value);
+
+    res.status(200).json(updatedPartner);
+  } catch (error) {
+    console.error('Error updating partner expertise:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 router.post('/register', async (req, res) => {
+  const salt = await bcrypt.genSalt(10)
   try {
     const email = req.body.email;
-    const name = req.body.name;
-    const lastName = req.body.lastName;
-    const sexo = req.body.sexo;
-    const number = req.body.number;
-    const cpf = req.body.cpf;
-    const address = req.body.address;
-    const registerUC = new RegisterPartnerUC(email,name,lastName,sexo,number,cpf,address); 
+    const nameFantasia = req.body.nameFantasia;
+    const nameResponsavel = req.body.nameResponsavel;
+    const cnpj = req.body.cnpj;
+    const password = await bcrypt.hash(req.body.password,salt)
+    const registerUC = new RegisterPartnerUC(email,nameFantasia,nameResponsavel,cnpj,password); 
     const newPartner= await registerUC.create();
     if (newPartner){
       res.status(201).json(newPartner);
@@ -76,5 +94,20 @@ router.put("/update/:_id", async (req, res) => {
   }
 });
 
-
+router.post('/login', async (req, res) => {
+  console.log("login route called")
+  try {
+    const { email, password } = req.body;
+    const loginPartnerUC = new LoginPartnerUC(email, password); 
+    const loggedPartner = await loginPartnerUC.login();
+    if (loggedPartner) {
+      res.status(200).json(loggedPartner); // Login bem-sucedido
+    } else {
+      res.status(400).json({ error: 'Usuário ou senha incorretos' }); // Usuário ou senha incorretos
+    }
+  } catch (error) {
+    console.error('Erro ao fazer login:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' }); // Erro interno do servidor
+  }
+});
 module.exports = router;

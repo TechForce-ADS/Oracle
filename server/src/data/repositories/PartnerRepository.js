@@ -1,8 +1,9 @@
 const { Partner } = require('../../models/models');
+const bcrypt = require('bcrypt')
 
 async function registerPartner(partnerData) {
     try {
-      const existingPartner = await Partner.findOne({ cpf: partnerData.cpf});
+      const existingPartner = await Partner.findOne({ cnpj: partnerData.cnpj});
       if (existingPartner) {
         return false
       }
@@ -66,10 +67,58 @@ async function registerPartner(partnerData) {
     }
   }
   
+async function loginPartner(partnerData) {
+  try {
+    const partner = await Partner.findOne({ email: partnerData.email })
+    if(partner){
+      if (await bcrypt.compare(partnerData.password,partner.password)){
+        return partner
+      }else{
+        return false
+      }
+    }else{
+      return false
+    }
+  } catch (error) {
+    console.error('Error logging partner:', error);
+    throw new Error('Failed to login partner');
+  }
+}
+
+async function updatePartnerExpertise(partnerId, expertiseKey, value) {
+  try {
+    // Primeiro, verifique se a expertiseKey é válida
+    if (!['Expertise1', 'Expertise2', 'Expertise3', 'Expertise4'].includes(expertiseKey)) {
+      throw new Error('Expertise inválida');
+    }
+
+    // Atualize o parceiro pelo ID com a expertise fornecida
+    const result = await Partner.findByIdAndUpdate(
+      partnerId,
+      { $set: { [expertiseKey]: value } },
+      { new: true }
+    );
+
+    if (!result) {
+      throw new Error('Parceiro não encontrado');
+    }
+
+    // Retorne o parceiro atualizado
+    return result;
+  } catch (error) {
+    // Registre o erro e retorne um erro 500
+    console.error('Erro ao atualizar expertise do parceiro:', error);
+    throw new Error('Erro interno do servidor');
+  }
+}
+
+
   
 module.exports = {
     registerPartner,
     listPartners,
     updatePartner,
-    deletePartner
+    deletePartner,
+    loginPartner,
+    updatePartnerExpertise
 };

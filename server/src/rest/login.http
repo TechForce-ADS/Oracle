@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/users/login HTTP/1.1
+POST http://localhost:3001/api/partners/login HTTP/1.1
 content-type: application/json
 
 {
-    "email":"micael@gmail.com",
+    "email":"marcio@gmail.com",
     "password":"123"
 }

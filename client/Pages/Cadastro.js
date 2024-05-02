@@ -58,7 +58,7 @@ const Cadastro = ({ navigation }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, name, lastName, number, sexo, cpf, address }),
+                body: JSON.stringify({ email, name, lastName, number, sexo, cnpj, address }),
             });
 
             const data = await response.json();

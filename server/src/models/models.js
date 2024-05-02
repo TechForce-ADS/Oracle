@@ -44,19 +44,11 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  name: {
+  nameFantasia: {
     type: String,
     required: true,
   },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  number: {
-    type: String,
-    required: true,
-  },
-  sexo: {
+  nameResponsavel: {
     type: String,
     required: true,
   },
@@ -64,14 +56,38 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  address: {
+  password:{
     type: String,
     required: true,
   },
+
+  Expertise1: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  Expertise2: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  Expertise3: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  Expertise4: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+
   nivel: {
     type: String,
     required: true,
+    default: 'Iniciante',
   },
+
   observation: {
     type: String,
   }

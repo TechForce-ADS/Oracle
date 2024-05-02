@@ -1,26 +1,23 @@
 const {registerPartner} = require('../../data/repositories/PartnerRepository.js');
 
 class RegisterPartnerUC {
-  constructor(email,name,lastName,sexo,number,cpf,address) {
+  constructor(email,nameFantasia,nameResponsavel,cnpj,password) {
     this.email = email;
-    this.name = name;
-    this.lastName = lastName;
-    this.sexo = sexo;
-    this.number = number;
-    this.cpf = cpf;
-    this.address = address;
+    this.nameFantasia = nameFantasia;
+    this.nameResponsavel = nameResponsavel;
+    this.cnpj = cnpj;
+    this.password = password;
   }
 
   async create() {
     try {
       const partnerData = {
         email: this.email,
-        name:this.name,
-        lastName:this.lastName,
-        sexo:this.sexo,
-        number:this.number,
-        cpf:this.cpf,
-        address:this.address
+        nameFantasia:this.nameFantasia,
+        nameResponsavel:this.nameResponsavel,
+        cnpj:this.cnpj,
+        password:this.password,
+     
       };
       
       return await registerPartner(partnerData);

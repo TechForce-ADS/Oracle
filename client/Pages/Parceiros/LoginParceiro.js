@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
-import Logo from '../img/LogoN.png';
+import Logo from '../../img/LogoN.png';
 import {
   useFonts, Poppins_100Thin,
   Poppins_200ExtraLight,
@@ -10,10 +10,10 @@ import {
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
 import {ip} from "@env";
-
+import Navbar from '../../Components/Navbar';
 //import CookieManager from '@react-native-cookies/cookies';
 
-const Login = ({ navigation }) => {
+const LoginParceiro = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
@@ -47,20 +47,18 @@ const Login = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-
     try {
-      const response = await fetch(`http://${ip}:3001/api/users/login`, {
+      const response = await fetch(`http://${ip}:3001/api/partners/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
-     
-
+  
       if (response.ok) {
-        
-        navigation.navigate('TelaLista');
+        const partnerData = await response.json(); // Assumindo que o servidor retorna os dados do usuário
+        navigation.navigate('TelaParceiro', { partnerToSee: partnerData }); // Passa os dados para a tela de informações
       } else { 
         setErrorMessage('Usuário ou senha incorretos');
         toggleErrorModal();
@@ -71,6 +69,7 @@ const Login = ({ navigation }) => {
       toggleErrorModal();
     }
   };
+  
 
   return (
     <ScrollView>
@@ -121,15 +120,9 @@ const Login = ({ navigation }) => {
         </Text>
         <Text
           style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
-          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastroConta')}> Criar uma conta</Text>
+          Quer virar um Parceiro?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastroContaParceiro')}> Criar uma conta</Text>
         </Text>
-        <Text
-          style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
-          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastrarAdmin')}> Criar uma conta</Text>
-        </Text>
-        <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('LoginParceiro')}>
-          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Sou Parceiro</Text>
-        </TouchableOpacity>
+
       </View>
 
 
@@ -146,8 +139,8 @@ const Login = ({ navigation }) => {
   );
 };
 
-Login.navigationOptions = {
-  title: 'Login',
+LoginParceiro.navigationOptions = {
+  title: 'LoginParceiro',
 }
 
 
@@ -247,4 +240,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Login;
+export default LoginParceiro;
