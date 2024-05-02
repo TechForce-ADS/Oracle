@@ -7,82 +7,107 @@ import MenuIcon from '../img/menu.png';
 
 const Navbar = () => {
 
-  const [menuAberto, setMenuAberto] = useState(false);
-  const navigation = useNavigation();
+const [menuAberto, setMenuAberto] = useState(false);
+const navigation = useNavigation();
 
-  const toggleMenu = () => {
-    setMenuAberto(!menuAberto);
-  };
+const toggleMenu = () => {
+  setMenuAberto(!menuAberto);
+};
 
-  useFocusEffect(
-    React.useCallback(() => {
-      handleCloseMenu();
-    }, [])
-  );
 
-  const handleCloseMenu = () => {
-    setMenuAberto(false);
-  };
 
-  return (
+useFocusEffect(
+  React.useCallback(() => {
+    handleCloseMenu();
+
+  }, [])
+);
+
+
+const handleCloseMenu = () => {
+  setMenuAberto(false);
+};
+
+   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleMenu} style={styles.menuIconContainer}>
-        <Image source={MenuIcon} style={styles.menuIcon} />
-      </TouchableOpacity>
-      <View style={styles.menu}>
-        {menuAberto && (
-          <>
-            <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar Parceiro</Text>
-            <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
-            <Text style={styles.menuText} onPress={() => navigation.navigate('Cursos')}>Cursos</Text>
-            <Text style={styles.menuText}>Menu Item 4</Text>
-          </>
-        )}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={toggleMenu}>
+          <Image source={MenuIcon} style={styles.menuIcon} />
+        </TouchableOpacity>
+        <Image source={Logo} style={styles.logo} />
       </View>
-      <Image source={Logo} style={styles.logo} />
+
+      {menuAberto && (
+        <View style={styles.menu}>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar Parceiro</Text>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('Cursos')}>Cursos</Text>
+          <Text style={styles.menuText}>Menu Item 4</Text>
+        </View>
+      )}
     </View>
   );
 }
+  
+
+
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+  header: {
     backgroundColor: '#50100c',
-    zIndex: 2,
+    width: 420,
+    height: 70,
+    alignItems: 'center',
+    flexDirection: 'row',
     paddingHorizontal: 20,
-    height: 70
-  },
-  menuIconContainer: {
-    marginRight: 20,
-  },
-  menuIcon: {
-    width: 50,
-    height: 50,
+    zIndex: 2,
   },
   logo: {
     width: 110,
     height: 25,
     resizeMode: 'contain',
+    marginLeft: 85
   },
+
+  menuIcon: {
+    width: 50,
+    height: 50,
+  },
+
+  User: {
+    width: '90%',
+    height: 150,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+    
+  },
+
   menu: {
     position: 'absolute',
-    left: 0,
     top: 70,
-    bottom: 0,
+    left: 0,
+    width: '100%',
+    height: 200,
     backgroundColor: '#50100c',
-    width: 200,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
     zIndex: 2024,
-    paddingTop: 20,
-    paddingHorizontal: 10,
+
+
   },
+
   menuText: {
     color: 'white',
     fontFamily: 'Poppins_300Light',
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 16
   },
+
 });
 
 export default Navbar;
