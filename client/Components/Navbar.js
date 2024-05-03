@@ -39,7 +39,7 @@ const handleCloseMenu = () => {
 
       {menuAberto && (
         <View style={styles.menu}>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar Parceiro</Text>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
           <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
           <Text style={styles.menuText} onPress={() => navigation.navigate('Cursos')}>Cursos</Text>
           <Text style={styles.menuText}>Menu Item 4</Text>
@@ -52,7 +52,17 @@ const handleCloseMenu = () => {
 
 
 
+
+
 const styles = StyleSheet.create({
+  logo: {
+    width: 110,
+    height: 25,
+    resizeMode: 'contain',
+    marginLeft: 85
+  },
+
+  
   header: {
     backgroundColor: '#50100c',
     width: 420,
@@ -62,18 +72,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     zIndex: 2,
   },
-  logo: {
-    width: 110,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft: 85
-  },
-
-  menuIcon: {
-    width: 50,
-    height: 50,
-  },
-
+ 
   User: {
     width: '90%',
     height: 150,
@@ -82,12 +81,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
-  scrollContainer: {
-    flexGrow: 1,
-    alignItems: 'center',
-    
+  menuIcon: {
+    width: 50,
+    height: 50,
   },
 
+ 
   menu: {
     position: 'absolute',
     top: 70,
@@ -102,6 +101,14 @@ const styles = StyleSheet.create({
 
   },
 
+
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+    
+  },
+
+ 
   menuText: {
     color: 'white',
     fontFamily: 'Poppins_300Light',
