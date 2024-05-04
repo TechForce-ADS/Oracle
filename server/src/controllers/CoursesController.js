@@ -1,8 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const RegisterCourseUC = require('../useCases/courses/RegisterCourse');
+
 const { listCourse, updateCourse, deleteCourse } = require('../data/repositories/CoursesRepository');
 const { deletePartner } = require('../data/repositories/PartnerRepository');
+const registerPartnersExpertiseUC = require('../useCases/courses/RegisterPartnerCourseUC')
+
+router.post('/registerPartnersCourse', async(req, res) => {
+    try {
+        const { partner_id, course_id } = req.body;
+        const registerUC = new registerPartnersExpertiseUC(partner_id, course_id);
+        const newRegister = await registerUC.create();
+        if(newRegister){
+            res.status(200).json(newRegister);
+        }
+    } catch (error) {
+        console.error('Error register expertise:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
+
+
 
 router.post('/registerCourse', async (req, res) =>{
     try {
@@ -32,9 +50,9 @@ router.get('/coursesList', async(req, res) => {
 })
 
 
-router.delete("/deleteCourse/:_id", async(req, res) => {
 
-router.delete("/delete/:_id", async(req, res) => {
+
+    router.delete("/deleteCourse/:_id", async(req, res) => {
 
     try {
         const courseId = req.params._id;
@@ -46,9 +64,8 @@ router.delete("/delete/:_id", async(req, res) => {
     }
 })
 
-router.put("/updateCourse/:_id", async (req, res) => {
 
-router.put("/update/:_id", async (req, res) => {
+    router.put("/updateCourse/:_id", async (req, res) => {
 
     try {
         const courseId = req.params._id;
@@ -64,5 +81,8 @@ router.put("/update/:_id", async (req, res) => {
         res.status(500).json({error: "Erro interno do servidor"});
     }
 })
+
+
+
 
 module.exports = router;

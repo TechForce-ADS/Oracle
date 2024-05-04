@@ -1,4 +1,5 @@
 const { Course } = require('../../models/models');
+const { CourseRegistration } = require('../../models/models');
 
 async function registerCourses(courseData) {
     try {
@@ -57,9 +58,26 @@ async function updateCourse(courseId, updateCourse){
 
 }
 
+async function registerPartnersCourse(registrationData){
+    try {
+        const existingCourseRegister = await CourseRegistration.findOne({ title: registrationData.partner});
+        if(existingCourseRegister){
+            return false;
+        }
+        const newCourseRegistration = new CourseRegistration(registrationData)
+        await newCourseRegistration.save();
+        return newCourseRegistration;
+    } catch (error) {
+        console.error('Erro registering CourseRegistration :', error);
+        throw new Error('Failed to register CourseRegistration');
+    }
+}
+
+
 module.exports = {
     registerCourses,
     listCourse,
     deleteCourse,
-    updateCourse
+    updateCourse,
+    registerPartnersCourse
 }

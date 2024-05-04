@@ -23,7 +23,8 @@ import InformacoesCurso from './Pages/InformacoesCursos';
 import CursosParceiro from './Pages/Parceiros/CursosParceiro';
 import InformacoesCursoParceiro from './Pages/Parceiros/InformacoesCursosParceiro';
 import TelaListaParceiro from './Pages/Parceiros/TelaListaParceiro';
-
+import Expertises from './Pages/Expertises';
+import InformacoesParceiros from './Pages/Parceiros/InformacoesParceiros';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,8 @@ export default function App() {
         <Stack.Screen name="CursosParceiro" component={CursosParceiro} />
         <Stack.Screen name="InformacoesCursoParceiro" component={InformacoesCursoParceiro} />
         <Stack.Screen name="TelaListaParceiro" component={TelaListaParceiro} />
+        <Stack.Screen name="InformacoesParceiros" component={InformacoesParceiros} />
+        <Stack.Screen name="Expertises" component={Expertises} />
   
       </Stack.Navigator>
     </NavigationContainer>

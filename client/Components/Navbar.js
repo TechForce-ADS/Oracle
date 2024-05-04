@@ -33,35 +33,26 @@ const Navbar = () => {
 
   const handleCloseMenu = () => {
     Animated.timing(menuOffset, {
-      toValue: -300,
-      duration: 300,
+      toValue: -350, // Mudar para a esquerda da tela
+      duration: 500,
       useNativeDriver: true,
     }).start(() => {
       setMenuAberto(false);
     });
   };
-
-  const handleOrderByAlphabetical = () => {
-    
-    alert('Ordenar por ordem alfabética');
-  };
-
-  const handleSearch = () => {
-
-    alert('Pesquisar: ' + searchQuery);
-  };
+  
 
   const screenHeight = Dimensions.get('window').height;
 
   return (
     <View style={styles.header}>
-      
+      <Image source={Logo} style={styles.logo} />
     
       <TouchableOpacity style={styles.menuButton} onPress={toggleMenu}>
         <Image source={MenuIcon} style={styles.menuIcon} />
       </TouchableOpacity>
       
-      <Animated.View style={[styles.menu, { transform: [{ translateY: menuOffset }], height: menuAberto ? screenHeight : 50 }]}>
+      <Animated.View style={[styles.menu, { transform: [{ translateX: menuOffset }], height: menuAberto ? screenHeight : 50 }]}>
         <Image source={Logo} style={styles.logo} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
@@ -85,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 110,
+    width: 100,
     height: 25,
     resizeMode: 'contain',
     marginLeft: 20,
@@ -93,11 +84,11 @@ const styles = StyleSheet.create({
 
   menuButton: {
     backgroundColor: '#50100c',
-    width: 60,
+    width: 70,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft:330,
+    marginLeft:200,
     zIndex: 2001,
   },
 

@@ -3,8 +3,42 @@ const router = express.Router();
 const {listExpertise} = require('../data/repositories/ExpertiseRepository');
 const {deleteExpertise} = require('../data/repositories/ExpertiseRepository');
 const {updateExpertise} = require('../data/repositories/ExpertiseRepository');
+const {listOnePartner} = require("../data/repositories/PartnerRepository")
+const {getPartnerExpertises} = require("../data/repositories/ExpertiseRepository")
+const {deleteRegister} = require("../data/repositories/ExpertiseRepository")
 
-const registerExpertiseUC = require('../useCases/expertises/RegisterExpertiseUC')
+const registerExpertiseUC = require('../useCases/expertises/RegisterExpertiseUC');
+
+const {listPartnersExpertises} = require('../data/repositories/ExpertiseRepository');
+const {deleteExpertiseRegistration} = require('../data/repositories/ExpertiseRepository');
+const registerPartnersExpertiseUC = require('../useCases/expertises/RegisterRegisterExpertiseUC')
+
+router.post('/registerPartnersExpertise', async(req, res) => {
+    try {
+        const { partner_id, expertise_id } = req.body;
+        const registerUC = new registerPartnersExpertiseUC(partner_id, expertise_id);
+        const newRegister = await registerUC.create();
+        if(newRegister){
+            res.status(200).json(newRegister);
+        }
+    } catch (error) {
+        console.error('Error register expertise:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
+
+
+router.delete('/deleteExpertiseRegister/:_id', async(req, res) => {
+    try {
+        const registerId = req.params._id;
+        const result = await deleteRegister(registerId);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: "Erro interno do servidor."});
+        
+    }
+})
 
 router.post('/registerExpertise', async(req, res) =>{
     try {
@@ -57,5 +91,34 @@ router.put('/updateExpertise/:_id', async (req, res) => {
         res.status(500).json({error: "Erro interno do servidor."});
     }
 });
+
+router.get('/partnerExpertises/:partnerId', async (req, res) => {
+    try {
+        const partnerId = req.params.partnerId;
+        const partnerExpertises = await getPartnerExpertises(partnerId);
+        res.status(200).json(partnerExpertises);
+    } catch (error) {
+        console.error('Error getting partner expertises:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
+
+
+
+
+router.delete('/deleteExpertiseRegister/:_id', async(req, res) => {
+    try {
+        const registerId = req.params._id;
+        const result = await deleteRegister(registerId);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: "Erro interno do servidor."});
+        
+    }
+})
+
+
+
 
 module.exports = router;

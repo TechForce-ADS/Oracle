@@ -44,33 +44,35 @@ export default function Dashboard() {
       <Navbar />
       
       <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>Quantidade de Administradores e Partners</Text>
-        <BarChart
-          data={{
-            labels: ['Administradores', 'Partners'],
-            datasets: [
-              {
-                data: [adminCount, partnerCount],
-              },
-            ],
-          }}
-          width={350}
-          height={220}
-          yAxisSuffix=""
-          yAxisInterval={1} // Definir o intervalo do eixo y como 1 para mostrar apenas números inteiros
-          fromZero={true} // Isso faz com que o gráfico comece em 0
-          chartConfig={{
-            backgroundGradientFrom: '#1E2923',
-            backgroundGradientTo: '#08130D',
-            color: (opacity = 1) => `rgba(249, 69, 9, ${opacity})`, // Cor laranja
-            strokeWidth: 4,
-          }}
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
-      </View>
+  <Text style={styles.chartTitle}>Quantidade de Administradores e Partners</Text>
+  <BarChart
+    data={{
+      labels: ['Administradores', 'Parceiros'],
+      datasets: [
+        {
+          data: [parseInt(adminCount), parseInt(partnerCount)],
+        },
+      ],
+    }}
+    width={350}
+    height={220}
+    yAxisSuffix=""
+    yAxisInterval={1} // Definir o intervalo do eixo y como 1 para mostrar apenas números inteiros
+    fromZero={true} // Isso faz com que o gráfico comece em 0
+    chartConfig={{
+      backgroundGradientFrom: '#ddd',
+      backgroundGradientTo: '#ddd',
+      color: (opacity = 2) => `rgba(249, 0, 9, ${opacity})`, // Cor laranja
+      strokeWidth: 4,
+      formatYLabel: (label) => parseInt(label),
+    }}
+    style={{
+      marginVertical: 8,
+      borderRadius: 16,
+    }}
+  />
+</View>
+
     </View>
   );
 }
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   chartTitle: { 
-    fontSize: 20,
+    fontSize: 16,
     color: '#FFF',
     marginBottom: 10,
     fontFamily: 'Poppins_700Bold',

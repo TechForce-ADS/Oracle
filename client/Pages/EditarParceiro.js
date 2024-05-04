@@ -7,7 +7,7 @@ const EditarParceiro = ({ navigation, route }) => {
     const [menuAberto, setMenuAberto] = useState(false);
     const [partnerData, setPartnerData] = useState(route.params?.partnerToEdit || {});
     const [email, setEmail] = useState(partnerData.email || '');
-    const [nameFantasia, setName] = useState(partnerData.nameFantasia || '');
+    const [nameFantasia, setNameFantasia] = useState(partnerData.nameFantasia || '');
     const [nameResponsavel, setNameResponsavel] = useState(partnerData.nameResponsavel|| '');
     const [cnpj, setCnpj] = useState(partnerData.cnpj || '');
 
@@ -45,7 +45,7 @@ const EditarParceiro = ({ navigation, route }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, nameResponsavel, lastName, number, sexo, cpf, address }),
+                body: JSON.stringify({ email, nameFantasia, nameResponsavel, cnpj }),
             });
 
             const data = await response.json();

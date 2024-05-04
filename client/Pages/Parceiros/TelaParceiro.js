@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
-import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../../Components/NavbarParceiro';
 import User from '../../img/User.png';
 import { ip } from "@env";
-import * as Progress from 'react-native-progress';
+
 
 export default function TelaParceiro({ navigation, route }) {
 
   const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
   const [expanded, setExpanded] = useState(false);
-  const [fonteLoaded] = useFonts({
-    Poppins_100Thin,
-    Poppins_200ExtraLight,
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_500Medium
-  });
+  const [partnerExpertises, setPartnerExpertises] = useState([]);
+  const idPartner = partnerData._id;
 
   useEffect(() => {
-    setPartnerData(route.params?.partnerToSee || {});
-  }, [route.params?.partnerToSee]);
+
+    fetchPartnerExpertises(idPartner);
+  }, [idPartner]);
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -42,6 +37,9 @@ export default function TelaParceiro({ navigation, route }) {
     );
   };
 
+
+
+
   const excluirConfirmed = async (_id) => {
     try {
       await fetch(`http://${ip}:3001/api/partners/delete/${_id}`, {
@@ -56,86 +54,34 @@ export default function TelaParceiro({ navigation, route }) {
     }
   };
 
-  const adquirirExpertise = (expertiseKey) => {
-    Alert.alert(
-      'Adquirir Expertise',
-      `Deseja adquirir a expertise ${expertiseKey}?`,
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel'
-        },
-        {
-          text: 'Adquirir',
-          onPress: () => adquirirExpertiseConfirmado(expertiseKey),
-        },
-      ],
-      { cancelable: false }
-    );
-  };
-
-  const adquirirExpertiseConfirmado = async (expertiseKey) => {
+ const fetchPartnerExpertises = async (partnerId) => {
     try {
-      await updateExpertise(partnerData._id, expertiseKey, true);
-      // Atualiza o estado local do parceiro
-      setPartnerData(prevData => ({
-        ...prevData,
-        [expertiseKey]: true
-      }));
-      Alert.alert(
-        'Sucesso',
-        `A expertise ${expertiseKey} foi adquirida com sucesso!`
-      );
-    } catch (error) {
-      console.error('Erro ao adquirir expertise:', error);
-      Alert.alert(
-        'Erro',
-        'Houve um erro ao tentar adquirir a expertise. Por favor, tente novamente.'
-      );
-    }
-  };
-
-  const updateExpertise = async (partnerId, expertiseKey, value) => {
-    try {
-      const response = await fetch(`http://${ip}:3001/api/partners/updateExpertise/${partnerId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          expertise: expertiseKey,
-          value: value
-        })
-      });
-
+      const response = await fetch(`http://${ip}:3001/api/expertise/partnerExpertises/${partnerId}`);
       if (!response.ok) {
-        throw new Error('Erro ao atualizar expertise');
+        throw new Error('Erro ao buscar expertises do parceiro');
       }
+      const data = await response.json();
+      setPartnerExpertises(data);
     } catch (error) {
-      throw new Error(error.message);
+      console.error('Erro ao buscar expertises do parceiro:', error);
+      Alert.alert('Erro', 'Não foi possível carregar as expertises do parceiro');
     }
   };
 
-  const renderExpertise = (key, label, progress) => {
-    const isAcquired = partnerData[key];
-    return (
-      <TouchableOpacity style={styles.tarefa} onPress={() => navigation.navigate('Tasks')}>
-        <View style={styles.TitleExpertise}><Text style={{ fontFamily: 'Poppins_300Light', color: '#fff' }}>{label}</Text></View>
-        <View style={styles.ProgressBar}>
-          {isAcquired ? (
-            <>
-              <Text style={{ color: 'white', marginLeft: 12, fontFamily: 'Poppins_300Light' }}>{progress} %</Text>
-              <Progress.Bar progress={progress / 100} width={200} color='#FF4700' backgroundColor='#FFF' />
-            </>
-          ) : (
-            <TouchableOpacity onPress={() => adquirirExpertise(key)}>
-              <Text style={{ color: 'white', marginLeft: 12, fontFamily: 'Poppins_300Light' }}>Adquirir</Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      </TouchableOpacity>
-    );
+  
+  
+
+  const renderExpertises = () => {
+    return partnerExpertises.map((expertise, index) => (
+      <View key={index} style={styles.expertise}>
+        <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.title}</Text>
+        {/* <TouchableOpacity onPress={() => excluirExpertise(expertise._id)}>
+          <Text style={{ color: '#FF0000', fontFamily: 'Poppins_300Light', fontSize: 16, marginLeft: 10 }}>Excluir</Text>
+        </TouchableOpacity> */}
+      </View>
+    ));
   };
+
 
   return (
     <View style={styles.container}>
@@ -172,16 +118,21 @@ export default function TelaParceiro({ navigation, route }) {
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
-          <View style={{ width: 150, height: 2, backgroundColor: 'white', marginLeft: 12, marginRight: 12 }} />
+          <View style={{ width: 120, height: 2, backgroundColor: 'white', marginLeft: 12, marginRight: 12 }} />
           <View>
-            <Text style={{ width: 60, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Tarefas</Text>
+            <Text style={{ width: 70, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Expertises</Text>
           </View>
-          <View style={{ width: 150, height: 2, backgroundColor: 'white', marginRight: 12, marginLeft: 12, }} />
+          <View style={{ width: 120, height: 2, backgroundColor: 'white', marginRight: 12, marginLeft: 12, }} />
         </View>
-        {renderExpertise('Expertise1', 'Cloud Build', 0)}
-        {renderExpertise('Expertise2', 'Cloud Sell', 0)}
-        {renderExpertise('Expertise3', 'Service Expertise', 0)}
-        {renderExpertise('Expertise4', 'Industry Healthcare Expertise', 0)}
+        <View style={styles.botoes}>
+          {partnerExpertises.length > 0 ? (
+            renderExpertises()
+          ) : (
+            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma expertise encontrada.</Text>
+          )}
+         
+        </View>
+        
       </ScrollView>
     </View>
   );
@@ -243,16 +194,7 @@ const styles = StyleSheet.create({
     borderColor: '#7b7574',
   },
 
-  botoes: {
-    width: '100%',
-    height: 170,
-    marginTop: 30,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
-
-  },
+ 
 
   DeletarBTN: {
     height: 35,
@@ -314,19 +256,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_300Light',
   },
 
-  tarefa: {
+  expertise: {
     backgroundColor: '#584848',
     width: 350,
-    height: 75,
+    height: 50,
     borderRadius: 22,
-    padding: 12,
     borderWidth: 1.3,
     borderColor: '#7b7574',
     marginTop: 20,
     display:'flex',
-    flexDirection:'column',
-    alignItems:'center',
-    justifyContent:'space-evenly'
-
+    justifyContent:'center',
+    alignItems:'center'
   },
 });

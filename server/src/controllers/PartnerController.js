@@ -4,6 +4,7 @@ const {listPartners} = require('../data/repositories/PartnerRepository.js');
 const {deletePartner} = require('../data/repositories/PartnerRepository.js');
 const {getPartnerCount} = require('../data/repositories/PartnerRepository.js');
 const {updatePartner} = require('../data/repositories/PartnerRepository.js');
+const {listOnePartner} = require('../data/repositories/PartnerRepository.js')
 const {updatePartnerExpertise} = require('../data/repositories/PartnerRepository.js');
 const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
 const bcrypt = require('bcrypt')
@@ -25,7 +26,16 @@ router.post('/updateExpertise/:_id', async (req, res) => {
   }
 });
 
-
+router.get('/partnerListOne', async (req, res) => {
+  try {
+    const id = req.body._id;
+    const partner = await listOnePartner(id);
+    res.status(200).json(partner);
+  } catch (error) {
+    console.error('Error find partner:', error);
+    res.status(500).json({error: 'Internal server error.'});
+  }
+});
 
 router.post('/register', async (req, res) => {
   const salt = await bcrypt.genSalt(10)
@@ -70,32 +80,32 @@ router.delete("/delete/:_id", async (req, res) => {
   try {
     const partnerId = req.params._id;
     
-    // Chamar a função para deletar o parceiro
+   
     const result = await deletePartner(partnerId);
 
-    // Responder com a mensagem de sucesso
+  
     res.status(200).json(result);
   } catch (error) {
-    // Se ocorrer um erro, retornar um erro 500
+    
     console.error(error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
 
-
 router.put("/update/:_id", async (req, res) => {
-  const salt = await bcrypt.genSalt(10)
   try {
     const partnerId = req.params._id;
-    const name = req.body.name; 
+    const nameFantasia = req.body.nameFantasia; 
+    const nameResponsavel = req.body.nameResponsavel; 
     const email = req.body.email; 
-    const password = await bcrypt.hash(req.body.password,salt)
+   
     const updatedData = {
-      name:name,
-      email:email,
-      password:password
+      nameFantasia: nameFantasia,
+      nameResponsavel: nameResponsavel,
+      email: email,
     }
 
+    const updatedPartner = await updatePartner(partnerId, updatedData);
 
     // Responder com o parceiro atualizado
     if (updatedPartner) {
@@ -104,24 +114,8 @@ router.put("/update/:_id", async (req, res) => {
       // Se não encontrou o parceiro para atualizar
       res.status(404).json({ error: "Parceiro não encontrado" });
     }
-
-    // Adicionar campos ao modelo do parceiro conforme fornecido em updateData
-    for (const key in updateData) {
-      if (!(key in partnerSchema.paths)) {
-        // Se o campo não existir no esquema do parceiro, serão adicionados dinamicamente
-        const fieldOptions = { type: typeof updateData[key] };
-        partnerSchema.add({ [key]: fieldOptions });
-      }
-    }
-    // Atualiza os campos conforme fornecido em updateData
-    for (const key in updateData) {
-      partner[key] = updateData[key];
-    }
-    // Salvar as alterações
-    const updatedPartner = await partner.save();
-    res.status(200).json(updatedPartner);
-
   } catch (error) {
+    // Se ocorrer um erro, retornar um erro 500
     console.error(error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }

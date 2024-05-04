@@ -56,7 +56,7 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password:{
+  password: {
     type: String,
     required: true,
   },
@@ -81,29 +81,6 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-// ----------------------------------
-
-  Expertise1: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  Expertise2: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  Expertise3: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-  Expertise4: {
-    type: Boolean,
-    required: true,
-    default: false
-  },
-
   nivel: {
     type: String,
     required: true,
@@ -163,7 +140,7 @@ const expertiseSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-  
+
 });
 
 
@@ -173,14 +150,14 @@ const tasksSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  date:{
-    type:Date,
+  date: {
+    type: Date,
   },
-  conclusion:{
+  conclusion: {
     type: Boolean,
     required: true,
     default: false,
-  }  ,
+  },
   expertise: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Expertise'
@@ -203,6 +180,23 @@ const courseRegistrationSchema = new mongoose.Schema({
   },
 });
 
+const expertiseRegistrationSchema = new mongoose.Schema({
+  partner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Partner'
+  },
+  expertise: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Expertise"
+  },
+  expertiseCompleted: {
+    type: Boolean,
+    default: false
+  }
+});
+
+const ExpertiseRegistration = mongoose.model('ExpertiseRegistration', expertiseRegistrationSchema);
+
 const CourseRegistration = mongoose.model('CourseRegistration', courseRegistrationSchema);
 
 const Course = mongoose.model('Course', courseSchema);
@@ -213,15 +207,12 @@ const Admin = mongoose.model('Admin', adminSchema);
 
 const Partner = mongoose.model('Partner', partnerSchema);
 
-const Task = mongoose.model('Task', tasksSchema);
-
-module.exports = { User, userSchema, 
-                   Partner, partnerSchema, 
-                   Admin, adminSchema, 
-                   Course, courseSchema, 
-                   CourseRegistration, courseRegistrationSchema, 
-                   Expertise, expertiseSchema,
-                   Task, tasksSchema};
-
-module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema, CourseRegistration, courseRegistrationSchema, Expertise, expertiseSchema };
-
+module.exports = {
+  User, userSchema,
+  Partner, partnerSchema,
+  Admin, adminSchema,
+  Course, courseSchema,
+  CourseRegistration, courseRegistrationSchema,
+  Expertise, expertiseSchema,
+  ExpertiseRegistration, expertiseRegistrationSchema
+};

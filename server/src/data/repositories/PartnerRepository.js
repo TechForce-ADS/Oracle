@@ -27,6 +27,16 @@ async function registerPartner(partnerData) {
       throw new Error('Failed to list partners');
     }
   }
+
+  async function listOnePartner(id) {
+    try {
+      const partner = await Partner.findOne({_id: id});
+      return partner;
+    } catch (error) {
+      console.error('Error finding partner:', error);
+      throw new Error('Failed to find partner');
+    }
+  }
   
   async function deletePartner(partnerId) {
     try {
@@ -131,5 +141,6 @@ module.exports = {
     updatePartner,
     deletePartner,
     loginPartner,
-    updatePartnerExpertise
+    updatePartnerExpertise,
+    listOnePartner
 };

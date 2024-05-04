@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } fr
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../Components/Navbar';
 
-import { IP } from "@env";
+import { ip } from "@env";
 
 export default function InformacoesCurso({ navigation, route }) {
 
@@ -40,7 +40,7 @@ export default function InformacoesCurso({ navigation, route }) {
 
   const excluirConfirmed = async (_id) => {
     try {
-      await fetch(`http://${IP}:3001/api/courses/delete/${_id}`, {
+      await fetch(`http://${ip}:3001/api/courses/deleteCourse/${_id}`, {
         method: 'DELETE',
       });
 

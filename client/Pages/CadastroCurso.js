@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView, Alert } from 'react-native';
 import { ip } from "@env";
 import Navbar from '../Components/Navbar';
 
@@ -32,7 +32,7 @@ const CadastroCurso = ({ navigation }) => {
 
     const handleRegister = async () => {
         try {
-            const response = await fetch(`http://${ip}:3001/api/courses/register`, {
+            const response = await fetch(`http://${ip}:3001/api/courses/registerCourse`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

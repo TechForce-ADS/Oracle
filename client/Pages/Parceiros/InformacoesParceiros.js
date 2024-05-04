@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
-import Navbar from '../Components/Navbar';
-import User from '../img/User.png';
+import Navbar from '../../Components/NavbarParceiro';
+import User from '../../img/User.png';
 import { ip } from "@env";
 import { useFocusEffect } from '@react-navigation/native';
 
 
-export default function Informacoes({ navigation, route }) {
+export default function InformacoesParceiro({ navigation, route }) {
   const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
   const [partnerExpertises, setPartnerExpertises] = useState([]);
   const idPartner = partnerData._id;
@@ -24,15 +24,7 @@ export default function Informacoes({ navigation, route }) {
     setExpanded(!expanded);
   };
 
-  const editarPartner = (partner) => {
-    navigation.navigate('EditarParceiro', { partnerToEdit: partner });
-  };
-
-  const registerExpertise = (partner) => {
-    navigation.navigate('Expertises', { partnerExpertise: partner });
-    
-  };
-
+ 
 
   useFocusEffect(
     React.useCallback(() => {
@@ -55,70 +47,18 @@ export default function Informacoes({ navigation, route }) {
     }
   };
 
-  const excluirPartner = (_id) => {
-    Alert.alert(
-      'Você tem certeza?',
-      'Esta ação não poderá ser revertida!',
-      [
-        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
-        { text: 'Excluir', onPress: () => excluirConfirmed(_id)  },
-      ],
-      { cancelable: true }
-    );
-  };
-
-  const excluirConfirmed = async (_id) => {
-    try {
-      await fetch(`http://${ip}:3001/api/partners/delete/${_id}`, {
-        method: 'DELETE',
-      });
-      
-      navigation.navigate('TelaLista');
-      setPartnerData({});
-  
-    } catch (error) {
-      console.error('Erro ao excluir parceiro:', error);
-      Alert.alert("Erro", "Algo deu errado ao tentar excluir o parceiro.");
-    }
-  };
+ 
 
   const renderExpertises = () => {
     return partnerExpertises.map((expertise, index) => (
       <View key={index} style={styles.expertise}>
         <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.title}</Text>
-        {/* <TouchableOpacity onPress={() => excluirExpertise(expertise._id)}>
-          <Text style={{ color: '#FF0000', fontFamily: 'Poppins_300Light', fontSize: 16, marginLeft: 10 }}>Excluir</Text>
-        </TouchableOpacity> */}
+      
       </View>
     ));
   };
 
-  const excluirExpertise = (_id) => {
-    Alert.alert(
-      'Você tem certeza?',
-      'Esta ação não poderá ser revertida!',
-      [
-        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
-        { text: 'Excluir', onPress: () => excluirExpertiseConfirmed(_id)  },
-      ],
-      { cancelable: true }
-    );
-  };
   
-
-  const excluirExpertiseConfirmed = async (_id) => {
-    try {
-        console.log('Confirmando exclusão da expertise com ID:', _id);
-        await fetch(`http://${ip}:3001/api/expertiseRegistration/deleteExpertiseRegister/${_id}`, {
-            method: 'DELETE',
-        });
-        console.log('Exclusão bem-sucedida.');
-        navigation.navigate('TelaLista');
-    } catch (error) {
-        console.error('Erro ao excluir expertise:', error);
-        Alert.alert("Erro", "Algo deu errado ao tentar excluir a expertise.");
-    }
-};
 
 
   return (
@@ -135,7 +75,7 @@ export default function Informacoes({ navigation, route }) {
         <View>
           <Text style={{ color: "#FFFFFF", fontSize: 16, marginLeft: 2, fontFamily: 'Poppins_300Light' }}>Informações</Text>
           <TouchableOpacity
-            style={expanded ? styles.expandedContent : styles.content}
+            style={ styles.content}
             onPress={toggleExpand}
           >
 
@@ -145,14 +85,7 @@ export default function Informacoes({ navigation, route }) {
             <Text style={styles.heading}>Email: <Text style={styles.Info}> {partnerData.email}</Text></Text>
             <Text style={styles.heading}>CNPJ: : <Text style={styles.Info}>{partnerData.cnpj}</Text></Text>
 
-            <View style={styles.botoes}>
-              <TouchableOpacity style={styles.EditarBTN} onPress={() => editarPartner(partnerData)}>
-                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Editar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.DeletarBTN} onPress={() => excluirPartner(partnerData._id)}>
-                <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Deletar</Text>
-              </TouchableOpacity>
-            </View>
+         
 
           </TouchableOpacity>
         </View>
@@ -171,9 +104,7 @@ export default function Informacoes({ navigation, route }) {
           )}
          
         </View>
-        <TouchableOpacity style={styles.expertiseBTN} onPress={() => registerExpertise(partnerData)}>
-            <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>+ Adicionar Expertise</Text>
-          </TouchableOpacity>
+  
       </ScrollView>
     </View>
   );
@@ -229,57 +160,18 @@ const styles = StyleSheet.create({
   },
 
 
-  expandedContent: {
-    backgroundColor: '#584848',
-    width: 350,
-    height: 400,
-    borderRadius: 22,
-    padding: 20,
-    borderWidth: 1.3,
-    borderColor: '#7b7574',
-  },
-
   botoes: {
     width: '100%',
-    height: 200,
+    height: 300,
     marginTop: 5,
     display: 'flex',
     alignItems: 'center',
-    justifyContent:'center',
+   
     flexDirection: 'column',
     marginTop:50
   },
 
-  DeletarBTN: {
-    height: 35,
-    width: "70%",
-    backgroundColor: '#6b0600',
-    justifyContent: 'center',
-    display: 'flex',
-    marginTop: 10,
-    borderRadius: 5,
-  },
 
-  EditarBTN: {
-    height: 35,
-    width: "70%",
-    backgroundColor: '#FFF',
-    justifyContent: 'center',
-    display: 'flex',
-    marginTop: 10,
-    borderRadius: 5,
-  },
-
-  expertiseBTN:{
-    height: 35,
-    width: "70%",
-    backgroundColor: '#FFF',
-    justifyContent: 'center',
-    display: 'flex',
-    marginTop: 50,
-  
-    borderRadius: 5,
-  },
 
 
 

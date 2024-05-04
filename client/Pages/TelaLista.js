@@ -6,16 +6,17 @@ import Ver from '../img/click.png';
 import MenuIcon from '../img/menu.png';
 import Search from '../img/search.png';
 import User from '../img/User.png';
-import {ip} from "@env";
+import { ip } from "@env";
 import Navbar from '../Components/Navbar';
 
-
+const PAGE_SIZE = 5;
 
 const TelaLista = ({ navigation }) => {
   const [menuAberto, setMenuAberto] = useState(false);
   const [partners, setPartners] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const toggleMenu = () => {
     setMenuAberto(!menuAberto);
@@ -70,10 +71,15 @@ const TelaLista = ({ navigation }) => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
+  const handleLoadMore = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const paginatedPartners = sortedPartners.slice(0, currentPage * PAGE_SIZE);
+
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
       <Navbar />
-
 
       <View style={{ width: 350, height: 70, paddingTop: 20, justifyContent: 'space-between', display: 'flex', flexDirection: 'row' }}>
         <Image source={Search} style={styles.SearchIcon} />
@@ -89,15 +95,15 @@ const TelaLista = ({ navigation }) => {
       </View>
 
       <ScrollView>
-        {sortedPartners.map((partner) => (
+        {paginatedPartners.map((partner) => (
           <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
             <View style={styles.container}>
               <View style={styles.UserPhoto}>
                 <Image source={User} />
               </View>
               <View style={styles.TextName}>
-                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_300Light' }}>{partner.nameFantasia}</Text>
-                <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_700Bold' }}>Nivel - {partner.nivel} </Text>
+                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily: 'Poppins_300Light' }}>{partner.nameFantasia}</Text>
+                <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily: 'Poppins_700Bold' }}>Nivel - {partner.nivel} </Text>
               </View>
               <View style={{ width: 30, height: '100%', marginTop: 10 }}>
                 <TouchableOpacity key={partner._id} onPress={() => editarPartner(partner)}>
@@ -107,30 +113,33 @@ const TelaLista = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         ))}
+        {paginatedPartners.length < sortedPartners.length && (
+          <TouchableOpacity onPress={handleLoadMore} style={{ alignSelf: 'center', marginTop: 20 }}>
+            <Text style={{ color: '#FFF' }}>Carregar mais</Text>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );
 };
 
-
-
 const styles = StyleSheet.create({
-  
+
   UserPhoto: {
     width: 105,
     height: 100,
     borderRadius: 15,
-    resizeMode:'cover'
+    resizeMode: 'cover'
   },
 
 
-  TextName:{
+  TextName: {
     width: 200,
     height: '100%',
-    display:'flex',
-    justifyContent:'space-evenly',
-    fontFamily:'Poppins_700Bold'
-  
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    fontFamily: 'Poppins_700Bold'
+
   },
 
 
@@ -146,8 +155,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
-
-
   FilterBTN: {
     backgroundColor: '#FFFFFF',
     width: 50,
@@ -159,13 +166,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-
   Icons: {
-  
+
     width: 35,
     height: 35,
     resizeMode: 'contain',
-    
+
   },
 
   SearchIcon: {
@@ -180,7 +186,6 @@ const styles = StyleSheet.create({
 
   },
 
-
   searchBar: {
     width: 250,
     height: 40,
@@ -189,9 +194,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     color: 'black',
     paddingLeft: 50,
-
-
-
   },
 
 });

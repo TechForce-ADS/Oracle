@@ -13,11 +13,11 @@ const TelaLista = ({ navigation }) => {
   const [partners, setPartners] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
-
+  const PAGE_SIZE = 4;
 
 
   const vizualizar = (partner) => {
-    navigation.navigate('Informacoes', { partnerToSee: partner });
+    navigation.navigate('InformacoesParceiros', { partnerToSee: partner });
   };
 
   useFocusEffect(
@@ -43,13 +43,13 @@ const TelaLista = ({ navigation }) => {
   );
 
   const filteredPartners = partners.filter(partner => {
-    const fullName = `${partner.name} ${partner.lastName}`.toLowerCase();
+    const fullName = `${partner.nameFantasia}`.toLowerCase();
     return fullName.includes(searchText.toLowerCase());
   });
 
   const sortedPartners = filteredPartners.slice().sort((a, b) => {
-    const nameA = `${a.name} ${a.lastName}`.toLowerCase();
-    const nameB = `${b.name} ${b.lastName}`.toLowerCase();
+    const nameA = `${a.nameFantasia}`.toLowerCase();
+    const nameB = `${b.nameFantasia}`.toLowerCase();
     return sortOrder === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
   });
 
@@ -87,7 +87,7 @@ const TelaLista = ({ navigation }) => {
                 <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_700Bold' }}>Nivel - {partner.nivel} </Text>
               </View>
               <View style={{ width: 30, height: '100%', marginTop: 10 }}>
-                <TouchableOpacity key={partner._id} onPress={() => editarPartner(partner)}>
+                <TouchableOpacity key={partner._id}>
                   <Image source={Ver} style={styles.Icons} />
                 </TouchableOpacity>
               </View>

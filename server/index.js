@@ -32,8 +32,8 @@ connect()
     const expertiseController = require ('./src/controllers/ExpertiseController');
     app.use('/api/expertise', expertiseController);
     
-    const expertiseController = require('./src/controllers/ExpertiseController');
-    app.use('/api/expertise', expertiseController)
+    const expertiseRegisterController = require('./src/controllers/ExpertiseController');
+    app.use('/api/expertiseRegistration', expertiseRegisterController)
     
 
     app.listen(PORT, () => {

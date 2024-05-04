@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, ScrollView, Alert, AsyncStorage, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView, Alert, StyleSheet } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../../Components/NavbarParceiro';
 
@@ -7,6 +7,9 @@ import Navbar from '../../Components/NavbarParceiro';
 
 export default function InformacoesCurso({ navigation, route }) {
   const [courseData, setCourseData] = useState(route.params?.courseToSee || {});
+  const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
+
+
   const [fonteLoaded] = useFonts({
     Poppins_100Thin,
     Poppins_200ExtraLight,
@@ -29,6 +32,8 @@ export default function InformacoesCurso({ navigation, route }) {
           <Text style={styles.heading}>Nome: <Text style={styles.Info}>{courseData.name} </Text></Text>
           <Text style={styles.heading}>Descrição: <Text style={styles.Info}>{courseData.description} </Text></Text>
           <Text style={styles.heading}>Tempo de duração: <Text style={styles.Info}> {courseData.time}</Text></Text>
+          
+          
           <View style={styles.Botao}>
             <TouchableOpacity style={styles.EditarBTN}>
               <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>ingressar</Text>
