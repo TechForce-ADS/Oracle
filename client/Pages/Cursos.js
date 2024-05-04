@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { View, Image, TouchableOpacity, ScrollView, StyleSheet, Text } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, Image, TouchableOpacity, ScrollView, StyleSheet, Text, Alert } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { ip } from "@env";
 
 import Navbar from '../Components/Navbar';
 
@@ -9,58 +11,53 @@ export default function Cursos() {
 
 
   const [expanded, setExpanded] = useState(false);
-
+  const [courses, setCourses] = useState([]);
   const toggleExpand = () => {
     setExpanded(!expanded);
   };
+
+
+  
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchData() {
+        try {
+          const response = await fetch(`http://${ip}:3001/api/courses/coursesList`);
+          if (!response.ok) {
+            throw new Error('Erro ao buscar cursos');
+          }
+          const data = await response.json();
+          setCourses(data);
+        } catch (error) {
+          console.error('Erro ao buscar cursos:', error);
+          Alert.alert('Erro', 'Não foi possível carregar a lista de cursos');
+        }
+      }
+
+      fetchData();
+      // handleCloseMenu(); // Ensure this function is defined or necessary
+
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
       <Navbar />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-
-
-        <TouchableOpacity style={expanded ? styles.expandedCurso : styles.Curso}
-          onPress={toggleExpand}>
-          <View style={styles.Titulo}>
-            <Text style={{ color: '#fff', fontSize: 18, fontFamily: 'Poppins_300Light' }}>Introduction to MongoDB</Text>
-          </View>
-
-          <View style={styles.Descricao}>
-            <Text style={{ color: '#fff', fontSize: 14, fontFamily: 'Poppins_300Light' }}>The Introduction to MongoDB course guides you through the foundational skills and knowledge you need to get started with MongoDB. This includes connecting to a MongoDB database, how to conduct simple CRUD operations, and key topics such as aggregation, indexing, data modeling, and transactions.</Text>
-          </View>
-          <View style={styles.Botoes}>
-            <TouchableOpacity style={styles.VerMaisBTN}>
-              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Ver mais</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.EngressarBTN}>
-              <Text style={{ color: '#FFF', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Iniciar</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={expanded ? styles.expandedCurso : styles.Curso}
-          onPress={toggleExpand}>
-          <View style={styles.Titulo}>
-            <Text style={{ color: '#fff', fontSize: 18, fontFamily: 'Poppins_300Light' }}>Introduction to MongoDB 2 </Text>
-          </View>
-
-          <View style={styles.Descricao}>
-            <Text style={{ color: '#fff', fontSize: 14, fontFamily: 'Poppins_300Light' }}>The Introduction to MongoDB course guides you through the foundational skills and knowledge you need to get started with MongoDB. This includes connecting to a MongoDB database, how to conduct simple CRUD operations, and key topics such as aggregation, indexing, data modeling, and transactions.</Text>
-          </View>
-          <View style={styles.Botoes}>
-            <TouchableOpacity style={styles.VerMaisBTN}>
-              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Ver mais</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.EngressarBTN}>
-              <Text style={{ color: '#FFF', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Iniciar</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-
-
-
+        {courses.map((course) => (
+          <TouchableOpacity key={course._id} onPress={() => console.log('Course selected', course.name)}>
+            <View style={styles.containerA}>
+              <View style={styles.TextName}>
+                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily: 'Poppins_300Light' }}>
+                  {course.name}
+                </Text>
+              </View>
+              <View style={{ width: 30, height: '100%', marginTop: 10 }}>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
     </View>
   );
@@ -74,6 +71,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1c2120',
     alignItems: 'center',
+  },
+
+
+  TextName:{
+    width: 200,
+    height: '100%',
+    display:'flex',
+    justifyContent:'space-evenly',
+    fontFamily:'Poppins_700Bold'
+  
+  },
+
+
+  containerA: {
+    borderRadius: 15,
+    backgroundColor: '#584848',
+    borderWidth: 1.3,
+    borderColor: '#7b7574',
+    width: 350,
+    height: 100,
+    display: 'flex',
+   
+    marginTop: 20,
   },
 
 

@@ -2,7 +2,7 @@ const { Course } = require('../../models/models');
 
 async function registerCourses(courseData) {
     try {
-        const existingCourse = await Course.findOne({ nome: courseData.nome});
+        const existingCourse = await Course.findOne({ name: courseData.name});
         if (existingCourse) {
             return false;
         }

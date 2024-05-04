@@ -1,10 +1,10 @@
-POST http://localhost:3001/api/partners/register HTTP/1.1
+POST http://localhost:3001/api/courses/register HTTP/1.1
 content-type: application/json
 
 {
-    "email":"pedro@gmail.com",
-    "nameResponsavel":"brener",
-    "nameFantasia":"FATEC",
-    "cnpj":"123456789",
-    "password":"123"
+    "name":"Abluble",
+    "description":"loucuras",
+    "time":"12",
+    "image":"123456789"
+    
 }

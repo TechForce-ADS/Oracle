@@ -18,7 +18,7 @@ connect()
   .then(() => {
 
     const coursesController = require('./src/controllers/CoursesController');
-    app.use('api/courses', coursesController);
+    app.use('/api/courses', coursesController);
 
     const userController = require('./src/controllers/UserController');
     app.use('/api/users', userController);
