@@ -54,22 +54,9 @@ const Navbar = () => {
   const screenHeight = Dimensions.get('window').height;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchBar}>
-        <TextInput
-          style={styles.input}
-          placeholder="Pesquisar..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          onSubmitEditing={handleSearch}
-        />
-        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
-          <Image source={SearchIcon} style={styles.searchIcon} />
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={styles.filterButton} onPress={handleOrderByAlphabetical}>
-        <Text style={styles.filterButtonText}>A-Z</Text>
-      </TouchableOpacity>
+    <View style={styles.header}>
+      
+    
       <TouchableOpacity style={styles.menuButton} onPress={toggleMenu}>
         <Image source={MenuIcon} style={styles.menuIcon} />
       </TouchableOpacity>
@@ -87,9 +74,14 @@ const Navbar = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
+  header: {
+    backgroundColor: '#50100c',
+    width: 420,
+    height: 70,
     alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    zIndex: 2000,
   },
 
   logo: {
@@ -101,10 +93,12 @@ const styles = StyleSheet.create({
 
   menuButton: {
     backgroundColor: '#50100c',
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft:330,
+    zIndex: 2001,
   },
 
   menuIcon: {

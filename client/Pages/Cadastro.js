@@ -7,47 +7,32 @@ import Navbar from '../Components/Navbar';
 
 
 const Cadastro = ({ navigation }) => {
-    const [menuAberto, setMenuAberto] = useState(false);
-    const [sexo, setSexo] = useState(null);
-    const [open, setOpen] = useState(false);
-    const [items, setItems] = useState([
-        { label: 'Masculino', value: 'masculino' },
-        { label: 'Feminino', value: 'feminino' },
-        { label: 'Outro', value: 'outro' }
-    ]);
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [number, setNumber] = useState('');
-    const [cpf, setCpf] = useState('');
-    const [address, setAddress] = useState('');
 
-    const toggleMenu = () => {
-        setMenuAberto(!menuAberto);
-    };
+    const [email, setEmail] = useState('');
+    const [nameFantasia, setNameFantasia] = useState('');
+    const [nameResponsavel, setNameResponsavel] = useState('');
+    const [cnpj, setCnpj] = useState('');
+    const [password, setPassword] = useState('');
+
 
     const handleEmailChange = (text) => {
         setEmail(text);
     };
 
-    const handleNameChange = (text) => {
-        setName(text);
+    const handleNameFantasiaChange = (text) => {
+        setNameFantasia(text);
     };
 
-    const handleLastNameChange = (text) => {
-        setLastName(text);
+    const handleNameResponsavelChange = (text) => {
+        setNameResponsavel(text);
     };
 
-    const handleNumberChange = (text) => {
-        setNumber(text);
+    const handleCnpjChange = (text) => {
+        setCnpj(text);
     };
 
-    const handleCpfChange = (text) => {
-        setCpf(text);
-    };
-
-    const handleAddressChange = (text) => {
-        setAddress(text);
+    const handlePasswordChange = (text) => {
+        setPassword(text);
     };
 
 
@@ -58,7 +43,7 @@ const Cadastro = ({ navigation }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, name, lastName, number, sexo, cnpj, address }),
+                body: JSON.stringify({ email, nameFantasia, nameResponsavel, cnpj, password }),
             });
 
             const data = await response.json();
@@ -66,7 +51,7 @@ const Cadastro = ({ navigation }) => {
             if (response.ok) {
                 navigation.navigate('TelaLista');
             } else {
-                // Handle login failure
+
                 Alert.alert('Error', data.error);
             }
         } catch (error) {
@@ -74,6 +59,9 @@ const Cadastro = ({ navigation }) => {
             Alert.alert('Error', 'Internal server error');
         }
     };
+
+
+
 
     return (
 
@@ -88,86 +76,61 @@ const Cadastro = ({ navigation }) => {
                     </View>
                     <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 12, marginLeft: 10, }} />
                 </View>
-                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Nome:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Nome'
-                            value={name}
-                            onChangeText={handleNameChange}
-                        >
-                        </TextInput>
-                    </View>
-                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Sobrenome:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Sobrenome'
-                            value={lastName}
-                            onChangeText={handleLastNameChange}
-                        >
-                        </TextInput>
-                    </View>
-                </View>
 
+                <View style={styles.ContainerLogin}>
+                    <Text style={styles.label}>Nome:</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Nome Fantasia'
+                        placeholderTextColor={'#fff'}
+                        value={nameFantasia}
+                        onChangeText={handleNameFantasiaChange}
+                    />
+                    <View style={styles.Labels}>
+                        <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', letterSpacing: 2 }}>NOME RESPONSAVEL</Text>
+                    </View>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Nome'
+                        placeholderTextColor={'#fff'}
+                        value={nameResponsavel}
+                        onChangeText={handleNameResponsavelChange}
+                    />
+                    <View style={styles.Labels}>
+                        <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', letterSpacing: 2 }}>CNPJ</Text>
+                    </View>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='CNPJ'
+                        placeholderTextColor={'#fff'}
+                        value={cnpj}
+                        onChangeText={handleCnpjChange}
+                    />
 
+                    <View style={styles.Labels}>
+                        <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', letterSpacing: 2 }}>EMAIL</Text>
+                    </View>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Email'
+                        placeholderTextColor={'#fff'}
+                        value={email}
+                        onChangeText={handleEmailChange}
+                    />
+                    <View style={styles.Labels}>
+                        <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', letterSpacing: 2 }}>SENHA</Text>
+                    </View>
 
-                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                    <View style={{ width: '65%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Email:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Email'
-                            value={email}
-                            onChangeText={handleEmailChange}
-                        >
-                        </TextInput>
-                    </View>
-                    <View style={{ width: '35%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Sexo:</Text>
-                        <DropDownPicker
-                            open={open}
-                            value={sexo}
-                            items={items}
-                            setOpen={setOpen}
-                            setValue={setSexo}
-                            setItems={setItems}
-                            style={styles.dropdown}
-                            dropDownContainerStyle={styles.dropdownContainer}
-                            zIndex={1000}
-                            zIndexInverse={1000}
-                            placeholder="Sexo"
-                        />
-                    </View>
-                </View>
-                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Numero:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Número'
-                            value={number}
-                            onChangeText={handleNumberChange}
-                        >
-                        </TextInput>
-                    </View>
-                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>CPF:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='CPF'
-                            value={cpf}
-                            onChangeText={handleCpfChange}
-                        >
-                        </TextInput>
-                    </View>
-                </View>
-                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                    <View style={{ width: '100%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Endereço:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Endereço'
-                            value={address}
-                            onChangeText={handleAddressChange}
-                        >
-                        </TextInput>
-                    </View>
+                    <TextInput
+                        secureTextEntry={true}
+                        style={styles.input}
+                        placeholder='Senha'
+                        value={password}
+                        onChangeText={handlePasswordChange}
+                        placeholderTextColor={'#fff'}
+
+                    />
+
                 </View>
             </ScrollView>
             <TouchableOpacity onPress={handleRegister} style={styles.cadastrarBTN}>
@@ -223,6 +186,39 @@ const styles = StyleSheet.create({
         marginBottom: 12
     },
 
+
+    ContainerLogin: {
+        width: "100%",
+        height: 600,
+        marginTop: 20,
+        alignItems:'center'
+    },
+
+
+    Textos: {
+        height: 85,
+        width: "100%",
+        display: 'flex',
+        alignItems: 'center'
+
+    },
+
+    Labels: {
+        height: 20,
+
+        display: 'flex',
+    },
+
+    input: {
+        width: 250,
+        height: 50,
+        backgroundColor: 'rgba(147, 113, 112, 0.3)',
+        color: '#fff',
+        paddingLeft: 15,
+        borderRadius: 18,
+        marginBottom: 10,
+        fontFamily: 'Poppins_300Light'
+    },
 
 
 });

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const RegisterCourseUC = require('../useCases/courses/RegisterCourse');
-const { listCourse, updateCourse } = require('../data/repositories/CoursesRepository');
+const { listCourse, updateCourse, deleteCourse } = require('../data/repositories/CoursesRepository');
 const { deletePartner } = require('../data/repositories/PartnerRepository');
 
 router.post('/register', async (req, res) =>{
@@ -31,10 +31,10 @@ router.get('/coursesList', async(req, res) => {
     }
 })
 
-router.delete("/delete/:id", async(req, res) => {
+router.delete("/delete/:_id", async(req, res) => {
     try {
         const courseId = req.params._id;
-        const result = await deletePartner(courseId);
+        const result = await deleteCourse(courseId);
         res.status(200).json(result);
     } catch (error) {
         console.error(error);
@@ -42,7 +42,7 @@ router.delete("/delete/:id", async(req, res) => {
     }
 })
 
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:_id", async (req, res) => {
     try {
         const courseId = req.params._id;
         const updateData = req.body;

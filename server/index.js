@@ -29,6 +29,10 @@ connect()
     const adminController = require('./src/controllers/AdminController');
     app.use('/api/admin', adminController)
     
+    const expertiseController = require('./src/controllers/ExpertiseController');
+    app.use('/api/expertise', expertiseController)
+    
+
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
