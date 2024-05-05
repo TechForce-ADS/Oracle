@@ -85,8 +85,7 @@ router.put("/update/:_id", async (req, res) => {
       email:email,
       password:password
     }
-    // Chamar a função para atualizar o parceiro
-    const updatedPartner = await updatePartner(partnerId, updatedData);
+
 
     // Responder com o parceiro atualizado
     if (updatedPartner) {
