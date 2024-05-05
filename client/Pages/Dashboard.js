@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Text, Alert } from 'react-native';   
 import { BarChart } from 'react-native-chart-kit';
-import { ip } from "@env";
+import { IP } from "@env";
 import { useFocusEffect } from '@react-navigation/native';  
 
 import Navbar from '../Components/Navbar';
@@ -14,14 +14,14 @@ export default function Dashboard() {
     useCallback(() => {
       async function fetchData() {
         try {
-          const adminResponse = await fetch(`http://${ip}:3001/api/admin/adminCount`);
+          const adminResponse = await fetch(`http://${IP}:3001/api/admin/adminCount`);
           if (!adminResponse.ok) {
             throw new Error('Erro ao buscar quantidade de administradores');
           }
           const adminCount = await adminResponse.json();
           setAdminCount(adminCount);
 
-          const partnerResponse = await fetch(`http://${ip}:3001/api/partners/partnerCount`);
+          const partnerResponse = await fetch(`http://${IP}:3001/api/partners/partnerCount`);
           if (!partnerResponse.ok) {
             throw new Error('Erro ao buscar quantidade de ');
           }

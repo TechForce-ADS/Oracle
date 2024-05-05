@@ -9,7 +9,7 @@ import {
   Poppins_500Medium,
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
-import {ip} from "@env";
+import {IP} from "@env";
 
 
 
@@ -33,7 +33,7 @@ const CadastroConta = ({ navigation }) => {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch(`http://${ip}:3001/api/admin/register`, {
+      const response = await fetch(`http://${IP}:3001/api/admin/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

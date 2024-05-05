@@ -68,7 +68,11 @@ const Login = ({ navigation }) => {
           isMainAdmin:adminData.isMainAdmin
         }
         console.log(loggedAdmin)
-        navigation.navigate('Admin');
+        if(loggedAdmin.isMainAdmin == true){
+          navigation.navigate('Admin');
+        }else{
+          navigation.navigate('TelaLista');
+        }
       } else { 
         setErrorMessage('Usuário ou senha incorretos');
         toggleErrorModal();

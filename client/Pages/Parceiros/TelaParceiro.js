@@ -4,7 +4,7 @@ import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Pop
 import Navbar from '../../Components/NavbarParceiro';
 import { useFocusEffect } from '@react-navigation/native';
 import User from '../../img/User.png';
-import { ip } from "@env";
+import { IP } from "@env";
 
 
 export default function TelaParceiro({ navigation, route }) {
@@ -36,7 +36,7 @@ export default function TelaParceiro({ navigation, route }) {
     React.useCallback(() => {
       async function fetchData() {
         try {
-          const response = await fetch(`http://${ip}:3001/api/expertise/expertisesList`);
+          const response = await fetch(`http://${IP}:3001/api/expertise/expertisesList`);
           if (!response.ok) {
             throw new Error('Erro ao buscar partners');
           }

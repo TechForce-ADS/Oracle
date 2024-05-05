@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { ip } from "@env";
+import { IP } from "@env";
 import Navbar from '../Components/Navbar';
 
 
@@ -38,7 +37,7 @@ const Cadastro = ({ navigation }) => {
 
     const handleRegister = async () => {
         try {
-            const response = await fetch(`http://${ip}:3001/api/partners/register`, {
+            const response = await fetch(`http://${IP}:3001/api/partners/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

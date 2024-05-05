@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 import { IP } from "@env";
 import NavbarAdmin from '../Components/NavbarAdmin';
 
