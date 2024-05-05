@@ -1,20 +1,20 @@
 const {registerAdmin} = require('../../data/repositories/AdminRepository.js');
 
 class RegisterAdminUC {
-  constructor(name, email,password,isAdminMain) {
+  constructor(name, email,password,isMainAdmin) {
     this.name = name;
     this.email = email;
     this.password = password;
-    this.isAdminMain = isAdminMain;
+    this.isMainAdmin = isMainAdmin;
   }
 
   async create() {
     try {
       const adminData = {
-        name: this.email,
+        name: this.name,
         email: this.email,
         password: this.password,
-        isAdminMain:this.isAdminMain,
+        isMainAdmin:this.isMainAdmin,
       };
       
       return await registerAdmin(adminData);

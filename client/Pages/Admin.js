@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';;
 import Ver from '../img/click.png';
 import Search from '../img/search.png';
 import User from '../img/User.png';
-import {IP} from "@env";
+import {ip} from "@env";
 import NavbarAdmin from '../Components/NavbarAdmin';
 
 
@@ -35,7 +35,7 @@ const Admin = ({ navigation }) => {
     React.useCallback(() => {
       async function fetchData() {
         try {
-          const response = await fetch(`http://${IP}:3001/api/admin/adminList`);
+          const response = await fetch(`http://${ip}:3001/api/admin/adminList`);
           if (!response.ok) {
             throw new Error('Erro ao buscar admins');
           }
@@ -95,7 +95,6 @@ const Admin = ({ navigation }) => {
               </View>
               <View style={styles.TextName}>
                 <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_300Light' }}>{admin.name}</Text>
-                <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_700Bold' }}>Nivel - </Text>
               </View>
               <View style={{ width: 30, height: '100%', marginTop: 10 }}>
                 <TouchableOpacity key={admin._id} onPress={() => editarAdmin(admin)}>

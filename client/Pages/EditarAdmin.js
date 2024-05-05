@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert, ScrollView } from 'react-native';
-import { IP } from "@env";
+import { ip } from "@env";
 
 import NavbarAdmin from '../Components/NavbarAdmin';
 
@@ -31,7 +31,7 @@ const EditarAdmin = ({ navigation, route }) => {
 
     const handleUpdate = async () => {
         try {
-            const response = await fetch(`http://${IP}:3001/api/admin/update/${partnerData._id}`, {
+            const response = await fetch(`http://${ip}:3001/api/admin/update/${partnerData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

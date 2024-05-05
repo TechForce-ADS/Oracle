@@ -13,8 +13,8 @@ router.post('/register', async (req, res) => {
       const name = req.body.name;
       const email = req.body.email;
       const password = await bcrypt.hash(req.body.password,salt)
-      const isAdminMain = req.body.isAdminMain;
-      const registerUC = new RegisterAdminUC(name,email,password,isAdminMain); 
+      const isMainAdmin = req.body.isMainAdmin;
+      const registerUC = new RegisterAdminUC(name,email,password,isMainAdmin); 
       const newAdmin= await registerUC.create();
       if (newAdmin){
         res.status(201).json(newAdmin);

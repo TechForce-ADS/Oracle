@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { View, Image, TouchableOpacity, ScrollView, StyleSheet, Text, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { IP } from "@env";
+import { ip } from "@env";
 
 import Navbar from '../Components/Navbar';
 
@@ -26,7 +26,7 @@ export default function Cursos({ navigation }) {
     useCallback(() => {
       async function fetchData() {
         try {
-          const response = await fetch(`http://${IP}:3001/api/courses/coursesList`);
+          const response = await fetch(`http://${ip}:3001/api/courses/coursesList`);
           if (!response.ok) {
             throw new Error('Erro ao buscar cursos');
           }
