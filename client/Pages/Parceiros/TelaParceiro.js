@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../../Components/NavbarParceiro';
-import { useFocusEffect } from '@react-navigation/native';
 import User from '../../img/User.png';
 import { ip } from "@env";
-
+import * as Progress from 'react-native-progress';
 
 export default function TelaParceiro({ navigation, route }) {
-  const [expertises, setExpertises] = useState([]);
+
   const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
   const [expanded, setExpanded] = useState(false);
   const [fonteLoaded] = useFonts({
@@ -31,29 +30,112 @@ export default function TelaParceiro({ navigation, route }) {
     navigation.navigate('EditarParceiro', { partnerToEdit: partner });
   };
 
+  const excluirPartner = (_id) => {
+    Alert.alert(
+      'Você tem certeza?',
+      'Esta ação não poderá ser revertida!',
+      [
+        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
+        { text: 'Excluir', onPress: () => excluirConfirmed(_id) },
+      ],
+      { cancelable: true }
+    );
+  };
 
-  useEffect(
-    React.useCallback(() => {
-      async function fetchData() {
-        try {
-          const response = await fetch(`http://${ip}:3001/api/expertise/expertisesList`);
-          if (!response.ok) {
-            throw new Error('Erro ao buscar partners');
-          }
-          const data = await response.json();
-          setExpertises(data);
-        } catch (error) {
-          console.error('Erro ao buscar partners:', error);
-          Alert.alert('Erro', 'Não foi possível carregar a lista de parceiros');
-        }
+  const excluirConfirmed = async (_id) => {
+    try {
+      await fetch(`http://${ip}:3001/api/partners/delete/${_id}`, {
+        method: 'DELETE',
+      });
+      
+      setPartnerData({});
+      navigation.navigate('LoginParceiro');
+    } catch (error) {
+      console.error('Erro ao excluir parceiro:', error);
+      Alert.alert("Erro", "Algo deu errado ao tentar excluir o parceiro.");
+    }
+  };
+
+  const adquirirExpertise = (expertiseKey) => {
+    Alert.alert(
+      'Adquirir Expertise',
+      `Deseja adquirir a expertise ${expertiseKey}?`,
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel'
+        },
+        {
+          text: 'Adquirir',
+          onPress: () => adquirirExpertiseConfirmado(expertiseKey),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const adquirirExpertiseConfirmado = async (expertiseKey) => {
+    try {
+      await updateExpertise(partnerData._id, expertiseKey, true);
+      // Atualiza o estado local do parceiro
+      setPartnerData(prevData => ({
+        ...prevData,
+        [expertiseKey]: true
+      }));
+      Alert.alert(
+        'Sucesso',
+        `A expertise ${expertiseKey} foi adquirida com sucesso!`
+      );
+    } catch (error) {
+      console.error('Erro ao adquirir expertise:', error);
+      Alert.alert(
+        'Erro',
+        'Houve um erro ao tentar adquirir a expertise. Por favor, tente novamente.'
+      );
+    }
+  };
+
+  const updateExpertise = async (partnerId, expertiseKey, value) => {
+    try {
+      const response = await fetch(`http://${ip}:3001/api/partners/updateExpertise/${partnerId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          expertise: expertiseKey,
+          value: value
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar expertise');
       }
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
 
-      fetchData();
-   
-
-    }, [])
-  );
-  
+  const renderExpertise = (key, label, progress) => {
+    const isAcquired = partnerData[key];
+    return (
+      <TouchableOpacity style={styles.tarefa} onPress={() => navigation.navigate('Tasks')}>
+        <View style={styles.TitleExpertise}><Text style={{ fontFamily: 'Poppins_300Light', color: '#fff' }}>{label}</Text></View>
+        <View style={styles.ProgressBar}>
+          {isAcquired ? (
+            <>
+              <Text style={{ color: 'white', marginLeft: 12, fontFamily: 'Poppins_300Light' }}>{progress} %</Text>
+              <Progress.Bar progress={progress / 100} width={200} color='#FF4700' backgroundColor='#FFF' />
+            </>
+          ) : (
+            <TouchableOpacity onPress={() => adquirirExpertise(key)}>
+              <Text style={{ color: 'white', marginLeft: 12, fontFamily: 'Poppins_300Light' }}>Adquirir</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -96,19 +178,10 @@ export default function TelaParceiro({ navigation, route }) {
           </View>
           <View style={{ width: 150, height: 2, backgroundColor: 'white', marginRight: 12, marginLeft: 12, }} />
         </View>
-        {expertises.map((expertise) => (
-          <TouchableOpacity key={expertise._id} onPress={() => vizualizar(expertise)}>
-            <View style={styles.tarefa}>
-              <View style={styles.TextName}>
-                <Text style={{ fontSize: 18, color: '#FFF', letterSpacing: 1, fontFamily: 'Poppins_300Light' }}>
-                  {expertise.title}
-                </Text>
-                
-              </View>
-             
-            </View>
-          </TouchableOpacity>
-        ))}
+        {renderExpertise('Expertise1', 'Cloud Build', 0)}
+        {renderExpertise('Expertise2', 'Cloud Sell', 0)}
+        {renderExpertise('Expertise3', 'Service Expertise', 0)}
+        {renderExpertise('Expertise4', 'Industry Healthcare Expertise', 0)}
       </ScrollView>
     </View>
   );

@@ -3,8 +3,6 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert, Scro
 import { ip } from "@env";
 import Navbar from '../Components/Navbar';
 
-
-
 const EditarParceiro = ({ navigation, route }) => {
     const [menuAberto, setMenuAberto] = useState(false);
     const [partnerData, setPartnerData] = useState(route.params?.partnerToEdit || {});
@@ -47,7 +45,7 @@ const EditarParceiro = ({ navigation, route }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, name, lastName, number, sexo, cpf, address }),
+                body: JSON.stringify({ email, nameResponsavel, lastName, number, sexo, cpf, address }),
             });
 
             const data = await response.json();
