@@ -2,7 +2,7 @@ POST http://localhost:3001/api/courses/register HTTP/1.1
 content-type: application/json
 
 {
-    "name":"Abluble",
+    "name":"Ablauble",
     "description":"loucuras",
     "time":"12",
     "image":"123456789"

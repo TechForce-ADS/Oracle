@@ -11,7 +11,6 @@ import {
 } from '@expo-google-fonts/poppins'
 import {ip} from "@env";
 
-//import CookieManager from '@react-native-cookies/cookies';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');

@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/users/register HTTP/1.1
+content-type: application/json
+
+{
+    "email":"micael@email.com",
+    "name":"micael",
+    "lastName":"micaeldois",
+    "sexo":"homem",
+    "number":"1299185132",
+    "cpf":"1233172321",
+    "address":"avenida",
+    "password":"123"
+}

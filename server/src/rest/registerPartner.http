@@ -1,0 +1,12 @@
+POST http://localhost:3001/api/partners/register HTTP/1.1
+content-type: application/json
+
+{
+    "email":"joaoo@email.com",
+    "nameFantasia":"joaoo",
+    "nameResponsavel":"joaoo",
+    "cnpj":"8423323232721",
+    "password":"123"
+}
+
+

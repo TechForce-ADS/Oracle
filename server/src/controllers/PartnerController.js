@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {getPartnerCount} = require('../data/repositories/PartnerRepository.js');
 const {listPartners} = require('../data/repositories/PartnerRepository.js');
 const {deletePartner} = require('../data/repositories/PartnerRepository.js');
 const {updatePartner} = require('../data/repositories/PartnerRepository.js');
@@ -50,6 +51,17 @@ router.get('/partnerList', async (req, res) => {
     res.status(200).json(partners);
   } catch (error) {
     console.error('Error listing partners:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+router.get('/partnerCount', async (req, res) => {
+  try {
+    const partner = await getPartnerCount();
+    res.status(200).json(partner);
+  } catch (error) {
+    console.error('Error listing admin:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

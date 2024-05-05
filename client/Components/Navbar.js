@@ -79,7 +79,8 @@ const Navbar = () => {
         <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Cursos')}>Cursos</Text>
-        <Text style={styles.menuText}>Menu Item 4</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Dashboard')}>Dashboard</Text>
+
       </Animated.View>
     </View>
   );

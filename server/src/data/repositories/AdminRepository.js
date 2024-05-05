@@ -17,6 +17,16 @@ async function registerAdmin(adminData) {
     }
   }
 
+  async function getAdminCount() {
+    try {
+      return await Admin.countDocuments({});
+    } catch (error) {
+      console.error('Error listing admin:', error);
+      throw new Error('Failed to list admin');
+    }
+  }
+
   module.exports = {
+    getAdminCount,
     registerAdmin
 }; 
