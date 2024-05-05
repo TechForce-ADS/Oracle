@@ -135,10 +135,6 @@ const Login = ({ navigation }) => {
           style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
           Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastroConta')}> Criar uma conta</Text>
         </Text>
-        <Text
-          style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
-          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('TelaLista')}> Criar uma conta</Text>
-        </Text>
         <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('Cursos')}>
           <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Sou Parceiro</Text>
         </TouchableOpacity>

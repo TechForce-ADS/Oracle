@@ -91,6 +91,24 @@ async function registerAdmin(adminData) {
     }
   }
 
+  async function deleteAdmin(AdminId) {
+    try {
+      // Tentar encontrar e excluir o administrador pelo ID
+      const result = await Admin.deleteOne({ _id: AdminId });
+  
+      if (result.deletedCount === 0) {
+        throw new Error('Administrador não encontrado');
+      }
+  
+      // Retornar uma mensagem de sucesso
+      return { message: "Administrador removido com sucesso" };
+    } catch (error) {
+      // Se ocorrer um erro, logar o erro e retornar um erro 500
+      console.error('Erro ao deletar administrador:', error);
+      throw new Error('Erro interno do servidor');
+    }
+  }
+
   module.exports = {
     registerAdmin,
     loginAdmin,
@@ -98,5 +116,6 @@ async function registerAdmin(adminData) {
     registerAdmin,
     listAdmins,
     updateAdmin,
-    loginAdmin
+    loginAdmin,
+    deleteAdmin
 }; 

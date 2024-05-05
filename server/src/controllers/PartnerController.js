@@ -85,10 +85,17 @@ router.delete("/delete/:_id", async (req, res) => {
 
 
 router.put("/update/:_id", async (req, res) => {
+  const salt = await bcrypt.genSalt(10)
   try {
     const partnerId = req.params._id;
-    const updatedData = req.body; // Dados que serão atualizados
-
+    const name = req.body.name; 
+    const email = req.body.email; 
+    const password = await bcrypt.hash(req.body.password,salt)
+    const updatedData = {
+      name:name,
+      email:email,
+      password:password
+    }
     // Chamar a função para atualizar o parceiro
     const updatedPartner = await updatePartner(partnerId, updatedData);
 
@@ -107,7 +114,6 @@ router.put("/update/:_id", async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  console.log("login route called")
   try {
     const { email, password } = req.body;
     const loginPartnerUC = new LoginPartnerUC(email, password); 

@@ -1,28 +1,20 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert, ScrollView } from 'react-native';
-import { IP } from "@env";
-
+import { ip } from "@env";
 import Navbar from '../Components/Navbar';
 
 
 
 const EditarParceiro = ({ navigation, route }) => {
     const [menuAberto, setMenuAberto] = useState(false);
-    const [sexo, setSexo] = useState(null);
     const [partnerData, setPartnerData] = useState(route.params?.partnerToEdit || {});
     const [email, setEmail] = useState(partnerData.email || '');
-    const [name, setName] = useState(partnerData.name || '');
-    const [lastName, setLastName] = useState(partnerData.lastName || '');
-    const [number, setNumber] = useState(partnerData.number || '');
-    const [cpf, setCpf] = useState(partnerData.cpf || '');
-    const [address, setAddress] = useState(partnerData.address || '');
+    const [nameFantasia, setName] = useState(partnerData.nameFantasia || '');
+    const [nameResponsavel, setNameResponsavel] = useState(partnerData.nameResponsavel|| '');
+    const [cnpj, setCnpj] = useState(partnerData.cnpj || '');
+
 
     const [open, setOpen] = useState(false);
-    const [items, setItems] = useState([
-        { label: 'Masculino', value: 'masculino' },
-        { label: 'Feminino', value: 'feminino' },
-        { label: 'Outro', value: 'outro' }
-    ]);
 
 
 
@@ -34,30 +26,23 @@ const EditarParceiro = ({ navigation, route }) => {
         setEmail(text);
     };
 
-    const handleNameChange = (text) => {
-        setName(text);
+    const handleNameFantasiaChange = (text) => {
+        setNameFantasia(text);
     };
 
-    const handleLastNameChange = (text) => {
-        setLastName(text);
+    const handleNameResponsavelChange = (text) => {
+        setNameResponsavel(text);
     };
 
-    const handleNumberChange = (text) => {
-        setNumber(text);
+    const handleCnpjChange = (text) => {
+        setCnpj(text);
     };
 
-    const handleCpfChange = (text) => {
-        setCpf(text);
-    };
-
-    const handleAddressChange = (text) => {
-        setAddress(text);
-    };
 
 
     const handleUpdate = async () => {
         try {
-            const response = await fetch(`http://${IP}:3001/api/partners/update/${partnerData._id}`, {
+            const response = await fetch(`http://${ip}:3001/api/partners/update/${partnerData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,26 +77,24 @@ const EditarParceiro = ({ navigation, route }) => {
                 </View>
                 <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
                     <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Nome:</Text>
+                        <Text style={styles.label}>Nome Fantasia:</Text>
                         <TextInput style={styles.inputNome}
                             placeholder='Nome'
-                            value={name}
-                            onChangeText={handleNameChange}
+                            value={nameFantasia}
+                            onChangeText={handleNameFantasiaChange}
                         >
                         </TextInput>
                     </View>
                     <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Sobrenome:</Text>
+                        <Text style={styles.label}>Nome do Responsável:</Text>
                         <TextInput style={styles.inputNome}
-                            placeholder='Sobrenome'
-                            value={lastName}
-                            onChangeText={handleLastNameChange}
+                            placeholder='Nome Responsavel'
+                            value={nameResponsavel}
+                            onChangeText={handleNameResponsavelChange}
                         >
                         </TextInput>
                     </View>
                 </View>
-
-
 
                 <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
                     <View style={{ width: '65%', height: 100, justifyContent: 'center', padding: 12 }}>
@@ -124,49 +107,15 @@ const EditarParceiro = ({ navigation, route }) => {
                         </TextInput>
                     </View>
                     <View style={{ width: '35%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Sexo:</Text>
-                        <DropDownPicker
-                            open={open}
-                            value={sexo}
-                            items={items}
-                            setOpen={setOpen}
-                            setValue={setSexo}
-                            setItems={setItems}
-                            style={styles.dropdown}
-                            dropDownContainerStyle={styles.dropdownContainer}
-                            zIndex={1000}
-                            zIndexInverse={1000}
-                            placeholder="Sexo"
-                        />
                     </View>
                 </View>
                 <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
                     <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Numero:</Text>
+                        <Text style={styles.label}>CNPJ:</Text>
                         <TextInput style={styles.inputNome}
-                            placeholder='Número'
-                            value={number}
-                            onChangeText={handleNumberChange}
-                        >
-                        </TextInput>
-                    </View>
-                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>CPF:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='CPF'
-                            value={cpf}
-                            onChangeText={handleCpfChange}
-                        >
-                        </TextInput>
-                    </View>
-                </View>
-                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                    <View style={{ width: '100%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Endereço:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Endereço'
-                            value={address}
-                            onChangeText={handleAddressChange}
+                            placeholder='CNPJ'
+                            value={cnpj}
+                            onChangeText={handleCnpjChange}
                         >
                         </TextInput>
                     </View>
@@ -176,12 +125,6 @@ const EditarParceiro = ({ navigation, route }) => {
                 <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Editar</Text>
             </TouchableOpacity>
         </View>
-
-
-
-
-
-
     );
 };
 

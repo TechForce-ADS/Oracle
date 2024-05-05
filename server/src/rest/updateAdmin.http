@@ -1,8 +1,8 @@
-PUT http://localhost:3001/api/admin/update/6637b8e25e0b20bfd4cc3ece HTTP/1.1
+PUT http://localhost:3001/api/admin/update/6637e11ad2ac4047ff89940b HTTP/1.1
 Content-Type: application/json
 
 {
-    "name": "brener",
-    "email":"brener@gmail.com",
-    "password":"123"
+    "name": "micael",
+    "email":"@gmail.com",
+    "password": "1235"
 }

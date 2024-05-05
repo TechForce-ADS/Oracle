@@ -11,7 +11,6 @@ const EditarAdmin = ({ navigation, route }) => {
     const [adminData, setAdminData] = useState(route.params?.adminToEdit || {});
     const [email, setEmail] = useState(adminData.email || '');
     const [name, setName] = useState(adminData.name || '');
-
     const [open, setOpen] = useState(false);
 
 
@@ -26,12 +25,12 @@ const EditarAdmin = ({ navigation, route }) => {
     const handleNameChange = (text) => {
         setName(text);
     };
-
-
+    
+    
 
     const handleUpdate = async () => {
         try {
-            const response = await fetch(`http://${ip}:3001/api/admin/update/${partnerData._id}`, {
+            const response = await fetch(`http://${ip}:3001/api/admin/update/${adminData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,7 +59,7 @@ const EditarAdmin = ({ navigation, route }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
                     <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 10, marginLeft: 16, }} />
                     <View>
-                        <Text style={{ width: 175, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Editar um parceiro</Text>
+                        <Text style={{ width: 175, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Editar um Administrador</Text>
                     </View>
                     <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 16, marginLeft: 10, }} />
                 </View>
@@ -88,64 +87,12 @@ const EditarAdmin = ({ navigation, route }) => {
                         >
                         </TextInput>
                     </View>
-                    <View style={{ width: '35%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Sexo:</Text>
-                        <DropDownPicker
-                            open={open}
-                            value={sexo}
-                            items={items}
-                            setOpen={setOpen}
-                            setValue={setSexo}
-                            setItems={setItems}
-                            style={styles.dropdown}
-                            dropDownContainerStyle={styles.dropdownContainer}
-                            zIndex={1000}
-                            zIndexInverse={1000}
-                            placeholder="Sexo"
-                        />
-                    </View>
-                </View>
-                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Numero:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Número'
-                            value={number}
-                            onChangeText={handleNumberChange}
-                        >
-                        </TextInput>
-                    </View>
-                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>CPF:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='CPF'
-                            value={cpf}
-                            onChangeText={handleCpfChange}
-                        >
-                        </TextInput>
-                    </View>
-                </View>
-                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
-                    <View style={{ width: '100%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Endereço:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Endereço'
-                            value={address}
-                            onChangeText={handleAddressChange}
-                        >
-                        </TextInput>
-                    </View>
                 </View>
             </ScrollView>
             <TouchableOpacity onPress={handleUpdate} style={styles.editarBTN}>
                 <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Editar</Text>
             </TouchableOpacity>
         </View>
-
-
-
-
-
 
     );
 };
@@ -181,14 +128,6 @@ const styles = StyleSheet.create({
         borderRadius: 9,
         fontFamily: 'Poppins_300Light'
     },
-    dropdown: {
-        backgroundColor: '#DCDCDC',
-        borderRadius: 9,
-        minHeight: 40,
-
-    },
-
-
 
     editarBTN: {
         height: 45,

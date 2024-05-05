@@ -24,6 +24,7 @@ import CursosParceiro from './Pages/Parceiros/CursosParceiro';
 import InformacoesCursoParceiro from './Pages/Parceiros/InformacoesCursosParceiro';
 import TelaListaParceiro from './Pages/Parceiros/TelaListaParceiro';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -51,9 +52,7 @@ export default function App() {
         <Stack.Screen name="CursosParceiro" component={CursosParceiro} />
         <Stack.Screen name="InformacoesCursoParceiro" component={InformacoesCursoParceiro} />
         <Stack.Screen name="TelaListaParceiro" component={TelaListaParceiro} />
-    
-
-
+  
       </Stack.Navigator>
     </NavigationContainer>
   );

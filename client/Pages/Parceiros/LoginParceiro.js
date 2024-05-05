@@ -12,7 +12,7 @@ import {
   Poppins_500Medium,
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
-import {IP} from "@env";
+import {ip} from "@env";
 import Navbar from '../../Components/Navbar';
 //import CookieManager from '@react-native-cookies/cookies';
 
@@ -51,7 +51,7 @@ const LoginParceiro = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`http://${IP}:3001/api/partners/login`, {
+      const response = await fetch(`http://${ip}:3001/api/partners/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

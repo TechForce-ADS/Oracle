@@ -28,7 +28,7 @@ const Admin = ({ navigation }) => {
   };
 
   const vizualizar = (admin) => {
-    navigation.navigate('Informacoes', { adminToSee: admin });
+    navigation.navigate('InformacoesAdmin', { adminToSee: admin });
   };
 
   useFocusEffect(
