@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert, ScrollView } from 'react-native';
-import { IP } from "@env";
+import DropDownPicker from 'react-native-dropdown-picker';
+import { ip } from "@env";
 
 import Navbar from '../Components/Navbar';
-
-
 
 const EditarParceiro = ({ navigation, route }) => {
     const [menuAberto, setMenuAberto] = useState(false);
     const [sexo, setSexo] = useState(null);
     const [partnerData, setPartnerData] = useState(route.params?.partnerToEdit || {});
     const [email, setEmail] = useState(partnerData.email || '');
-    const [name, setName] = useState(partnerData.name || '');
+    const [nameResponsavel, setNameResponsavel] = useState(partnerData.nameResponsavel || '');
     const [lastName, setLastName] = useState(partnerData.lastName || '');
     const [number, setNumber] = useState(partnerData.number || '');
     const [cpf, setCpf] = useState(partnerData.cpf || '');
@@ -35,7 +34,7 @@ const EditarParceiro = ({ navigation, route }) => {
     };
 
     const handleNameChange = (text) => {
-        setName(text);
+        setNameResponsavel(text);
     };
 
     const handleLastNameChange = (text) => {
@@ -57,12 +56,12 @@ const EditarParceiro = ({ navigation, route }) => {
 
     const handleUpdate = async () => {
         try {
-            const response = await fetch(`http://${IP}:3001/api/partners/update/${partnerData._id}`, {
+            const response = await fetch(`http://${ip}:3001/api/partners/update/${partnerData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, name, lastName, number, sexo, cpf, address }),
+                body: JSON.stringify({ email, nameResponsavel, lastName, number, sexo, cpf, address }),
             });
 
             const data = await response.json();
@@ -95,7 +94,7 @@ const EditarParceiro = ({ navigation, route }) => {
                         <Text style={styles.label}>Nome:</Text>
                         <TextInput style={styles.inputNome}
                             placeholder='Nome'
-                            value={name}
+                            value={nameResponsavel}
                             onChangeText={handleNameChange}
                         >
                         </TextInput>
