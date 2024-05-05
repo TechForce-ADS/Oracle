@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import Logo from '../img/LogoN.png';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import {
   useFonts, Poppins_100Thin,
@@ -50,7 +50,7 @@ const Login = ({ navigation }) => {
   const handleLogin = async () => {
 
     try {
-      const response = await fetch(`http://${ip}:3001/api/admin/login`, {
+      const response = await fetch(`http://192.168.15.99:3001/api/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -124,12 +124,14 @@ const Login = ({ navigation }) => {
           style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
           Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastroConta')}> Criar uma conta</Text>
         </Text>
-        <Text
-          style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
-          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastrarAdmin')}> Criar uma conta</Text>
-        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
+                    <View style={{ width: 350, height: 1, backgroundColor: 'white', marginRight: 10, marginLeft: 12, }} />
+                    </View>
         <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('LoginParceiro')}>
           <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Sou Parceiro</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('CadastroContaParceiro')}>
+          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Virar Parceiro</Text>
         </TouchableOpacity>
       </View>
 

@@ -36,7 +36,6 @@ async function registerAdmin(adminData) {
     }
   }
 
-  
   async function getAdminCount() {
     try {
       return await Admin.countDocuments({});
@@ -50,7 +49,4 @@ async function registerAdmin(adminData) {
     registerAdmin,
     loginAdmin,
     getAdminCount,
-
-    
-
-}; 
+  }
