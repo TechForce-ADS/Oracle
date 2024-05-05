@@ -20,3 +20,18 @@
 # 1° Sprint
 - Vídeo da Primeira Sprint
     https://youtu.be/J11hILLQCvU
+
+# Protótipo 
+- 1° Tela - Tela de Login para Administradores e Consultores de aliança
+- 2° Tela - Tela de Listagem de parceiros da Oracle
+- 3° Tela - Tela de um parceiro com as funções de visualizar (expertises e informações), editar, deletar e gerar relatórios com as suas informações e expertises
+
+  ![22](https://github.com/TechForce-ADS/Oracle/assets/101806264/2ea1bf93-c2d7-4137-b72e-31a8e08b7863)
+
+- 4° Tela - Tela de expertises do parceiro
+- 5° Tela - Tela de Informações do parceiro 
+- 6° Tela - Tela de Tarefas parceiro
+![23](https://github.com/TechForce-ADS/Oracle/assets/101806264/aed4e7e8-1d6e-4c59-a5e9-5958a344676d)
+
+# 2° Sprint
+- Vídeo da Segunda Sprint
