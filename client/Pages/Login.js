@@ -9,7 +9,7 @@ import {
   Poppins_500Medium,
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
-import {ip} from "@env";
+import {IP} from "@env";
 
 
 const Login = ({ navigation }) => {
@@ -48,7 +48,7 @@ const Login = ({ navigation }) => {
   const handleLogin = async () => {
 
     try {
-      const response = await fetch(`http://${ip}:3001/api/users/login`, {
+      const response = await fetch(`http://${IP}:3001/api/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,8 +58,15 @@ const Login = ({ navigation }) => {
      
 
       if (response.ok) {
-        
-        navigation.navigate('TelaLista');
+        const adminData = await response.json();
+        const loggedAdmin = {
+          id:adminData._id,
+          name:adminData.name,
+          email:adminData.email,
+          isMainAdmin:adminData.isMainAdmin
+        }
+        console.log(loggedAdmin)
+        navigation.navigate('Admin');
       } else { 
         setErrorMessage('Usuário ou senha incorretos');
         toggleErrorModal();
@@ -124,7 +131,7 @@ const Login = ({ navigation }) => {
         </Text>
         <Text
           style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
-          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastrarAdmin')}> Criar uma conta</Text>
+          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('TelaLista')}> Criar uma conta</Text>
         </Text>
         <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('Cursos')}>
           <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Sou Parceiro</Text>
@@ -247,3 +254,4 @@ const styles = StyleSheet.create({
 })
 
 export default Login;
+export const loggedAdmin = {};

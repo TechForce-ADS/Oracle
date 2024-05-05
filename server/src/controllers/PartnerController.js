@@ -87,10 +87,10 @@ router.delete("/delete/:_id", async (req, res) => {
 router.put("/update/:_id", async (req, res) => {
   try {
     const partnerId = req.params._id;
-    const updateData = req.body; // Dados que serão atualizados
+    const updatedData = req.body; // Dados que serão atualizados
 
     // Chamar a função para atualizar o parceiro
-    const updatedPartner = await updatePartner(partnerId, updateData);
+    const updatedPartner = await updatePartner(partnerId, updatedData);
 
     // Responder com o parceiro atualizado
     if (updatedPartner) {

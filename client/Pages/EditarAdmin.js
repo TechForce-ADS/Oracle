@@ -3,28 +3,17 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert, Scro
 import DropDownPicker from 'react-native-dropdown-picker';
 import { IP } from "@env";
 
-import Navbar from '../Components/Navbar';
+import NavbarAdmin from '../Components/NavbarAdmin';
 
 
 
-const EditarParceiro = ({ navigation, route }) => {
+const EditarAdmin = ({ navigation, route }) => {
     const [menuAberto, setMenuAberto] = useState(false);
-    const [sexo, setSexo] = useState(null);
-    const [partnerData, setPartnerData] = useState(route.params?.partnerToEdit || {});
-    const [email, setEmail] = useState(partnerData.email || '');
-    const [name, setName] = useState(partnerData.name || '');
-    const [lastName, setLastName] = useState(partnerData.lastName || '');
-    const [number, setNumber] = useState(partnerData.number || '');
-    const [cpf, setCpf] = useState(partnerData.cpf || '');
-    const [address, setAddress] = useState(partnerData.address || '');
+    const [adminData, setAdminData] = useState(route.params?.adminToEdit || {});
+    const [email, setEmail] = useState(adminData.email || '');
+    const [name, setName] = useState(adminData.name || '');
 
     const [open, setOpen] = useState(false);
-    const [items, setItems] = useState([
-        { label: 'Masculino', value: 'masculino' },
-        { label: 'Feminino', value: 'feminino' },
-        { label: 'Outro', value: 'outro' }
-    ]);
-
 
 
     const toggleMenu = () => {
@@ -39,37 +28,22 @@ const EditarParceiro = ({ navigation, route }) => {
         setName(text);
     };
 
-    const handleLastNameChange = (text) => {
-        setLastName(text);
-    };
-
-    const handleNumberChange = (text) => {
-        setNumber(text);
-    };
-
-    const handleCpfChange = (text) => {
-        setCpf(text);
-    };
-
-    const handleAddressChange = (text) => {
-        setAddress(text);
-    };
 
 
     const handleUpdate = async () => {
         try {
-            const response = await fetch(`http://${IP}:3001/api/partners/update/${partnerData._id}`, {
+            const response = await fetch(`http://${IP}:3001/api/admin/update/${partnerData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, name, lastName, number, sexo, cpf, address }),
+                body: JSON.stringify({ email, name}),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                navigation.navigate('TelaLista');
+                navigation.navigate('Admin');
             } else {
                 // Handle update failure
                 Alert.alert('Error', data.error);
@@ -82,7 +56,7 @@ const EditarParceiro = ({ navigation, route }) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#1C2120', alignItems: 'center' }}>
-            <Navbar />
+            <NavbarAdmin />
             <ScrollView>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
                     <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 10, marginLeft: 16, }} />
@@ -98,15 +72,6 @@ const EditarParceiro = ({ navigation, route }) => {
                             placeholder='Nome'
                             value={name}
                             onChangeText={handleNameChange}
-                        >
-                        </TextInput>
-                    </View>
-                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
-                        <Text style={styles.label}>Sobrenome:</Text>
-                        <TextInput style={styles.inputNome}
-                            placeholder='Sobrenome'
-                            value={lastName}
-                            onChangeText={handleLastNameChange}
                         >
                         </TextInput>
                     </View>
@@ -240,4 +205,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default EditarParceiro;
+export default EditarAdmin;

@@ -1,196 +1,145 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, ScrollView, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';;
-import Ver from '../img/click.png';
-import Search from '../img/search.png';
-import User from '../img/User.png';
-import {ip} from "@env";
-import Navbar from '../Components/Navbar';
+import React, { useState } from 'react';
+import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { IP } from "@env";
+import NavbarAdmin from '../Components/NavbarAdmin';
 
 
 
 const CadastrarAdmin = ({ navigation }) => {
-  const [menuAberto, setMenuAberto] = useState(false);
-  const [partners, setPartners] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [sortOrder, setSortOrder] = useState('asc');
+    const [menuAberto, setMenuAberto] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
 
-  const toggleMenu = () => {
-    setMenuAberto(!menuAberto);
-  };
+    const toggleMenu = () => {
+        setMenuAberto(!menuAberto);
+    };
 
-  const handleCloseMenu = () => {
-    setMenuAberto(false);
-  };
+    const handleEmailChange = (text) => {
+        setEmail(text);
+    };
 
-  const editarPartner = (partner) => {
-    navigation.navigate('EditarParceiro', { partnerToEdit: partner });
-  };
+    const handleNameChange = (text) => {
+        setName(text);
+    };
 
-  const vizualizar = (partner) => {
-    navigation.navigate('Informacoes', { partnerToSee: partner });
-  };
 
-  useFocusEffect(
-    React.useCallback(() => {
-      async function fetchData() {
+    const handleRegister = async () => {
         try {
-          const response = await fetch(`http://${ip}:3001/api/partners/partnerList`);
-          if (!response.ok) {
-            throw new Error('Erro ao buscar partners');
-          }
-          const data = await response.json();
-          setPartners(data);
+            const response = await fetch(`http://${IP}:3001/api/admin/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, name}),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                navigation.navigate('Admin');
+            } else {
+                // Handle login failure
+                Alert.alert('Error', data.error);
+            }
         } catch (error) {
-          console.error('Erro ao buscar partners:', error);
-          Alert.alert('Erro', 'Não foi possível carregar a lista de parceiros');
+            console.error('Error registering:', error);
+            Alert.alert('Error', 'Internal server error');
         }
-      }
+    };
 
-      fetchData();
-      handleCloseMenu();
+    return (
 
-    }, [])
-  );
+        <View style={{ flex: 1, backgroundColor: '#1C2120', alignItems: 'center' }}>
 
-  const filteredPartners = partners.filter(partner => {
-    const fullName = `${partner.name} ${partner.lastName}`.toLowerCase();
-    return fullName.includes(searchText.toLowerCase());
-  });
+            <NavbarAdmin />
+            <ScrollView>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
+                    <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 10, marginLeft: 12, }} />
+                    <View>
+                        <Text style={{ width: 175, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Cadastro de parceiro</Text>
+                    </View>
+                    <View style={{ width: 95, height: 2, backgroundColor: 'white', marginRight: 12, marginLeft: 10, }} />
+                </View>
+                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
+                    <View style={{ width: '50%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>Nome:</Text>
+                        <TextInput style={styles.inputNome}
+                            placeholder='Nome'
+                            value={name}
+                            onChangeText={handleNameChange}
+                        >
+                        </TextInput>
+                    </View>
+                </View>
 
-  const sortedPartners = filteredPartners.slice().sort((a, b) => {
-    const nameA = `${a.name} ${a.lastName}`.toLowerCase();
-    const nameB = `${b.name} ${b.lastName}`.toLowerCase();
-    return sortOrder === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-  });
+                <View style={{ width: '100%', height: 100, display: 'flex', flexDirection: 'row' }}>
+                    <View style={{ width: '65%', height: 100, justifyContent: 'center', padding: 12 }}>
+                        <Text style={styles.label}>Email:</Text>
+                        <TextInput style={styles.inputNome}
+                            placeholder='Email'
+                            value={email}
+                            onChangeText={handleEmailChange}
+                        >
+                        </TextInput>
+                    </View>
+                </View>
+            </ScrollView>
+            <TouchableOpacity onPress={handleRegister} style={styles.cadastrarBTN}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Cadastrar</Text>
+            </TouchableOpacity>
+        </View>
 
-  const toggleSortOrder = () => {
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-  };
 
-  return (
-    <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
-      <Navbar />
-
-
-      <View style={{ width: 350, height: 70, paddingTop: 20, justifyContent: 'space-between', display: 'flex', flexDirection: 'row' }}>
-        <Image source={Search} style={styles.SearchIcon} />
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Pesquisar"
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-        <TouchableOpacity style={styles.FilterBTN} onPress={toggleSortOrder}>
-          <Text>A - Z</Text>
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView>
-        {sortedPartners.map((partner) => (
-          <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
-            <View style={styles.container}>
-              <View style={styles.UserPhoto}>
-                <Image source={User} />
-              </View>
-              <View style={styles.TextName}>
-                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_300Light' }}>{partner.name} {partner.lastName}</Text>
-                <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_700Bold' }}>Nivel - </Text>
-              </View>
-              <View style={{ width: 30, height: '100%', marginTop: 10 }}>
-                <TouchableOpacity key={partner._id} onPress={() => editarPartner(partner)}>
-                  <Image source={Ver} style={styles.Icons} />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View>
-  );
+    );
 };
 
-
-
 const styles = StyleSheet.create({
-  UserPhoto: {
-    width: 105,
-    height: 100,
-    borderRadius: 15,
-    resizeMode:'cover'
-  },
+    label: {
+        color: '#FFFFFF',
+        fontSize: 14,
+        fontFamily: 'Poppins_300Light'
+    },
+
+    container: {
+        padding: 12,
+        borderRadius: 15,
+        backgroundColor: '#DCDCDC',
+        borderWidth: 3,
+        borderColor: '#B1ABAB',
+        width: 350,
+        height: 75,
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 20,
+    },
+
+    inputNome: {
+        width: '100%',
+        height: 35,
+        backgroundColor: '#DCDCDC',
+        paddingLeft: 10,
+        borderRadius: 9,
+        fontFamily: 'Poppins_300Light'
+    },
+    dropdown: {
+        backgroundColor: '#DCDCDC',
+        borderRadius: 9,
+        minHeight: 40,
+
+    },
+    cadastrarBTN: {
+        height: 45,
+        width: "40%",
+        backgroundColor: '#FFF',
+        justifyContent: 'center',
+        display: 'flex',
+        borderRadius: 5,
+        marginBottom: 12
+    },
 
 
-  TextName:{
-    width: 200,
-    height: '100%',
-    display:'flex',
-    justifyContent:'space-evenly',
-    fontFamily:'Poppins_700Bold'
-  
-  },
-
-
-  container: {
-    borderRadius: 15,
-    backgroundColor: '#584848',
-    borderWidth: 1.3,
-    borderColor: '#7b7574',
-    width: 350,
-    height: 100,
-    display: 'flex',
-    flexDirection: 'row',
-    marginTop: 20,
-    filter: 'blur(8px)',
-  },
-
-
-
-  FilterBTN: {
-    backgroundColor: '#FFFFFF',
-    width: 50,
-    height: 40,
-    borderWidth: 2,
-    borderColor: '#E3DDDD',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
-
-
-  Icons: {
-  
-    width: 35,
-    height: 35,
-    resizeMode: 'contain',
-    
-  },
-
-  SearchIcon: {
-
-    width: 100,
-    height: 30,
-    resizeMode: 'contain',
-    position: 'absolute',
-    top: 25,
-    left: -25,
-    zIndex: 1,
-
-  },
-
-
-  searchBar: {
-    width: 250,
-    height: 40,
-    backgroundColor: '#FFFFFF',
-    padding: 12,
-    borderRadius: 20,
-    color: 'black',
-    paddingLeft: 50,
-
-
-
-  },
 
 });
 

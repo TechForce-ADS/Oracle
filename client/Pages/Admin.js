@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import Logo from '../img/LogoSemFundo.png';
+import { useFocusEffect } from '@react-navigation/native';;
 import Ver from '../img/click.png';
-import MenuIcon from '../img/menu.png';
 import Search from '../img/search.png';
 import User from '../img/User.png';
 import {IP} from "@env";
-import Navbar from '../Components/Navbar';
+import NavbarAdmin from '../Components/NavbarAdmin';
 
 
 
-const TelaLista = ({ navigation }) => {
+const Admin = ({ navigation }) => {
   const [menuAberto, setMenuAberto] = useState(false);
-  const [partners, setPartners] = useState([]);
+  const [admins, setAdmins] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
 
@@ -25,24 +23,24 @@ const TelaLista = ({ navigation }) => {
     setMenuAberto(false);
   };
 
-  const editarPartner = (partner) => {
-    navigation.navigate('EditarParceiro', { partnerToEdit: partner });
+  const editarAdmin = (admin) => {
+    navigation.navigate('EditarAdmin', { adminToEdit: admin });
   };
 
-  const vizualizar = (partner) => {
-    navigation.navigate('Informacoes', { partnerToSee: partner });
+  const vizualizar = (admin) => {
+    navigation.navigate('Informacoes', { adminToSee: admin });
   };
 
   useFocusEffect(
     React.useCallback(() => {
       async function fetchData() {
         try {
-          const response = await fetch(`http://${IP}:3001/api/partners/partnerList`);
+          const response = await fetch(`http://${IP}:3001/api/admin/adminList`);
           if (!response.ok) {
-            throw new Error('Erro ao buscar partners');
+            throw new Error('Erro ao buscar admins');
           }
           const data = await response.json();
-          setPartners(data);
+          setAdmins(data);
         } catch (error) {
           console.error('Erro ao buscar partners:', error);
           Alert.alert('Erro', 'Não foi possível carregar a lista de parceiros');
@@ -55,14 +53,14 @@ const TelaLista = ({ navigation }) => {
     }, [])
   );
 
-  const filteredPartners = partners.filter(partner => {
-    const fullName = `${partner.name} ${partner.lastName}`.toLowerCase();
+  const filteredAdmins = admins.filter(admin => {
+    const fullName = `${admin.name}`.toLowerCase();
     return fullName.includes(searchText.toLowerCase());
   });
 
-  const sortedPartners = filteredPartners.slice().sort((a, b) => {
-    const nameA = `${a.name} ${a.lastName}`.toLowerCase();
-    const nameB = `${b.name} ${b.lastName}`.toLowerCase();
+  const sortedAdmins = filteredAdmins.slice().sort((a, b) => {
+    const nameA = `${a.name}`.toLowerCase();
+    const nameB = `${b.name}`.toLowerCase();
     return sortOrder === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
   });
 
@@ -72,7 +70,7 @@ const TelaLista = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
-      <Navbar />
+      <NavbarAdmin />
 
 
       <View style={{ width: 350, height: 70, paddingTop: 20, justifyContent: 'space-between', display: 'flex', flexDirection: 'row' }}>
@@ -89,18 +87,18 @@ const TelaLista = ({ navigation }) => {
       </View>
 
       <ScrollView>
-        {sortedPartners.map((partner) => (
-          <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
+        {sortedAdmins.map((admin) => (
+          <TouchableOpacity key={admin._id} onPress={() => vizualizar(admin)}>
             <View style={styles.container}>
               <View style={styles.UserPhoto}>
                 <Image source={User} />
               </View>
               <View style={styles.TextName}>
-                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_300Light' }}>{partner.nameFantasia}</Text>
-                <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_700Bold' }}>Nivel - {partner.nivel} </Text>
+                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_300Light' }}>{admin.name}</Text>
+                <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_700Bold' }}>Nivel - </Text>
               </View>
               <View style={{ width: 30, height: '100%', marginTop: 10 }}>
-                <TouchableOpacity key={partner._id} onPress={() => editarPartner(partner)}>
+                <TouchableOpacity key={admin._id} onPress={() => editarAdmin(admin)}>
                   <Image source={Ver} style={styles.Icons} />
                 </TouchableOpacity>
               </View>
@@ -115,7 +113,6 @@ const TelaLista = ({ navigation }) => {
 
 
 const styles = StyleSheet.create({
-  
   UserPhoto: {
     width: 105,
     height: 100,
@@ -196,4 +193,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default TelaLista;
+export default Admin;

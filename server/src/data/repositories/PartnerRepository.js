@@ -49,10 +49,10 @@ async function registerPartner(partnerData) {
   
 
 
-  async function updatePartner(partnerId, updateData) {
+  async function updatePartner(partnerId, updatedData) {
     try {
       // Atualizar o parceiro pelo ID usando os dados fornecidos
-      const result = await Partner.findByIdAndUpdate(partnerId, updateData, { new: true });
+      const result = await Partner.findByIdAndUpdate(partnerId, updatedData, { new: true });
   
       if (!result) {
         throw new Error('Parceiro não encontrado');

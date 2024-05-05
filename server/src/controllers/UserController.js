@@ -27,7 +27,6 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  console.log("login route called")
   try {
     const { email, password } = req.body;
     const loginUserUC = new LoginUserUC(email, password); 

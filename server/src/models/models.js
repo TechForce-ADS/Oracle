@@ -105,6 +105,10 @@ const consultantSchema = new mongoose.Schema({
 });
 
 const adminSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
@@ -113,7 +117,7 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  isAdminMain: {
+  isMainAdmin: {
     type: Boolean,
     default: false
   },
