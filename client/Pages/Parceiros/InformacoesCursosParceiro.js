@@ -31,7 +31,7 @@ export default function InformacoesCurso({ navigation, route }) {
           <Text style={styles.heading}>Tempo de duração: <Text style={styles.Info}> {courseData.time}</Text></Text>
           <View style={styles.Botao}>
             <TouchableOpacity style={styles.EditarBTN}>
-              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Ver Email</Text>
+              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>ingressar</Text>
             </TouchableOpacity>
           </View>
         </View>

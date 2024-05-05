@@ -41,7 +41,7 @@ const handleCloseMenu = () => {
         <View style={styles.menu}>
           <Text style={styles.menuText} onPress={() => navigation.navigate('TelaListaParceiro')}>Parceiros</Text>
           <Text style={styles.menuText} onPress={() => navigation.navigate('CursosParceiro')}>Cursos</Text>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('TelaParceiro')}>Cursos</Text>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('TelaParceiro')}>Perfil</Text>
         
         
         </View>

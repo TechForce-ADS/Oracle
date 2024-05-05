@@ -18,6 +18,11 @@ import TelaParceiro from './Pages/Parceiros/TelaParceiro'
 import Tasks from './Pages/Parceiros/Tasks'
 import CadastrarAdmin from './Pages/CadastrarAdmin';
 import EditarAdmin from './Pages/EditarAdmin';
+import CadastroCurso from './Pages/CadastroCurso';
+import InformacoesCurso from './Pages/InformacoesCursos';
+import CursosParceiro from './Pages/Parceiros/CursosParceiro';
+import InformacoesCursoParceiro from './Pages/Parceiros/InformacoesCursosParceiro';
+import TelaListaParceiro from './Pages/Parceiros/TelaListaParceiro';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +51,7 @@ export default function App() {
         <Stack.Screen name="CursosParceiro" component={CursosParceiro} />
         <Stack.Screen name="InformacoesCursoParceiro" component={InformacoesCursoParceiro} />
         <Stack.Screen name="TelaListaParceiro" component={TelaListaParceiro} />
+    
 
 
       </Stack.Navigator>
