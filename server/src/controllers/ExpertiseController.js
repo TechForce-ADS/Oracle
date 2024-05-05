@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {listExpertise, updateExpertise} = require('../data/repositories/ExpertiseRepository');
+const {listExpertise} = require('../data/repositories/ExpertiseRepository');
 const {deleteExpertise} = require('../data/repositories/ExpertiseRepository');
 const {updateExpertise} = require('../data/repositories/ExpertiseRepository');
 

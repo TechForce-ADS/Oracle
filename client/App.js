@@ -41,6 +41,13 @@ export default function App() {
         <Stack.Screen name="CadastroContaParceiro" component={CadastroContaParceiro} />
         <Stack.Screen name="TelaParceiro" component={TelaParceiro} />
         <Stack.Screen name="Tasks" component={Tasks} />
+        <Stack.Screen name="CadastroCurso" component={CadastroCurso} />
+        <Stack.Screen name="InformacoesCurso" component={InformacoesCurso} />
+        <Stack.Screen name="CursosParceiro" component={CursosParceiro} />
+        <Stack.Screen name="InformacoesCursoParceiro" component={InformacoesCursoParceiro} />
+        <Stack.Screen name="TelaListaParceiro" component={TelaListaParceiro} />
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );

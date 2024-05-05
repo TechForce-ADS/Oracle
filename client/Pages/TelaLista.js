@@ -56,13 +56,13 @@ const TelaLista = ({ navigation }) => {
   );
 
   const filteredPartners = partners.filter(partner => {
-    const fullName = `${partner.name} ${partner.lastName}`.toLowerCase();
+    const fullName = `${partner.nameFantasia}`.toLowerCase();
     return fullName.includes(searchText.toLowerCase());
   });
 
   const sortedPartners = filteredPartners.slice().sort((a, b) => {
-    const nameA = `${a.name} ${a.lastName}`.toLowerCase();
-    const nameB = `${b.name} ${b.lastName}`.toLowerCase();
+    const nameA = `${a.nameFantasia} `.toLowerCase();
+    const nameB = `${b.nameFantasia} `.toLowerCase();
     return sortOrder === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
   });
 

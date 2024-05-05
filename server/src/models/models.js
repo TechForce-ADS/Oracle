@@ -56,7 +56,7 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  password:{
+  password: {
     type: String,
     required: true,
   },
@@ -145,7 +145,7 @@ const expertiseSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-  
+
 });
 
 
@@ -155,14 +155,14 @@ const tasksSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  date:{
-    type:Date,
+  date: {
+    type: Date,
   },
-  conclusion:{
+  conclusion: {
     type: Boolean,
     required: true,
     default: false,
-  }  ,
+  },
   expertise: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Expertise'
@@ -195,4 +195,11 @@ const Admin = mongoose.model('Admin', adminSchema);
 
 const Partner = mongoose.model('Partner', partnerSchema);
 
-module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema, CourseRegistration, courseRegistrationSchema, Expertise, expertiseSchema };
+module.exports = {
+  User, userSchema,
+  Partner, partnerSchema,
+  Admin, adminSchema,
+  Course, courseSchema,
+  CourseRegistration, courseRegistrationSchema,
+  Expertise, expertiseSchema
+};

@@ -25,6 +25,25 @@ router.post('/register', async (req, res) => {
     }
   });
 
+
+  router.post('/login', async (req, res) => {
+    console.log("login route called")
+    try {
+      const { email, password } = req.body;
+      const loginAdminUC = new LoginAdminUC(email, password); 
+      const loggedAdmin = await loginAdminUC.login();
+      if (loggedAdmin) {
+        res.status(200).json(loggedAdmin);
+      } else {
+        res.status(400).json({ error: 'Usuário ou senha incorretos' }); 
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      res.status(500).json({ error: 'Erro interno do servidor' }); 
+    }
+  });
+  
+
 router.get('/adminCount', async (req, res) => {
     try {
       const admin = await getAdminCount();

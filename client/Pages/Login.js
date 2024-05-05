@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import Logo from '../img/LogoN.png';
+
+
 import {
   useFonts, Poppins_100Thin,
   Poppins_200ExtraLight,
@@ -135,6 +137,9 @@ const Login = ({ navigation }) => {
         </Text>
         <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('Cursos')}>
           <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Sou Parceiro</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('CadastroContaParceiro')}>
+          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Virar Parceiro</Text>
         </TouchableOpacity>
       </View>
 

@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, ScrollView, StyleSheet, Text, Alert } fr
 import { useFocusEffect } from '@react-navigation/native';
 import { ip } from "@env";
 
-import Navbar from '../Components/Navbar';
+import Navbar from '../../Components/NavbarParceiro';
 
 
 
@@ -19,7 +19,7 @@ export default function Cursos({ navigation }) {
 
 
   const vizualizar = (course) => {
-    navigation.navigate('InformacoesCurso', { courseToSee: course });
+    navigation.navigate('InformacoesCursoParceiro', { courseToSee: course });
   };
 
   useFocusEffect(
@@ -67,13 +67,7 @@ export default function Cursos({ navigation }) {
             </View>
           </TouchableOpacity>
         ))}
-        <View style={styles.Botão}>
-          <TouchableOpacity style={styles.VerMaisBTN}  onPress={() => navigation.navigate('CadastroCurso')}>
-          <Text style={{  textAlign:'center',fontSize: 16, color: '#000',  fontFamily: 'Poppins_700Bold' }} >
-                + Adicionar Curso
-                </Text>
-          </TouchableOpacity>
-        </View>
+        
       </ScrollView>
     </View>
   );
