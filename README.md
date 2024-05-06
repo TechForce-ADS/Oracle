@@ -107,6 +107,17 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
   
 </table>
 
+ <tr>
+    <td>Isabel Reis  </td>
+    <td>ST</td>
+    <td><a href="https://www.linkedin.com/in/isabel-reis-09806920b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="30px"></a></td>
+    <td><a href="https://github.com/IsabelRReis"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="30px"></a></td>
+    <td>Dominante</td>
+  </tr>
+ 
+  
+</table>
+
 ```
 PO - Product Owner
 SM - Scrum Master
@@ -188,7 +199,6 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
   <p>:white_check_mark: Criptografia de dados pessoais no Banco de Dados</p>
   <p>:white_check_mark: CRUD dos Cursos </p>
   <p>:white_check_mark: Reestruturação do Front-End</p>
-  <p>:white_check_mark: Criptografia de dados pessoias no Banco de Dados</p>
   <p>:white_check_mark: CRUD dos Administradores </p>  
   <p>:white_check_mark: Sistema de Expertises</p>
   <p>:white_check_mark: Sistema de Tasks das Expertises</p> 
