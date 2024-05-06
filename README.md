@@ -105,7 +105,6 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
   </tr>
  
   
-</table>
 
  <tr>
     <td>Isabel Reis  </td>
