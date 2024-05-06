@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/expertise/registerPartnersExpertise HTTP/1.1
+POST http://localhost:3001/api/tracks/registerTrack HTTP/1.1
 content-type: application/json
 
 {
 
-
+"name":"teste"
 }

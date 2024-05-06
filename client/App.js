@@ -9,7 +9,7 @@ import EditarParceiro from './Pages/EditarParceiro';
 import CadastroConta from './Pages/CadastroConta';
 import Informacoes from './Pages/Informacoes';
 import PerfilCompleto from './Pages/PerfilCompleto';
-import Cursos from './Pages/Cursos';
+import Tracks from './Pages/Tracks';
 import Dashboard from './Pages/Dashboard';
 import Admin from './Pages/Admin';
 import LoginParceiro from './Pages/Parceiros/LoginParceiro';
@@ -25,6 +25,7 @@ import InformacoesCursoParceiro from './Pages/Parceiros/InformacoesCursosParceir
 import TelaListaParceiro from './Pages/Parceiros/TelaListaParceiro';
 import Expertises from './Pages/Expertises';
 import InformacoesParceiros from './Pages/Parceiros/InformacoesParceiros';
+import AdicionarExpertise from './Pages/AdicionarExpertise';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ export default function App() {
         <Stack.Screen name="EditarAdmin" component={EditarAdmin} />
         <Stack.Screen name="Informacoes" component={Informacoes} />
         <Stack.Screen name="CadastroConta" component={CadastroConta} />
-        <Stack.Screen name="Cursos" component={Cursos} />
+        <Stack.Screen name="Tracks" component={Tracks} />
         <Stack.Screen name="CadastrarAdmin" component={CadastrarAdmin} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="PerfilCompleto" component={PerfilCompleto} />
@@ -55,6 +56,7 @@ export default function App() {
         <Stack.Screen name="TelaListaParceiro" component={TelaListaParceiro} />
         <Stack.Screen name="InformacoesParceiros" component={InformacoesParceiros} />
         <Stack.Screen name="Expertises" component={Expertises} />
+        <Stack.Screen name="AdicionarExpertise" component={AdicionarExpertise} />
   
       </Stack.Navigator>
     </NavigationContainer>

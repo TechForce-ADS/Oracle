@@ -56,7 +56,7 @@ const Navbar = () => {
         <Image source={Logo} style={styles.logo} />
         <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Cursos')}>Cursos</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Tracks')}>Tracks</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Dashboard')}>Dashboard</Text>
 
       </Animated.View>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     width: '70%',
     backgroundColor: '#50100c',
     paddingVertical: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     zIndex: 1,
   },
 
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_300Light',
     fontSize: 16,
     paddingVertical: 10,
+    marginTop:12,
   },
 
   searchBar: {

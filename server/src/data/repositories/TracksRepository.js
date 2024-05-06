@@ -1,37 +1,37 @@
-const { Course } = require('../../models/models');
-const { CourseRegistration } = require('../../models/models');
+const { Track } = require('../../models/models');
+const { TrackRegistration } = require('../../models/models');
 
-async function registerCourses(courseData) {
+async function registerTracks(trackData) {
     try {
-        const existingCourse = await Course.findOne({ name: courseData.name});
-        if (existingCourse) {
+        const existingTrack = await Track.findOne({ name: trackData.name});
+        if (existingTrack) {
             return false;
         }
-        const newCourse = new Course(courseData);
+        const newTrack = new Track(trackData);
 
-        await newCourse.save();
+        await newTrack.save();
 
-        return newCourse;
+        return newTrack;
     } catch (error) {
-        console.error('Error registering course.', error);
+        console.error('Error registering track.', error);
         throw new Error('Failed to register course.')        
     }
 }
 
-async function listCourse() {
+async function listTrack() {
     try {
-        const courses = await Course.find({});
-        return courses;
+        const tracks = await Track.find({});
+        return tracks;
     } catch (error) {
-        console.error('Error listing courses:', error);
-        throw new Error('Failed to list courses.');
+        console.error('Error listing tracks:', error);
+        throw new Error('Failed to list tracks.');
     }
 }
 
 
 async function deleteCourse(courseId) {
     try {
-        const result = await Course.deleteOne({_id: courseId});
+        const result = await Track.deleteOne({_id: courseId});
 
         if(result.deletedCount === 0) {
             throw new Error('Curso não encontrado.');
@@ -58,15 +58,16 @@ async function updateCourse(courseId, updateCourse){
 
 }
 
-async function registerPartnersCourse(registrationData){
+
+async function registerExpertiseTrack(registrationData){
     try {
-        const existingCourseRegister = await CourseRegistration.findOne({ title: registrationData.partner});
-        if(existingCourseRegister){
+        const existingTrackRegister = await TrackRegistration.findOne({ expertiseName: registrationData.expertiseName});
+        if(existingTrackRegister){
             return false;
         }
-        const newCourseRegistration = new CourseRegistration(registrationData)
-        await newCourseRegistration.save();
-        return newCourseRegistration;
+        const newTrackRegistration = new TrackRegistration(registrationData)
+        await newTrackRegistration.save();
+        return newTrackRegistration;
     } catch (error) {
         console.error('Erro registering CourseRegistration :', error);
         throw new Error('Failed to register CourseRegistration');
@@ -75,9 +76,9 @@ async function registerPartnersCourse(registrationData){
 
 
 module.exports = {
-    registerCourses,
-    listCourse,
+    registerTracks,
+    listTrack,
     deleteCourse,
     updateCourse,
-    registerPartnersCourse
+    registerExpertiseTrack,
 }

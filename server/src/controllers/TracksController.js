@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const RegisterCourseUC = require('../useCases/courses/RegisterCourse');
+const RegisterTrackUC = require('../useCases/tracks/RegisterTrackUC');
+const registerExpertiseTrackUC = require('../useCases/tracks/RegisterExpertiseTrackUC');
 
-const { listCourse, updateCourse, deleteCourse } = require('../data/repositories/CoursesRepository');
+const { listTrack, updateCourse, deleteCourse } = require('../data/repositories/TracksRepository');
 const { deletePartner } = require('../data/repositories/PartnerRepository');
-const registerPartnersExpertiseUC = require('../useCases/courses/RegisterPartnerCourseUC')
 
-router.post('/registerPartnersCourse', async(req, res) => {
+
+
+
+router.post('/registerExpertiseTrack', async(req, res) => {
     try {
-        const { partner_id, course_id } = req.body;
-        const registerUC = new registerPartnersExpertiseUC(partner_id, course_id);
+        const { expertiseName, track_id, expertiseCompleted } = req.body;
+        const registerUC = new registerExpertiseTrackUC(expertiseName, track_id, expertiseCompleted) ;
         const newRegister = await registerUC.create();
         if(newRegister){
             res.status(200).json(newRegister);
@@ -22,29 +25,27 @@ router.post('/registerPartnersCourse', async(req, res) => {
 
 
 
-router.post('/registerCourse', async (req, res) =>{
+
+router.post('/registerTrack', async (req, res) =>{
     try {
         const name = req.body.name;
-        const description = req.body.description;
-        const time = req.body.time;
-        const image = req.body.image;
-        const registerUC = new RegisterCourseUC(name,description,time,image);
-        const newCourse = await registerUC.create();
-        if (newCourse){
-            res.status(200).json(newCourse);
+        const registerUC = new RegisterTrackUC(name);
+        const newTrack = await registerUC.create();
+        if (newTrack){
+            res.status(200).json(newTrack);
         }
     } catch (error) {
-        console.error('Error register course:', error);
+        console.error('Error register track:', error);
         res.status(500).json({error: 'Internal server error.'})
     }
 });
 
-router.get('/coursesList', async(req, res) => {
+router.get('/tracksList', async(req, res) => {
     try {
-        const courses = await listCourse();
-        res.status(200).json(courses); 
+        const tracks = await listTrack();
+        res.status(200).json(tracks); 
     } catch (error) {
-        console.error('Erro ao listar cursos', error);
+        console.error('Erro ao listar tracks', error);
         res.status(500).json({error: "Erro interno do servidor."});
     }
 })
@@ -52,7 +53,7 @@ router.get('/coursesList', async(req, res) => {
 
 
 
-    router.delete("/deleteCourse/:_id", async(req, res) => {
+    router.delete("/deleteTrack/:_id", async(req, res) => {
 
     try {
         const courseId = req.params._id;
@@ -65,7 +66,7 @@ router.get('/coursesList', async(req, res) => {
 })
 
 
-    router.put("/updateCourse/:_id", async (req, res) => {
+    router.put("/updateTrack/:_id", async (req, res) => {
 
     try {
         const courseId = req.params._id;

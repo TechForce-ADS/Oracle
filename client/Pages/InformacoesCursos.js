@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../Components/Navbar';
+import * as Progress from 'react-native-progress';
 
 import { ip } from "@env";
 
 export default function InformacoesCurso({ navigation, route }) {
 
 
-  const [courseData, setCourseData] = useState(route.params?.courseToSee || {});
+  const [trackData, setTrackData] = useState(route.params?.courseToSee || {});
+  const track_id = trackData._id
 
   const [fonteLoaded] = useFonts({
     Poppins_100Thin,
@@ -25,32 +27,11 @@ export default function InformacoesCurso({ navigation, route }) {
 
 
 
-
-  const excluirCourse = (_id) => {
-    Alert.alert(
-      'Você tem certeza?',
-      'Esta ação não poderá ser revertida!',
-      [
-        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
-        { text: 'Excluir', onPress: () => excluirConfirmed(_id) },
-      ],
-      { cancelable: true }
-    );
+  const adicionarTask = (trackData) => {
+    navigation.navigate('AdicionarExpertise', { courseToSee: trackData });
   };
 
-  const excluirConfirmed = async (_id) => {
-    try {
-      await fetch(`http://${ip}:3001/api/courses/deleteCourse/${_id}`, {
-        method: 'DELETE',
-      });
 
-      setCourseData({});
-      navigation.navigate('Cursos');
-    } catch (error) {
-      console.error('Erro ao excluir parceiro:', error);
-      Alert.alert("Erro", "Algo deu errado ao tentar excluir o parceiro.");
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -60,26 +41,22 @@ export default function InformacoesCurso({ navigation, route }) {
 
 
 
-        <Text style={{ color: "#FFFFFF", fontSize: 16, marginLeft: 2, fontFamily: 'Poppins_300Light' }}>Informações do curso</Text>
-
-        <View style={styles.content}>
-          <Text style={styles.heading}>Nome: <Text style={styles.Info}>{courseData.name} </Text></Text>
-          <Text style={styles.heading}>Descrição: <Text style={styles.Info}>{courseData.description} </Text></Text>
-          <Text style={styles.heading}>Tempo de duração: <Text style={styles.Info}> {courseData.time}</Text></Text>
+      
+      
+          <Text style={styles.heading}><Text style={styles.Info}>{trackData.name} </Text></Text>
+          <View style={styles.ProgressBar}>
+            <Progress.Bar progress={0.5} width={250} color='#FF4700' backgroundColor='#FFF' /><Text style={{ fontFamily: 'Poppins_300Light', color: '#fff', fontSize: 16 }}>  50 %</Text>
+          </View>
 
 
 
           <View style={styles.Botao}>  
-            <TouchableOpacity style={styles.DeletarBTN} onPress={() => excluirCourse(courseData._id)}>
-              <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Deletar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.EditarBTN} >
-              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Ingressar</Text>
-            </TouchableOpacity>
+             <TouchableOpacity style={styles.EditarBTN}  onPress={() => adicionarTask(trackData)} >
+              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}> + Adicionar Expertise</Text>
+            </TouchableOpacity> 
+         
           </View>
 
-
-        </View>
 
       </ScrollView>
     </View>
@@ -100,7 +77,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingVertical:30
   },
 
 
@@ -147,7 +124,7 @@ const styles = StyleSheet.create({
 
   Info: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: 18,
     marginBottom: 8,
     fontFamily: 'Poppins_300Light',
   },
@@ -178,9 +155,18 @@ const styles = StyleSheet.create({
 
   heading: {
     color: '#000',
-    fontSize: 15,
     marginBottom: 8,
     fontFamily: 'Poppins_300Light'
+  },
+
+
+  ProgressBar: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+
   },
 
 

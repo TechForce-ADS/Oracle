@@ -17,8 +17,8 @@ app.use(cors());
 connect()
   .then(() => {
 
-    const coursesController = require('./src/controllers/CoursesController');
-    app.use('/api/courses', coursesController);
+    const tracksController = require('./src/controllers/TracksController');
+    app.use('/api/tracks', tracksController);
 
     const userController = require('./src/controllers/UserController');
     app.use('/api/users', userController);

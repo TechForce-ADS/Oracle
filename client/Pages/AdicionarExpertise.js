@@ -5,23 +5,26 @@ import Navbar from '../Components/Navbar';
 
 
 
-const CadastroCurso = ({ navigation }) => {
-    const [name, setName] = useState('');
-  
+const AdicionarExpertise = ({ navigation, route }) => {
+    const [expertiseName, setNameExpertise] = useState('');
+    const [trackData, setTrackData] = useState(route.params?.courseToSee || {});
+    const track_id = trackData._id
 
-    const handleNameChange = (text) => {
-        setName(text);
+
+
+    const handleNameExpertiseChange = (text) => {
+        setNameExpertise(text);
     };
 
  
     const handleRegister = async () => {
         try {
-            const response = await fetch(`http://${ip}:3001/api/tracks/registerTrack`, {
+            const response = await fetch(`http://${ip}:3001/api/tracks/registerExpertiseTrack`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name }),
+                body: JSON.stringify({ expertiseName, track_id }),
             });
 
             const data = await response.json();
@@ -38,8 +41,8 @@ const CadastroCurso = ({ navigation }) => {
         }
     };
 
-    CadastroCurso.navigationOptions = {
-        title: 'CadastroCurso',
+    AdicionarExpertise.navigationOptions = {
+        title: 'AdicionarExpertise',
       }
 
     return (
@@ -63,8 +66,8 @@ const CadastroCurso = ({ navigation }) => {
                         <TextInput style={styles.inputNome}
 
                             placeholder='Nome'
-                            value={name}
-                            onChangeText={handleNameChange}>
+                            value={expertiseName}
+                            onChangeText={handleNameExpertiseChange}>
 
                         </TextInput>
 
@@ -141,4 +144,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default CadastroCurso;
+export default AdicionarExpertise;
