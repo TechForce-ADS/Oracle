@@ -10,9 +10,6 @@ import {
 } from '@expo-google-fonts/poppins'
 import { ip } from "@env";
 
-
-
-
 const CadastroContaParceiro = ({ navigation }) => {
 
 

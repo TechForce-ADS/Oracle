@@ -2,6 +2,6 @@ POST http://localhost:3001/api/admin/login HTTP/1.1
 content-type: application/json
 
 {
-    "email":"adm11@gmail.com",
+    "email":"brener@gmail.com",
     "password":"123"
 }

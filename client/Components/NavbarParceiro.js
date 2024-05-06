@@ -39,9 +39,11 @@ const handleCloseMenu = () => {
 
       {menuAberto && (
         <View style={styles.menu}>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('Cursos')}>Cursos</Text>
-          <Text style={styles.menuText}>Menu Item 4</Text>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('TelaListaParceiro')}>Parceiros</Text>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('CursosParceiro')}>Cursos</Text>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('TelaParceiro')}>Perfil</Text>
+        
+        
         </View>
       )}
     </View>
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: 20,
-    zIndex: 2,
+    zIndex: 2000,
   },
   logo: {
     width: 110,

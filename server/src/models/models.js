@@ -60,6 +60,28 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // -------------------------------
+  lastName: {
+    type: String,
+    required: false,
+  },
+  number: {
+    type: String,
+    required: false,
+  },
+  sexo: {
+    type: String,
+    required: false,
+  },
+  cpf: {
+    type: String,
+    required: false,
+  },
+  address: {
+    type: String,
+    required: false,
+  },
+// ----------------------------------
 
   Expertise1: {
     type: Boolean,
@@ -200,3 +222,6 @@ module.exports = { User, userSchema,
                    CourseRegistration, courseRegistrationSchema, 
                    Expertise, expertiseSchema,
                    Task, tasksSchema};
+
+module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema, CourseRegistration, courseRegistrationSchema, Expertise, expertiseSchema };
+

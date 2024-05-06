@@ -2,7 +2,7 @@ const { Course } = require('../../models/models');
 
 async function registerCourses(courseData) {
     try {
-        const existingCourse = await Course.findOne({ nome: courseData.nome});
+        const existingCourse = await Course.findOne({ name: courseData.name});
         if (existingCourse) {
             return false;
         }
@@ -27,15 +27,6 @@ async function listCourse() {
     }
 }
 
-async function listCourse() {
-    try {
-        const courses = await Course.find({});
-        return courses;
-    } catch (error) {
-        console.error('Error listing courses:', error);
-        throw new Error('Failed to list courses.');
-    }
-}
 
 async function deleteCourse(courseId) {
     try {

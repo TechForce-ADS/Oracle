@@ -32,6 +32,10 @@ connect()
     const expertiseController = require ('./src/controllers/ExpertiseController');
     app.use('/api/expertise', expertiseController);
     
+    const expertiseController = require('./src/controllers/ExpertiseController');
+    app.use('/api/expertise', expertiseController)
+    
+
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
@@ -46,7 +50,7 @@ async function createPreBuiltAdmins() {
     const salt = await bcrypt.genSalt(10);
     const password = await bcrypt.hash(process.env.password, salt);
 
-    const admin = new RegisterAdminUC('adm@gmail.com', password, true);
+    const admin = new RegisterAdminUC('Chico','adm@gmail.com', password, true);
     const Admin = await admin.create();
 
     if (Admin) {

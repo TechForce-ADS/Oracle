@@ -1,197 +1,231 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, ScrollView, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';;
-import Ver from '../img/click.png';
-import Search from '../img/search.png';
-import User from '../img/User.png';
-import {ip} from "@env";
-import Navbar from '../Components/Navbar';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Alert, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+
+import {
+  useFonts, Poppins_100Thin,
+  Poppins_200ExtraLight,
+  Poppins_300Light, Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold
+} from '@expo-google-fonts/poppins'
+import { ip } from "@env";
+
 
 
 
 const CadastrarAdmin = ({ navigation }) => {
-  const [menuAberto, setMenuAberto] = useState(false);
-  const [partners, setPartners] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [sortOrder, setSortOrder] = useState('asc');
 
-  const toggleMenu = () => {
-    setMenuAberto(!menuAberto);
+
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
   };
 
-  const handleCloseMenu = () => {
-    setMenuAberto(false);
+  const handleNameChange = (text) => {
+    setName(text);
   };
 
-  const editarPartner = (partner) => {
-    navigation.navigate('EditarParceiro', { partnerToEdit: partner });
+  const handlePasswordChange = (text) => {
+    setPassword(text);
   };
 
-  const vizualizar = (partner) => {
-    navigation.navigate('Informacoes', { partnerToSee: partner });
-  };
 
-  useFocusEffect(
-    React.useCallback(() => {
-      async function fetchData() {
-        try {
-          const response = await fetch(`http://${ip}:3001/api/partners/partnerList`);
-          if (!response.ok) {
-            throw new Error('Erro ao buscar partners');
-          }
-          const data = await response.json();
-          setPartners(data);
-        } catch (error) {
-          console.error('Erro ao buscar partners:', error);
-          Alert.alert('Erro', 'Não foi possível carregar a lista de parceiros');
-        }
+  const handleRegister = async () => {
+    try {
+      const response = await fetch(`http://${ip}:3001/api/admin/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, name, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigation.navigate('Admin');
+      } else {
+       
+        Alert.alert('Error', data.error);
       }
-
-      fetchData();
-      handleCloseMenu();
-
-    }, [])
-  );
-
-  const filteredPartners = partners.filter(partner => {
-    const fullName = `${partner.name} ${partner.lastName}`.toLowerCase();
-    return fullName.includes(searchText.toLowerCase());
-  });
-
-  const sortedPartners = filteredPartners.slice().sort((a, b) => {
-    const nameA = `${a.name} ${a.lastName}`.toLowerCase();
-    const nameB = `${b.name} ${b.lastName}`.toLowerCase();
-    return sortOrder === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-  });
-
-  const toggleSortOrder = () => {
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } catch (error) {
+      console.error('Error registering:', error);
+      Alert.alert('Error', 'Internal server error');
+    }
   };
+
+
+
+
+  const [fonteLoaded] = useFonts({
+    Poppins_100Thin,
+    Poppins_200ExtraLight,
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold
+  })
+
+
+  if (!fonteLoaded) {
+    return null;
+  }
+
+
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
-      <Navbar />
+    <ScrollView>
+      <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#1C2120', padding: 20 }}>
 
+      
+        <View style={styles.ContainerLogin}>
+          <View style={styles.Textos}>
+            <Text style={{ fontSize: 26, color: '#fff', fontFamily: 'Poppins_700Bold', textAlign: 'center' }}>Crie conta parceiro</Text>
+            <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', }}>Já possui uma conta? <Text onPress={() => navigation.navigate('LoginParceiro')}>Clique aqui</Text></Text>
+          </View>
+          <View style={styles.Labels}>
+            <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', letterSpacing: 2 }}>NOME</Text>
+          </View>
+          <TextInput
+            style={styles.input}
+            placeholder='Nome'
+            placeholderTextColor={'#fff'}
+            value={name}
+            onChangeText={handleNameChange}
+          />
 
-      <View style={{ width: 350, height: 70, paddingTop: 20, justifyContent: 'space-between', display: 'flex', flexDirection: 'row' }}>
-        <Image source={Search} style={styles.SearchIcon} />
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Pesquisar"
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-        <TouchableOpacity style={styles.FilterBTN} onPress={toggleSortOrder}>
-          <Text>A - Z</Text>
-        </TouchableOpacity>
-      </View>
+          <View style={styles.Labels}>
+            <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', letterSpacing: 2 }}>EMAIL</Text>
+          </View>
+          <TextInput
+            style={styles.input}
+            placeholder='Email'
+            placeholderTextColor={'#fff'}
+            value={email}
+            onChangeText={handleEmailChange}
+          />
+          <View style={styles.Labels}>
+            <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', letterSpacing: 2 }}>SENHA</Text>
+          </View>
 
-      <ScrollView>
-        {sortedPartners.map((partner) => (
-          <TouchableOpacity key={partner._id} onPress={() => vizualizar(partner)}>
-            <View style={styles.container}>
-              <View style={styles.UserPhoto}>
-                <Image source={User} />
-              </View>
-              <View style={styles.TextName}>
-                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_300Light' }}>{partner.name} {partner.lastName}</Text>
-                <Text style={{ fontSize: 14, color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_700Bold' }}>Nivel - </Text>
-              </View>
-              <View style={{ width: 30, height: '100%', marginTop: 10 }}>
-                <TouchableOpacity key={partner._id} onPress={() => editarPartner(partner)}>
-                  <Image source={Ver} style={styles.Icons} />
-                </TouchableOpacity>
-              </View>
-            </View>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.input}
+            placeholder='Senha'
+            value={password}
+            onChangeText={handlePasswordChange}
+            placeholderTextColor={'#fff'}
+
+          />
+
+          <TouchableOpacity style={styles.LogarBTN} onPress={handleRegister} >
+            <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Criar</Text>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View>
+
+
+        </View>
+
+      </View>
+    </ScrollView>
   );
 };
 
+CadastrarAdmin.navigationOptions = {
+  title: 'CadastrarAdmin',
+}
 
 
 const styles = StyleSheet.create({
-  UserPhoto: {
-    width: 105,
-    height: 100,
-    borderRadius: 15,
-    resizeMode:'cover'
-  },
 
-
-  TextName:{
-    width: 200,
-    height: '100%',
-    display:'flex',
-    justifyContent:'space-evenly',
-    fontFamily:'Poppins_700Bold'
-  
-  },
-
-
-  container: {
-    borderRadius: 15,
-    backgroundColor: '#584848',
-    borderWidth: 1.3,
-    borderColor: '#7b7574',
-    width: 350,
-    height: 100,
-    display: 'flex',
-    flexDirection: 'row',
+  ContainerLogin: {
+    width: "80%",
+    height: 600,
     marginTop: 20,
-    filter: 'blur(8px)',
-  },
-
-
-
-  FilterBTN: {
-    backgroundColor: '#FFFFFF',
-    width: 50,
-    height: 40,
-    borderWidth: 2,
-    borderColor: '#E3DDDD',
-    justifyContent: 'center',
+    display: 'flex',
     alignItems: 'center',
-    borderRadius: 10,
   },
 
 
-  Icons: {
-  
-    width: 35,
-    height: 35,
-    resizeMode: 'contain',
-    
-  },
-
-  SearchIcon: {
-
-    width: 100,
-    height: 30,
-    resizeMode: 'contain',
-    position: 'absolute',
-    top: 25,
-    left: -25,
-    zIndex: 1,
+  Textos: {
+    height: 85,
+    width: "100%",
+    display: 'flex',
+    alignItems: 'center'
 
   },
 
+  Labels: {
+    height: 20,
+    width: "83%",
+    display: 'flex',
+  },
 
-  searchBar: {
+  input: {
     width: 250,
-    height: 40,
-    backgroundColor: '#FFFFFF',
-    padding: 12,
-    borderRadius: 20,
-    color: 'black',
-    paddingLeft: 50,
-
-
-
+    height: 50,
+    backgroundColor: 'rgba(147, 113, 112, 0.3)',
+    color: '#fff',
+    paddingLeft: 15,
+    borderRadius: 18,
+    marginBottom: 10,
+    fontFamily: 'Poppins_300Light'
   },
 
-});
+
+
+  LogarBTN: {
+    height: 45,
+    width: "83%",
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    display: 'flex',
+    marginTop: 10,
+    borderRadius: 5,
+  },
+
+  LogoContainer: {
+    width: "100%",
+    height: 122,
+    display: 'flex',
+    alignItems: 'center',
+  },
+
+
+  errorModalContent: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    width: 300,
+    marginTop: -30
+  },
+
+  errorModalMessage: {
+    color: 'black' //
+  },
+
+  errorModalCloseButton: {
+    backgroundColor: '#B70D0D',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 10
+  },
+
+  errorModalCloseButtonText: {
+    color: '#FFF',
+    fontWeight: 'bold'
+  },
+
+  errorModal: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+})
 
 export default CadastrarAdmin;

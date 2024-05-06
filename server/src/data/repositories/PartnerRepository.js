@@ -49,10 +49,10 @@ async function registerPartner(partnerData) {
   
 
 
-  async function updatePartner(partnerId, updateData) {
+  async function updatePartner(partnerId, updatedData) {
     try {
       // Atualizar o parceiro pelo ID usando os dados fornecidos
-      const result = await Partner.findByIdAndUpdate(partnerId, updateData, { new: true });
+      const result = await Partner.findByIdAndUpdate(partnerId, updatedData, { new: true });
   
       if (!result) {
         throw new Error('Parceiro não encontrado');
@@ -85,6 +85,16 @@ async function loginPartner(partnerData) {
   }
 }
 
+async function getPartnerCount() {
+  try {
+    return await Partner.countDocuments({});
+  } catch (error) {
+    console.error('Error listing partners:', error);
+    throw new Error('Failed to list partners');
+  }
+}
+
+
 async function updatePartnerExpertise(partnerId, expertiseKey, value) {
   try {
     // Primeiro, verifique se a expertiseKey é válida
@@ -116,6 +126,7 @@ async function updatePartnerExpertise(partnerId, expertiseKey, value) {
   
 module.exports = {
     registerPartner,
+    getPartnerCount,
     listPartners,
     updatePartner,
     deletePartner,

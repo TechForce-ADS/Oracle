@@ -7,7 +7,8 @@ const {updatePartnerExpertise} = require('../data/repositories/PartnerRepository
 const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
 const bcrypt = require('bcrypt')
 
-const RegisterPartnerUC = require('../useCases/partner/RegisterPartnerUC.js')
+const RegisterPartnerUC = require('../useCases/partner/RegisterPartnerUC.js');
+const { Partner, partnerSchema } = require('../models/models.js');
 
 router.post('/updateExpertise/:_id', async (req, res) => {
   try {
@@ -73,12 +74,18 @@ router.delete("/delete/:_id", async (req, res) => {
 
 
 router.put("/update/:_id", async (req, res) => {
+  const salt = await bcrypt.genSalt(10)
   try {
     const partnerId = req.params._id;
-    const updateData = req.body; // Dados que serão atualizados
+    const name = req.body.name; 
+    const email = req.body.email; 
+    const password = await bcrypt.hash(req.body.password,salt)
+    const updatedData = {
+      name:name,
+      email:email,
+      password:password
+    }
 
-    // Chamar a função para atualizar o parceiro
-    const updatedPartner = await updatePartner(partnerId, updateData);
 
     // Responder com o parceiro atualizado
     if (updatedPartner) {
@@ -87,15 +94,31 @@ router.put("/update/:_id", async (req, res) => {
       // Se não encontrou o parceiro para atualizar
       res.status(404).json({ error: "Parceiro não encontrado" });
     }
+
+    // Adicionar campos ao modelo do parceiro conforme fornecido em updateData
+    for (const key in updateData) {
+      if (!(key in partnerSchema.paths)) {
+        // Se o campo não existir no esquema do parceiro, serão adicionados dinamicamente
+        const fieldOptions = { type: typeof updateData[key] };
+        partnerSchema.add({ [key]: fieldOptions });
+      }
+    }
+    // Atualiza os campos conforme fornecido em updateData
+    for (const key in updateData) {
+      partner[key] = updateData[key];
+    }
+    // Salvar as alterações
+    const updatedPartner = await partner.save();
+    res.status(200).json(updatedPartner);
+
   } catch (error) {
-    // Se ocorrer um erro, retornar um erro 500
     console.error(error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
 
+
 router.post('/login', async (req, res) => {
-  console.log("login route called")
   try {
     const { email, password } = req.body;
     const loginPartnerUC = new LoginPartnerUC(email, password); 

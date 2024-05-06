@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import Logo from '../img/LogoSemFundo.png';
-import Ver from '../img/click.png';
-import MenuIcon from '../img/menu.png';
-import Search from '../img/search.png';
-import User from '../img/User.png';
+import Ver from '../../img/click.png';
+import Search from '../../img/search.png';
+import User from '../../img/User.png';
 import {ip} from "@env";
-import Navbar from '../Components/Navbar';
+import Navbar from '../../Components/NavbarParceiro';
 
 
 
@@ -16,13 +14,7 @@ const TelaLista = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
   const [sortOrder, setSortOrder] = useState('asc');
 
-  const toggleMenu = () => {
-    setMenuAberto(!menuAberto);
-  };
 
-  const handleCloseMenu = () => {
-    setMenuAberto(false);
-  };
 
   const vizualizar = (partner) => {
     navigation.navigate('Informacoes', { partnerToSee: partner });
@@ -45,7 +37,7 @@ const TelaLista = ({ navigation }) => {
       }
 
       fetchData();
-      handleCloseMenu();
+   
 
     }, [])
   );

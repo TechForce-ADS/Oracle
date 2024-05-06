@@ -17,6 +17,45 @@ import {ip} from "@env";
 const CadastroConta = ({ navigation }) => {
  
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
+  };
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+  };
+
+
+  const handleRegister = async () => {
+    try {
+      const response = await fetch(`http://${ip}:3001/api/admin/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        navigation.navigate('Login');
+      } else {
+       
+        Alert.alert('Error', data.error);
+      }
+    } catch (error) {
+      console.error('Error registering:', error);
+      Alert.alert('Error', 'Internal server error');
+    }
+  };
+
+
 
 
 
@@ -49,14 +88,7 @@ const CadastroConta = ({ navigation }) => {
           <Text style={{ fontSize: 26, color: '#fff', fontFamily:'Poppins_700Bold', textAlign:'center' }}>Crie sua nova conta</Text>
           <Text style={{ fontSize: 12, color: '#fff', fontFamily:'Poppins_300Light', }}>Já possui uma conta? <Text onPress={() => navigation.navigate('Login')}>Clique aqui</Text></Text>
         </View>
-        <View style={styles.Labels}>
-          <Text style={{ fontSize: 12, color: '#fff',  fontFamily:'Poppins_300Light', letterSpacing: 2 }}>NOME</Text>
-        </View>
-        <TextInput
-          style={styles.input}
-          placeholder='Nome'
-          placeholderTextColor={'#fff'}
-        />
+        
 
 
         <View style={styles.Labels}>
@@ -66,6 +98,8 @@ const CadastroConta = ({ navigation }) => {
           style={styles.input}
           placeholder='Email'
           placeholderTextColor={'#fff'}
+          value={email}
+          onChangeText={handleEmailChange}
         />
 
         <View style={styles.Labels}>
@@ -76,13 +110,13 @@ const CadastroConta = ({ navigation }) => {
           secureTextEntry={true}
           style={styles.input}
           placeholder='Senha'
-          
-         
+          value={password}
+          onChangeText={handlePasswordChange}
           placeholderTextColor={'#fff'}
 
         />
 
-        <TouchableOpacity style={styles.LogarBTN} >
+        <TouchableOpacity style={styles.LogarBTN} onPress={handleRegister} >
           <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Criar</Text>
         </TouchableOpacity>
 

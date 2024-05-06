@@ -2,5 +2,6 @@ POST http://localhost:3001/api/expertise/registerExpertise HTTP/1.1
 content-type: application/json
 
 {
-    "title":"como terminar a faculdade sem surtar: manual definitivo :3"
+
+
 }

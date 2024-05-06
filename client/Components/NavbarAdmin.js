@@ -6,7 +6,7 @@ import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
 import SearchIcon from '../img/search.png';
 
-const Navbar = () => {
+const NavbarAdmin = () => {
   const [menuAberto, setMenuAberto] = useState(false);
   const [menuOffset] = useState(new Animated.Value(-300));
   const [searchQuery, setSearchQuery] = useState('');
@@ -54,18 +54,30 @@ const Navbar = () => {
   const screenHeight = Dimensions.get('window').height;
 
   return (
-    <View style={styles.header}>
-      
-    
+    <View style={styles.container}>
+      <View style={styles.searchBar}>
+        <TextInput
+          style={styles.input}
+          placeholder="Pesquisar..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          onSubmitEditing={handleSearch}
+        />
+        <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
+          <Image source={SearchIcon} style={styles.searchIcon} />
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.filterButton} onPress={handleOrderByAlphabetical}>
+        <Text style={styles.filterButtonText}>A-Z</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.menuButton} onPress={toggleMenu}>
         <Image source={MenuIcon} style={styles.menuIcon} />
       </TouchableOpacity>
       
       <Animated.View style={[styles.menu, { transform: [{ translateY: menuOffset }], height: menuAberto ? screenHeight : 50 }]}>
         <Image source={Logo} style={styles.logo} />
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
-        <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Cursos')}>Cursos</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('CadastrarAdmin')}>Cadastrar administrador</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Administradores')}>Administradores</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Dashboard')}>Dashboard</Text>
 
       </Animated.View>
@@ -74,14 +86,9 @@ const Navbar = () => {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#50100c',
-    width: 420,
-    height: 70,
-    alignItems: 'center',
+  container: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    zIndex: 2000,
+    alignItems: 'center',
   },
 
   logo: {
@@ -93,12 +100,10 @@ const styles = StyleSheet.create({
 
   menuButton: {
     backgroundColor: '#50100c',
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft:330,
-    zIndex: 2001,
   },
 
   menuIcon: {
@@ -169,4 +174,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Navbar;
+export default NavbarAdmin;

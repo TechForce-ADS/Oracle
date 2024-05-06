@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import Logo from '../../img/LogoN.png';
+
+
+
 import {
   useFonts, Poppins_100Thin,
   Poppins_200ExtraLight,
@@ -57,8 +60,9 @@ const LoginParceiro = ({ navigation }) => {
       });
   
       if (response.ok) {
-        const partnerData = await response.json(); // Assumindo que o servidor retorna os dados do usuário
-        navigation.navigate('TelaParceiro', { partnerToSee: partnerData }); // Passa os dados para a tela de informações
+       
+        const partnerData = await response.json(); 
+        navigation.navigate('TelaParceiro', { partnerToSee: partnerData });
       } else { 
         setErrorMessage('Usuário ou senha incorretos');
         toggleErrorModal();
