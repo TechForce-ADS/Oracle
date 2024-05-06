@@ -18,7 +18,7 @@ connect()
   .then(() => {
 
     const coursesController = require('./src/controllers/CoursesController');
-    app.use('api/courses', coursesController);
+    app.use('/api/courses', coursesController);
 
     const userController = require('./src/controllers/UserController');
     app.use('/api/users', userController);
@@ -28,6 +28,9 @@ connect()
 
     const adminController = require('./src/controllers/AdminController');
     app.use('/api/admin', adminController)
+
+    const expertiseController = require ('./src/controllers/ExpertiseController');
+    app.use('/api/expertise', expertiseController);
     
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);

@@ -4,7 +4,7 @@ const RegisterCourseUC = require('../useCases/courses/RegisterCourse');
 const { listCourse, updateCourse } = require('../data/repositories/CoursesRepository');
 const { deletePartner } = require('../data/repositories/PartnerRepository');
 
-router.post('/register', async (req, res) =>{
+router.post('/registerCourse', async (req, res) =>{
     try {
         const name = req.body.name;
         const description = req.body.description;
@@ -13,7 +13,7 @@ router.post('/register', async (req, res) =>{
         const registerUC = new RegisterCourseUC(name,description,time,image);
         const newCourse = await registerUC.create();
         if (newCourse){
-            res.status(201).json(newCourse);
+            res.status(200).json(newCourse);
         }
     } catch (error) {
         console.error('Error register course:', error);
@@ -31,7 +31,7 @@ router.get('/coursesList', async(req, res) => {
     }
 })
 
-router.delete("/delete/:id", async(req, res) => {
+router.delete("/deleteCourse/:_id", async(req, res) => {
     try {
         const courseId = req.params._id;
         const result = await deletePartner(courseId);
@@ -42,14 +42,14 @@ router.delete("/delete/:id", async(req, res) => {
     }
 })
 
-router.put("/update/:id", async (req, res) => {
+router.put("/updateCourse/:_id", async (req, res) => {
     try {
         const courseId = req.params._id;
         const updateData = req.body;
         const updatedCourse = await updateCourse(courseId, updateData);
 
         if (updatedCourse) {
-            res.status(200),json(updatedCourse);
+            res.status(200).json(updatedCourse);
         }else{
             res.status(404).json({error: "Curso não encontrado"});
         }

@@ -167,9 +167,9 @@ const tasksSchema = new mongoose.Schema({
 });
 
 const courseRegistrationSchema = new mongoose.Schema({
-  user: {
+  partner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Partner'
   },
   course: {
     type: mongoose.Schema.Types.ObjectId,
@@ -191,4 +191,12 @@ const Admin = mongoose.model('Admin', adminSchema);
 
 const Partner = mongoose.model('Partner', partnerSchema);
 
-module.exports = { User, userSchema, Partner, partnerSchema, Admin, adminSchema, Course, courseSchema, CourseRegistration, courseRegistrationSchema, Expertise, expertiseSchema };
+const Task = mongoose.model('Task', tasksSchema);
+
+module.exports = { User, userSchema, 
+                   Partner, partnerSchema, 
+                   Admin, adminSchema, 
+                   Course, courseSchema, 
+                   CourseRegistration, courseRegistrationSchema, 
+                   Expertise, expertiseSchema,
+                   Task, tasksSchema};

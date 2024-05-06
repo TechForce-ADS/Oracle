@@ -1,10 +1,6 @@
-POST http://localhost:3001/api/partners/register HTTP/1.1
+POST http://localhost:3001/api/expertise/registerExpertise HTTP/1.1
 content-type: application/json
 
 {
-    "email":"pedro@gmail.com",
-    "nameResponsavel":"brener",
-    "nameFantasia":"FATEC",
-    "cnpj":"123456789",
-    "password":"123"
+    "title":"como terminar a faculdade sem surtar: manual definitivo :3"
 }
