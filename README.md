@@ -182,16 +182,27 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
 
   ### Sprint 2</a> - 15/04 - 05/05</p>
- > <p>:x: Atualizações do desenvolvimento dos parceiros</p>
+  <p>:white_check_mark: Novo protótipo </p>
+  <p>:white_check_mark: Login - Administrador Master do sistema e para Parceiros da Oracle </p>
+  <p>:white_check_mark: Configuração da Nav-Bar </p>
+  <p>:white_check_mark: Criptografia de dados pessoais no Banco de Dados</p>
+  <p>:white_check_mark: CRUD dos Cursos </p>
+  <p>:white_check_mark: Reestruturação do Front-End</p>
+  <p>:white_check_mark: Criptografia de dados pessoias no Banco de Dados</p>
+  <p>:white_check_mark: CRUD dos Administradores </p>  
+  <p>:white_check_mark: Sistema de Expertises</p>
+  <p>:white_check_mark: Sistema de Tasks das Expertises</p> 
+  <p>:white_check_mark: Alteração do Cadastro de Parceiros (edição)</p> 
+  <p>:white_check_mark: Atualizações do desenvolvimento dos parceiros</p>
  - User Storie: Como administrador, necessito atualizar as expertises de um parceiro que teve um novo
 alcance durante o semestre 
- > <p>:x: Criação do Dashboard </p>
+  <p>:white_check_mark: Criação do Dashboard </p>
  - User Storie: Como Administrador, gostaria de visualizar de maneira mais rápida o desempenho de meus
 parceiros
- > <p>:x: Gestão do Desempenho com os dados de cada parceiro </p>
+  <p>:white_check_mark: Gestão do Desempenho com os dados de cada parceiro </p>
  - User Storie:Como Administrador, quero ver gráficos e dados de cada um dos meus parceiros para ver seu
 desempenho
- > <p>:x: Implementação das funções: Filtrar, Paginar e Pesquisar </p>
+  <p>:white_check_mark: Implementação das funções: Filtrar, Paginar e Pesquisar </p>
 - User Storie: Como administrador, gostaria de pesquisar parceiros que o nome comecem com a letra 'D'
 
  ### Sprint 3</a> - 06/05 - 26/05</p>
@@ -251,6 +262,8 @@ durante a API
 # Burndown do Projeto
 > 1° Sprint
 ![burndown-oracle](https://github.com/TechForce-ADS/Oracle/assets/101806264/fbfe684f-64d9-4272-8441-3e1538e15ed2)
+> 2° Sprint
+![burndown2-oracle](https://github.com/TechForce-ADS/Oracle/assets/101806264/94368e26-6bb1-40f5-8b55-6d5237aabec3)
 
 
 
