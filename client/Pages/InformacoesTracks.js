@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../Components/Navbar';
@@ -10,7 +10,41 @@ export default function InformacoesCurso({ navigation, route }) {
 
 
   const [trackData, setTrackData] = useState(route.params?.courseToSee || {});
-  const track_id = trackData._id
+  const [expertiseData, setTrackExpertises] = useState(false);
+
+  const track = trackData._id
+
+
+  useEffect(() => {
+
+    fetchTrackExpertises(track);
+   
+  }, [track]);
+
+  const vizualizar = (track) => {
+    navigation.navigate('TaskExpertises', { trackToSee: track });
+  };
+
+
+
+
+  const fetchTrackExpertises = async (track) => {
+    try {
+        const response = await fetch(`http://${ip}:3001/api/tracks/trackExpertises/${track}`);
+        if (!response.ok) {
+            throw new Error('Erro ao buscar expertises do parceiro');
+        }
+        const data = await response.json();
+      
+        setTrackExpertises(data);
+     
+    } catch (error) {
+        console.error('Erro ao buscar expertises do parceiro:', error);
+        Alert.alert('Erro', 'Não foi possível carregar as expertises do parceiro');
+    }
+};
+
+
 
   const [fonteLoaded] = useFonts({
     Poppins_100Thin,
@@ -33,6 +67,21 @@ export default function InformacoesCurso({ navigation, route }) {
 
 
 
+
+
+  const renderExpertises = () => {
+    console.log('Expertises:', expertiseData); // Adicione este log
+    return expertiseData.map((expertise, index) => (
+        <TouchableOpacity key={index} style={styles.expertise}  onPress={() => vizualizar(expertise)}>
+            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.expertiseName}</Text>
+            {/* <TouchableOpacity onPress={() => excluirExpertise(expertise._id)}>
+                <Text style={{ color: '#FF0000', fontFamily: 'Poppins_300Light', fontSize: 16, marginLeft: 10 }}>Excluir</Text>
+            </TouchableOpacity> */}
+        </TouchableOpacity>
+    ));
+};
+
+
   return (
     <View style={styles.container}>
       <Navbar />
@@ -49,14 +98,18 @@ export default function InformacoesCurso({ navigation, route }) {
           </View>
 
 
-
+          {expertiseData.length > 0 ? (
+            renderExpertises()
+          ) : (
+            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma expertise encontrada.</Text>
+          )}
           <View style={styles.Botao}>  
              <TouchableOpacity style={styles.EditarBTN}  onPress={() => adicionarTask(trackData)} >
               <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}> + Adicionar Expertise</Text>
             </TouchableOpacity> 
          
           </View>
-
+          
 
       </ScrollView>
     </View>
@@ -170,6 +223,17 @@ const styles = StyleSheet.create({
   },
 
 
-
+  expertise: {
+    backgroundColor: '#584848',
+    width: 350,
+    height: 50,
+    borderRadius: 22,
+    borderWidth: 1.3,
+    borderColor: '#7b7574',
+    marginTop: 20,
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  },
 
 });

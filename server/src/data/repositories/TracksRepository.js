@@ -75,10 +75,22 @@ async function registerExpertiseTrack(registrationData){
 }
 
 
+async function listTracksExpertises(track) {
+    try {
+        const expertisesRegisters = await TrackRegistration.find({ track: track });
+        return expertisesRegisters;
+    } catch (error) {
+        console.error('Error listing expertises registers:', error);
+        throw new Error('Failed to list expertises registers.');
+    }
+}
+
+
 module.exports = {
     registerTracks,
     listTrack,
     deleteCourse,
     updateCourse,
     registerExpertiseTrack,
+    listTracksExpertises
 }

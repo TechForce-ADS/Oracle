@@ -137,8 +137,8 @@ const expertiseSchema = new mongoose.Schema({
 
 
 
-const tasksSchema = new mongoose.Schema({
-  title: {
+const taskSchema = new mongoose.Schema({
+  name: {
     type: String,
     required: true
   },
@@ -173,18 +173,19 @@ const courseRegistrationSchema = new mongoose.Schema({
 });
 
 
-const trackRegistrationSchema = new mongoose.Schema({
-  Track: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Partner'
-  },
+const trackRegistrationSchema = new mongoose.Schema({//registro expertise na track
   expertiseName: {
     type: String,
     required: true
   },
   expertiseCompleted: {
     type: Boolean,
-    default:false
+    default: false
+  },
+  track: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Track',
+    required:true,
   },
 });
 
@@ -218,6 +219,9 @@ const Admin = mongoose.model('Admin', adminSchema);
 
 const Partner = mongoose.model('Partner', partnerSchema);
 
+const Task = mongoose.model('Task', taskSchema);
+
+
 module.exports = {
   User, userSchema,
   Partner, partnerSchema,
@@ -226,5 +230,6 @@ module.exports = {
   CourseRegistration, courseRegistrationSchema,
   TrackRegistration, trackRegistrationSchema,
   Expertise, expertiseSchema,
+  Task, taskSchema,
   ExpertiseRegistration, expertiseRegistrationSchema
 };

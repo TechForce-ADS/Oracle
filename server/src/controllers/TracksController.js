@@ -3,20 +3,30 @@ const router = express.Router();
 const RegisterTrackUC = require('../useCases/tracks/RegisterTrackUC');
 const registerExpertiseTrackUC = require('../useCases/tracks/RegisterExpertiseTrackUC');
 
-const { listTrack, updateCourse, deleteCourse } = require('../data/repositories/TracksRepository');
+const { listTrack, updateCourse, deleteCourse, listTracksExpertises } = require('../data/repositories/TracksRepository');
 const { deletePartner } = require('../data/repositories/PartnerRepository');
 
 
-
+router.get('/trackExpertises/:track', async (req, res) => {
+    try {
+        const track = req.params.track;
+      
+        const trackExpertises = await listTracksExpertises(track);
+  
+        res.status(200).json(trackExpertises);
+    } catch (error) {
+        console.error('Error getting track expertises:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
 
 router.post('/registerExpertiseTrack', async(req, res) => {
     try {
-        const { expertiseName, track_id, expertiseCompleted } = req.body;
-        const registerUC = new registerExpertiseTrackUC(expertiseName, track_id, expertiseCompleted) ;
+        const { expertiseName, expertiseCompleted } = req.body;
+        const track = req.body.track;
+        const registerUC = new registerExpertiseTrackUC(expertiseName, track, expertiseCompleted) ;
         const newRegister = await registerUC.create();
-        if(newRegister){
-            res.status(200).json(newRegister);
-        }
+        console.log(newRegister);
     } catch (error) {
         console.error('Error register expertise:', error);
         res.status(500).json({ error: 'Internal server error.' });
@@ -29,6 +39,7 @@ router.post('/registerExpertiseTrack', async(req, res) => {
 router.post('/registerTrack', async (req, res) =>{
     try {
         const name = req.body.name;
+     
         const registerUC = new RegisterTrackUC(name);
         const newTrack = await registerUC.create();
         if (newTrack){

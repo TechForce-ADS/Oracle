@@ -1,15 +1,16 @@
 const {registerTracks} = require('../../data/repositories/TracksRepository');
 
 class RegisterTrackUC{
-    constructor(name) {
+    constructor(name, track) {
         this.name = name;
- 
+        this.track = track;
     }
 
     async create(){
         try {
             const trackData = {
                 name: this.name,
+                track: this.track,
                 
             };
 

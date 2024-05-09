@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView, Alert } from 'react-native';
 import { ip } from "@env";
 import Navbar from '../Components/Navbar';
 
 
 
-const AdicionarExpertise = ({ navigation, route }) => {
-    const [expertiseName, setNameExpertise] = useState('');
-    const [trackData, setTrackData] = useState(route.params?.courseToSee || {});
-    const track = trackData._id
+const AdicionarTask = ({ navigation, route }) => {
+    const [name, setNameTask] = useState('');
+    const [expertiseData, setExpertiseData] = useState(route.params?.expertiseToSee || {});
+    
+    const expertise = expertiseData._id
 
+    useEffect(() => {
 
+   
+       console.log("ID ATUAL:", expertise)
+      }, []);
 
-    const handleNameExpertiseChange = (text) => {
-        setNameExpertise(text);
+    const handleNameTaskChange = (text) => {
+        setname(text);
     };
 
  
@@ -24,7 +29,7 @@ const AdicionarExpertise = ({ navigation, route }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ expertiseName, track }),
+                body: JSON.stringify({ name, expertise }),
             });
 
             const data = await response.json();
@@ -41,8 +46,8 @@ const AdicionarExpertise = ({ navigation, route }) => {
         }
     };
 
-    AdicionarExpertise.navigationOptions = {
-        title: 'AdicionarExpertise',
+    AdicionarTask.navigationOptions = {
+        title: 'AdicionarTask',
       }
 
     return (
@@ -54,7 +59,7 @@ const AdicionarExpertise = ({ navigation, route }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
                     <View style={{ width: 100, height: 2, backgroundColor: 'white', }} />
                     <View>
-                        <Text style={{ width: 175, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Nova Expertise de {trackData.name}</Text>
+                        <Text style={{ width: 175, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Nova Expertise de</Text>
                     </View>
                     <View style={{ width: 100, height: 2, backgroundColor: 'white', }} />
                 </View>
@@ -66,8 +71,8 @@ const AdicionarExpertise = ({ navigation, route }) => {
                         <TextInput style={styles.inputNome}
 
                             placeholder='Nome'
-                            value={expertiseName}
-                            onChangeText={handleNameExpertiseChange}>
+                            value={name}
+                            onChangeText={handleNameTaskChange}>
 
                         </TextInput>
 
@@ -144,4 +149,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default AdicionarExpertise;
+export default AdicionarTask;

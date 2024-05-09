@@ -19,7 +19,7 @@ export default function Tracks({ navigation }) {
 
 
   const vizualizar = (course) => {
-    navigation.navigate('InformacoesCurso', { courseToSee: course });
+    navigation.navigate('InformacoesTracks', { courseToSee: course });
   };
 
   useFocusEffect(
@@ -65,7 +65,7 @@ export default function Tracks({ navigation }) {
           </TouchableOpacity>
         ))}
         <View style={styles.Botão}>
-          <TouchableOpacity style={styles.VerMaisBTN}  onPress={() => navigation.navigate('CadastroCurso')}>
+          <TouchableOpacity style={styles.VerMaisBTN}  onPress={() => navigation.navigate('CadastroTrack')}>
           <Text style={{  textAlign:'center',fontSize: 16, color: '#000',  fontFamily: 'Poppins_700Bold' }} >
                 + Adicionar Track
                 </Text>

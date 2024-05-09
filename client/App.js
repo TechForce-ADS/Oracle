@@ -18,14 +18,17 @@ import TelaParceiro from './Pages/Parceiros/TelaParceiro'
 import Tasks from './Pages/Parceiros/Tasks'
 import CadastrarAdmin from './Pages/CadastrarAdmin';
 import EditarAdmin from './Pages/EditarAdmin';
-import CadastroCurso from './Pages/CadastroCurso';
-import InformacoesCurso from './Pages/InformacoesCursos';
+import CadastroTrack from './Pages/CadastroTrack';
+import InformacoesTracks from './Pages/InformacoesTracks';
 import CursosParceiro from './Pages/Parceiros/CursosParceiro';
-import InformacoesCursoParceiro from './Pages/Parceiros/InformacoesCursosParceiro';
+import AdicionarTask from './Pages/AdicionarTask'
 import TelaListaParceiro from './Pages/Parceiros/TelaListaParceiro';
 import Expertises from './Pages/Expertises';
 import InformacoesParceiros from './Pages/Parceiros/InformacoesParceiros';
 import AdicionarExpertise from './Pages/AdicionarExpertise';
+import TaskExpertises from './Pages/TaskExpertises';
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -49,14 +52,15 @@ export default function App() {
         <Stack.Screen name="CadastroContaParceiro" component={CadastroContaParceiro} />
         <Stack.Screen name="TelaParceiro" component={TelaParceiro} />
         <Stack.Screen name="Tasks" component={Tasks} />
-        <Stack.Screen name="CadastroCurso" component={CadastroCurso} />
-        <Stack.Screen name="InformacoesCurso" component={InformacoesCurso} />
+        <Stack.Screen name="CadastroTrack" component={CadastroTrack} />
+        <Stack.Screen name="InformacoesTracks" component={InformacoesTracks} />
         <Stack.Screen name="CursosParceiro" component={CursosParceiro} />
-        <Stack.Screen name="InformacoesCursoParceiro" component={InformacoesCursoParceiro} />
+        <Stack.Screen name="AdicionarTask" component={AdicionarTask} />
         <Stack.Screen name="TelaListaParceiro" component={TelaListaParceiro} />
         <Stack.Screen name="InformacoesParceiros" component={InformacoesParceiros} />
         <Stack.Screen name="Expertises" component={Expertises} />
         <Stack.Screen name="AdicionarExpertise" component={AdicionarExpertise} />
+        <Stack.Screen name="TaskExpertises" component={TaskExpertises} />
   
       </Stack.Navigator>
     </NavigationContainer>

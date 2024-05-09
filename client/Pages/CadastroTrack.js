@@ -5,7 +5,7 @@ import Navbar from '../Components/Navbar';
 
 
 
-const CadastroCurso = ({ navigation }) => {
+const InformacoesTracks = ({ navigation }) => {
     const [name, setName] = useState('');
   
 
@@ -25,7 +25,7 @@ const CadastroCurso = ({ navigation }) => {
             });
 
             const data = await response.json();
-
+            navigation.navigate('Tracks');
             if (response.ok) {
                 navigation.navigate('Tracks');
             } else {
@@ -38,8 +38,8 @@ const CadastroCurso = ({ navigation }) => {
         }
     };
 
-    CadastroCurso.navigationOptions = {
-        title: 'CadastroCurso',
+    InformacoesTracks.navigationOptions = {
+        title: 'InformacoesTracks',
       }
 
     return (
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default CadastroCurso;
+export default InformacoesTracks;
