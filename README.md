@@ -28,12 +28,13 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
 - <a href ="#objetivo"> Objetivo </a>
 - <a href ="#requisito-da-aplicação"> Requisitos da Aplicação </a>
 - <a href ="#metodologia"> Metodologia </a>
+- <a href = "#calendário-da-sprint"> Calendário da Sprint <a/>
 - <a href ="#backlog-do-produto"> Backlog do Produto </a>
 - <a href ="#user-stories"> User Stories </a>
-- <a href ="#epico-e-sprints"> Épico e Sprints </a>
+- <a href ="#épico-e-sprints"> Épico e Sprints </a>
 - <a href ="#tecnologia-utilizadas"> Tecnologias Utilizadas </a>
 - <a href ="#sprint"> Sprints </a>
-- <a href ="#burndown-do-projeto"> Burndown do Projeto </a>
+
 
 
 
@@ -161,17 +162,25 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
 - SCRUM
 
+
+# Calendário da Sprint
+
+![CALENDÁRIO](https://github.com/TechForce-ADS/Oracle/assets/101806264/4b65fee6-79d2-431f-a314-2e0c466578ec)
+
+
 # Backlog do Produto 
-<img src = "https://github.com/TechForce-ADS/imagens/blob/main/product-oracle.png" />
+
+![1](https://github.com/TechForce-ADS/Oracle/assets/101806264/d1811e78-bd2e-4267-914f-e89b08a2a6b3)
 
 # User Stories
+
 ![user-stories-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/5e4af7b4-381f-4909-977a-641fb67b3cf2)
 
 
 
 # Épico e Sprints
 
-![EPICO-ORACLE (2)](https://github.com/TechForce-ADS/Oracle/assets/101806264/f77144ce-2dd3-4f67-ac05-62093a6bf186)
+![2](https://github.com/TechForce-ADS/Oracle/assets/101806264/07e4564a-d9c8-4bb7-9ab6-675812cb4ac8)
 
 
 > Sprint Backlog:
@@ -240,8 +249,8 @@ durante a API
  
 # Tecnologia Utilizadas
 
+![4](https://github.com/TechForce-ADS/Oracle/assets/101806264/32c291f8-acab-4764-a512-16cf6d668342)
 
-<img src ="https://github.com/TechForce-ADS/imagens/blob/main/BACKLOG.png"/>
  
 
 ## 
