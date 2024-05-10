@@ -1,4 +1,3 @@
-<img src= "https://github.com/TechForce-ADS/imagens/blob/main/oracle.png" height="200" width="400"/> 
 
 # Projeto API - Oracle
 Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
@@ -268,12 +267,5 @@ durante a API
 - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Protótipo
 
   
-# Burndown do Projeto
-> 1° Sprint
-![burndown-oracle](https://github.com/TechForce-ADS/Oracle/assets/101806264/fbfe684f-64d9-4272-8441-3e1538e15ed2)
-> 2° Sprint
-![burndown2-oracle](https://github.com/TechForce-ADS/Oracle/assets/101806264/94368e26-6bb1-40f5-8b55-6d5237aabec3)
-
-
 
 
