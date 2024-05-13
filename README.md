@@ -274,7 +274,8 @@ durante a API
 # Sprint
 
 - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Protótipo
-
-  
+- >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Primeira Sprint
+ - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Prototipo - Segunda Versão
+ - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Segunda Sprint
 
 
