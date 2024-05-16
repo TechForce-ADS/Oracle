@@ -20,14 +20,15 @@ import CadastrarAdmin from './Pages/CadastrarAdmin';
 import EditarAdmin from './Pages/EditarAdmin';
 import CadastroTrack from './Pages/CadastroTrack';
 import InformacoesTracks from './Pages/InformacoesTracks';
-import CursosParceiro from './Pages/Parceiros/CursosParceiro';
+import InformacoesTracksParceiros from './Pages/Parceiros/InformacoesTracksParceiros';
 import AdicionarTask from './Pages/AdicionarTask'
 import TelaListaParceiro from './Pages/Parceiros/TelaListaParceiro';
 import Expertises from './Pages/Expertises';
 import InformacoesParceiros from './Pages/Parceiros/InformacoesParceiros';
 import AdicionarExpertise from './Pages/AdicionarExpertise';
 import TaskExpertises from './Pages/TaskExpertises';
-
+import TracksParceiro from './Pages/Parceiros/TracksParceiro';
+import TaskExpertisesParceiros from './Pages/Parceiros/TaskExpertisesParceiros';
 
 
 const Stack = createNativeStackNavigator();
@@ -54,13 +55,15 @@ export default function App() {
         <Stack.Screen name="Tasks" component={Tasks} />
         <Stack.Screen name="CadastroTrack" component={CadastroTrack} />
         <Stack.Screen name="InformacoesTracks" component={InformacoesTracks} />
-        <Stack.Screen name="CursosParceiro" component={CursosParceiro} />
         <Stack.Screen name="AdicionarTask" component={AdicionarTask} />
         <Stack.Screen name="TelaListaParceiro" component={TelaListaParceiro} />
         <Stack.Screen name="InformacoesParceiros" component={InformacoesParceiros} />
         <Stack.Screen name="Expertises" component={Expertises} />
         <Stack.Screen name="AdicionarExpertise" component={AdicionarExpertise} />
         <Stack.Screen name="TaskExpertises" component={TaskExpertises} />
+        <Stack.Screen name="TracksParceiro" component={TracksParceiro} />
+        <Stack.Screen name="InformacoesTracksParceiros" component={InformacoesTracksParceiros} />
+        <Stack.Screen name="TaskExpertisesParceiros" component={TaskExpertisesParceiros} />
   
       </Stack.Navigator>
     </NavigationContainer>

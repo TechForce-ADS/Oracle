@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
-import Navbar from '../Components/Navbar';
+import Navbar from '../../Components/NavbarParceiro';
 import * as Progress from 'react-native-progress';
 
 import { ip } from "@env";
@@ -10,13 +10,14 @@ export default function InformacoesCurso({ navigation, route }) {
 
 
   const [expertiseData, setExpertiseData] = useState(route.params?.trackToSee || {});
+
   const [taskData, setTaskData] = useState(false);
 
 
-
+  
   useEffect(() => {
     fetchTaskExpertises(expertiseData._id); 
-
+   
   }, []);
   
 
@@ -66,8 +67,8 @@ const renderExpertises = () => {
         )}
 
         <View style={styles.Botao}>  
-          <TouchableOpacity style={styles.EditarBTN} onPress={() => navigation.navigate('AdicionarTask', { expertiseToSee: expertiseData })}>
-            <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}> + Adicionar Task</Text>
+          <TouchableOpacity style={styles.EditarBTN}>
+            <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Engressar na Expertise</Text>
           </TouchableOpacity> 
         </View>
       </ScrollView>
@@ -156,8 +157,8 @@ const styles = StyleSheet.create({
 
 
   EditarBTN: {
-    height: 35,
-    width: "70%",
+    height: 45,
+    width: "75%",
     backgroundColor: '#FFF',
     justifyContent: 'center',
     display: 'flex',

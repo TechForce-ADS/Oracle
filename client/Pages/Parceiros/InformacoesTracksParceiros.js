@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
-import Navbar from '../Components/Navbar';
+import Navbar from '../../Components/NavbarParceiro';
 import * as Progress from 'react-native-progress';
 
 import { ip } from "@env";
@@ -22,8 +22,8 @@ export default function InformacoesCurso({ navigation, route }) {
   }, [track]);
 
   const vizualizar = (track) => {
+    navigation.navigate('TaskExpertisesParceiros', { trackToSee: track });
   };
-  navigation.navigate('TaskExpertises', { trackToSee: track });
 
 
 
@@ -59,11 +59,6 @@ export default function InformacoesCurso({ navigation, route }) {
   }
 
 
-
-
-  const adicionarTask = (trackData) => {
-    navigation.navigate('AdicionarExpertise', { courseToSee: trackData });
-  };
 
 
 
@@ -103,12 +98,7 @@ export default function InformacoesCurso({ navigation, route }) {
           ) : (
             <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma expertise encontrada.</Text>
           )}
-          <View style={styles.Botao}>  
-             <TouchableOpacity style={styles.EditarBTN}  onPress={() => adicionarTask(trackData)} >
-              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}> + Adicionar Expertise</Text>
-            </TouchableOpacity> 
-         
-          </View>
+          
           
 
       </ScrollView>

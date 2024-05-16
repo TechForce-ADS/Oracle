@@ -2,7 +2,7 @@ const {Task} = require('../../models/models');
 
 async function registerTask(taskData){
     try {
-        const existingTask = await Task.findOne({name: taskData.name});
+        const existingTask = await Task.findOne({_id: taskData._id});
         if(existingTask){
             return false;
         }

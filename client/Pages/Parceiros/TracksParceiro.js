@@ -7,11 +7,11 @@ import Navbar from '../../Components/NavbarParceiro';
 
 
 
-export default function Cursos({ navigation }) {
+export default function Tracks({ navigation }) {
 
 
   const [expanded, setExpanded] = useState(false);
-  const [courses, setCourses] = useState([]);
+  const [tracks, setTracks] = useState([]);
 
   const toggleExpand = () => {
     setExpanded(!expanded);
@@ -19,19 +19,19 @@ export default function Cursos({ navigation }) {
 
 
   const vizualizar = (course) => {
-    navigation.navigate('InformacoesCursoParceiro', { courseToSee: course });
+    navigation.navigate('InformacoesTracksParceiros', { courseToSee: course });
   };
 
   useFocusEffect(
     useCallback(() => {
       async function fetchData() {
         try {
-          const response = await fetch(`http://${ip}:3001/api/courses/coursesList`);
+          const response = await fetch(`http://${ip}:3001/api/tracks/tracksList`);
           if (!response.ok) {
             throw new Error('Erro ao buscar cursos');
           }
           const data = await response.json();
-          setCourses(data);
+          setTracks(data);
         } catch (error) {
           console.error('Erro ao buscar cursos:', error);
           Alert.alert('Erro', 'Não foi possível carregar a lista de cursos');
@@ -49,19 +49,16 @@ export default function Cursos({ navigation }) {
       <Navbar />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {courses.map((course) => (
-          <TouchableOpacity key={course._id} onPress={() => vizualizar(course)}>
+        {tracks.map((track) => (
+          <TouchableOpacity key={track._id} onPress={() => vizualizar(track)}>
             <View style={styles.containerA}>
               <View style={styles.TextName}>
                 <Text style={{ fontSize: 18, color: '#FFF', letterSpacing: 1, fontFamily: 'Poppins_300Light' }}>
-                  {course.name}
+                  {track.name}
                 </Text>
-                <View style={styles.TextDescription}>
-                <Text style={{  textAlign:'justify',fontSize: 12, color: '#FFF',  fontFamily: 'Poppins_300Light' }}>
-                {course.description}
-                </Text>
+               
                 
-              </View>
+                
               </View>
              
             </View>
@@ -105,11 +102,12 @@ const styles = StyleSheet.create({
     borderWidth: 1.3,
     borderColor: '#7b7574',
     width: 350,
-    height: 100,
+    height: 50,
     display: 'flex',
     flexDirection:'column',
     marginTop: 20,
     alignItems:'center',
+    justifyContent:'center'
     
   },
 

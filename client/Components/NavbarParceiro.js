@@ -40,7 +40,7 @@ const handleCloseMenu = () => {
       {menuAberto && (
         <View style={styles.menu}>
           <Text style={styles.menuText} onPress={() => navigation.navigate('TelaListaParceiro')}>Parceiros</Text>
-          <Text style={styles.menuText} onPress={() => navigation.navigate('CursosParceiro')}>Cursos</Text>
+          <Text style={styles.menuText} onPress={() => navigation.navigate('TracksParceiro')}>Tracks</Text>
           <Text style={styles.menuText} onPress={() => navigation.navigate('TelaParceiro')}>Perfil</Text>
         
         
