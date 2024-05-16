@@ -4,7 +4,7 @@ const RegisterTrackUC = require('../useCases/tracks/RegisterTrackUC');
 const registerExpertiseTrackUC = require('../useCases/tracks/RegisterExpertiseTrackUC');
 
 const { listTrack, updateCourse, deleteCourse, listTracksExpertises } = require('../data/repositories/TracksRepository');
-const { deletePartner } = require('../data/repositories/PartnerRepository');
+
 
 
 router.get('/trackExpertises/:track', async (req, res) => {

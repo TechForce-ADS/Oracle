@@ -10,91 +10,70 @@ export default function InformacoesCurso({ navigation, route }) {
 
 
   const [expertiseData, setExpertiseData] = useState(route.params?.trackToSee || {});
+  const [taskData, setTaskData] = useState(false);
 
-
-  const expertise = expertiseData._id
-
+  
+  const expertise = expertiseData._id;
 
   useEffect(() => {
+    fetchTaskExpertises(expertiseData._id); // Passando apenas o ID da expertise
+  }, []);
+  
 
-   
-    console.log("id", expertise ) 
-  }, [expertise]);
-
-
-
-  const vizualizar = (expertise) => {
-    navigation.navigate('AdicionarTask', { expertiseToSee: expertise });
+  const fetchTaskExpertises = async (expertiseId) => {
+    try {
+      const response = await fetch(`http://${ip}:3001/api/task/tasksExpertises/${expertiseId}`);
+      if (!response.ok) {
+        throw new Error('Error fetching partner tasks');
+      }
+      const data = await response.json();
+      setTaskData(data);
+    } catch (error) {
+      console.error('Error fetching partner tasks:', error);
+      Alert.alert('Error', 'Unable to load partner tasks');
+    }
   };
+  
 
-
-
-  const [fonteLoaded] = useFonts({
-    Poppins_100Thin,
-    Poppins_200ExtraLight,
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_500Medium
-  });
-
-  if (!fonteLoaded) {
-    return null;
+const renderExpertises = () => {
+  if (Array.isArray(taskData)) {
+    return taskData.map((task, index) => (
+      <TouchableOpacity key={index} style={styles.expertise}>
+        <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
+      </TouchableOpacity>
+    ));
+  } else {
+    return <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>;
   }
-
-
-
-
- 
-
-
-
-
-//   const renderExpertises = () => {
-//     console.log('Expertises:', expertiseData); // Adicione este log
-//     return expertiseData.map((expertise, index) => (
-//         <TouchableOpacity key={index} style={styles.expertise}>
-//             <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.expertiseName}</Text>
-//             {/* <TouchableOpacity onPress={() => excluirExpertise(expertise._id)}>
-//                 <Text style={{ color: '#FF0000', fontFamily: 'Poppins_300Light', fontSize: 16, marginLeft: 10 }}>Excluir</Text>
-//             </TouchableOpacity> */}
-//         </TouchableOpacity>
-//     ));
-// };
-
+};
 
   return (
     <View style={styles.container}>
       <Navbar />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.heading}><Text style={styles.Info}></Text></Text>
+        <View style={styles.ProgressBar}>
+          <Progress.Bar progress={0.8} width={250} color='#FF4700' backgroundColor='#FFF' /><Text style={{ fontFamily: 'Poppins_300Light', color: '#fff', fontSize: 16 }}>  80 %</Text>
+        </View>
 
+        {taskData.length > 0 ? (
+          renderExpertises()
+        ) : (
+          <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>
+        )}
 
-
-      
-      
-          <Text style={styles.heading}><Text style={styles.Info}></Text></Text>
-          <View style={styles.ProgressBar}>
-            <Progress.Bar progress={0.8} width={250} color='#FF4700' backgroundColor='#FFF' /><Text style={{ fontFamily: 'Poppins_300Light', color: '#fff', fontSize: 16 }}>  80 %</Text>
-          </View>
-
-
-          {/* {expertiseData.length > 0 ? (
-            renderExpertises()
-          ) : (
-            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma expertise encontrada.</Text>
-          )} */}
-          <View style={styles.Botao}>  
-            <TouchableOpacity style={styles.EditarBTN} onPress={() =>vizualizar(expertise)}>
-              <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}> + Adicionar Task</Text>
-            </TouchableOpacity> 
-        
-          </View>
-          
-
+        <View style={styles.Botao}>  
+          <TouchableOpacity style={styles.EditarBTN} onPress={() => navigation.navigate('AdicionarTask', { expertiseToSee: expertiseData })}>
+            <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}> + Adicionar Task</Text>
+          </TouchableOpacity> 
+        </View>
       </ScrollView>
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
 

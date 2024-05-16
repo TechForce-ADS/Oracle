@@ -6,25 +6,24 @@ import Navbar from '../Components/Navbar';
 
 
 const AdicionarTask = ({ navigation, route }) => {
-    const [name, setNameTask] = useState('');
+    const [name, setName] = useState('');
     const [expertiseData, setExpertiseData] = useState(route.params?.expertiseToSee || {});
-    
-    const expertise = expertiseData._id
 
+    
+    const expertise = expertiseData._id;
     useEffect(() => {
 
    
-       console.log("ID ATUAL:", expertise)
       }, []);
 
     const handleNameTaskChange = (text) => {
-        setname(text);
+        setName(text);
     };
 
  
     const handleRegister = async () => {
         try {
-            const response = await fetch(`http://${ip}:3001/api/tracks/registerExpertiseTrack`, {
+            const response = await fetch(`http://${ip}:3001/api/task/registerExpertiseTask`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

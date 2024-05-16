@@ -70,7 +70,7 @@ export default function InformacoesCurso({ navigation, route }) {
 
 
   const renderExpertises = () => {
-    console.log('Expertises:', expertiseData); // Adicione este log
+
     return expertiseData.map((expertise, index) => (
         <TouchableOpacity key={index} style={styles.expertise}  onPress={() => vizualizar(expertise)}>
             <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.expertiseName}</Text>

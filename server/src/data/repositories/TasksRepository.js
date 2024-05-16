@@ -50,9 +50,20 @@ async function updateTask(taskId, updateData){
     }
 }
 
+async function listTasksExpertise(expertiseId) {
+    try {
+        const taskRegisters = await Task.find({ expertise: expertiseId });
+        return taskRegisters;
+    } catch (error) {
+        console.error('Error listing tasks registers:', error);
+        throw new Error('Failed to list tasks registers.');
+    }
+}
+
 module.exports = {
     registerTask,
     listTask,
     deleteTask,
-    updateTask
+    updateTask,
+    listTasksExpertise
 }

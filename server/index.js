@@ -36,7 +36,7 @@ connect()
     app.use('/api/expertiseRegistration', expertiseRegisterController)
 
     const taskController = require('./src/controllers/TaskController');
-    app.use('/api/taskController', taskController);
+    app.use('/api/task', taskController);
     
 
     app.listen(PORT, () => {
