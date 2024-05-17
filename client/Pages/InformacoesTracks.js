@@ -22,8 +22,9 @@ export default function InformacoesCurso({ navigation, route }) {
   }, [track]);
 
   const vizualizar = (track) => {
+    navigation.navigate('TaskExpertises', { trackToSee: track });
   };
-  navigation.navigate('TaskExpertises', { trackToSee: track });
+  
 
 
 

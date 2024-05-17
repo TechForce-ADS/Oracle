@@ -19,7 +19,7 @@ router.post('/registerExpertiseTask', async(req, res) => {
 
 router.get('/tasksExpertises/:expertiseId', async (req, res) => {
     try {
-      const expertiseId = req.params.expertiseId; // Usando req.params.expertiseId
+      const expertiseId = req.params.expertiseId; 
       const taskExpertises = await listTasksExpertise(expertiseId);
       res.status(200).json(taskExpertises);
     } catch (error) {

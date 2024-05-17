@@ -15,10 +15,12 @@ export default function InformacoesCurso({ navigation, route }) {
 
 
   useEffect(() => {
-    fetchTaskExpertises(expertiseData._id); 
-
-  }, []);
-  
+    if (expertiseData._id) {
+      fetchTaskExpertises(expertiseData._id.trim()); 
+    } else {
+      console.error('Error: expertiseData._id is undefined');
+    }
+  }, [expertiseData]);
 
   const fetchTaskExpertises = async (expertiseId) => {
     try {
