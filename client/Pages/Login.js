@@ -48,7 +48,6 @@ const Login = ({ navigation }) => {
   };
 
   const handleLogin = async () => {
-
     try {
       const response = await fetch(`http://${ip}:3001/api/admin/login`, {
         method: 'POST',
@@ -57,23 +56,27 @@ const Login = ({ navigation }) => {
         },
         body: JSON.stringify({ email, password }),
       });
-     
-
+  
       if (response.ok) {
         const adminData = await response.json();
         const loggedAdmin = {
-          id:adminData._id,
-          name:adminData.name,
-          email:adminData.email,
-          isMainAdmin:adminData.isMainAdmin
-        }
-        console.log(loggedAdmin)
-        if(loggedAdmin.isMainAdmin == true){
-          navigation.navigate('Admin');
-        }else{
+          id: adminData._id,
+          name: adminData.name,
+          email: adminData.email,
+          isAdminMain: adminData.isAdminMain,
+          isConsultant: adminData.isConsultant
+        };
+  
+        console.log(loggedAdmin);
+  
+        if (loggedAdmin.isAdminMain) {
+          navigation.navigate('Administradores');
+        } else if (loggedAdmin.isConsultant) {
+          navigation.navigate('ConsultorLista');
+        } else {
           navigation.navigate('TelaLista');
         }
-      } else { 
+      } else {
         setErrorMessage('Usuário ou senha incorretos');
         toggleErrorModal();
       }
@@ -83,6 +86,7 @@ const Login = ({ navigation }) => {
       toggleErrorModal();
     }
   };
+  
 
   return (
     <ScrollView>

@@ -69,8 +69,8 @@ async function registerExpertiseTrack(registrationData){
         await newTrackRegistration.save();
         return newTrackRegistration;
     } catch (error) {
-        console.error('Erro registering CourseRegistration :', error);
-        throw new Error('Failed to register CourseRegistration');
+        console.error('Erro registering Track :', error);
+        throw new Error('Failed to register Track');
     }
 }
 

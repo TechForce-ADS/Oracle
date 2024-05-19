@@ -10,7 +10,10 @@ router.post('/registerExpertiseTask', async(req, res) => {
 
         const registerUC = new RegisterTaskUC(name,  expertise) ;
         const newRegister = await registerUC.create();
-        console.log(newRegister);
+        if (newRegister){
+          res.status(201).json(newRegister);
+          console.log("foi aaaaaaaaaaaaa")
+        }
     } catch (error) {
         console.error('Error register expertise:', error);
         res.status(500).json({ error: 'Internal server error.' });

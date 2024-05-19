@@ -10,8 +10,16 @@ import CadastroConta from './Pages/CadastroConta';
 import Informacoes from './Pages/Informacoes';
 import PerfilCompleto from './Pages/PerfilCompleto';
 import Tracks from './Pages/Tracks';
+import TracksMaster from './Pages/Master/TracksMaster';
 import Dashboard from './Pages/Dashboard';
-import Admin from './Pages/Admin';
+import Administradores from './Pages/Master/Administradores';
+import Consultores from './Pages/Master/Consultores';
+import Parceiros from './Pages/Master/Parceiros';
+import CadastroTrackMaster from './Pages/Master/CadastroTrackMaster';
+import InformacoesTracksMaster from './Pages/Master/InformacoesTracksMaster';
+import AdicionarExpertiseMaster from './Pages/Master/AdicionarExpertiseMaster';
+import TaskExpertisesMaster from './Pages/Master/TaskExpertisesMaster';
+import AdicionarTaskMaster from './Pages/Master/AdicionarTaskMaster';
 import LoginParceiro from './Pages/Parceiros/LoginParceiro';
 import CadastroContaParceiro from './Pages/Parceiros/CadastroContaParceiro'
 import TelaParceiro from './Pages/Parceiros/TelaParceiro'
@@ -29,6 +37,10 @@ import AdicionarExpertise from './Pages/AdicionarExpertise';
 import TaskExpertises from './Pages/TaskExpertises';
 import TracksParceiro from './Pages/Parceiros/TracksParceiro';
 import TaskExpertisesParceiros from './Pages/Parceiros/TaskExpertisesParceiros';
+import ConsultorLista from './Pages/Consultor/ConsultorLista'
+import AdicionarConsultor from './Pages/Master/AdicionarConsultor'
+import AdicionarAdministrador from './Pages/Master/AdicionarAdministrador'
+import InformacoesParceiroMaster from './Pages/Master/InformacoesParceiroMaster'
 
 
 const Stack = createNativeStackNavigator();
@@ -45,15 +57,17 @@ export default function App() {
         <Stack.Screen name="Informacoes" component={Informacoes} />
         <Stack.Screen name="CadastroConta" component={CadastroConta} />
         <Stack.Screen name="Tracks" component={Tracks} />
+        <Stack.Screen name="TracksMaster" component={TracksMaster} />
         <Stack.Screen name="CadastrarAdmin" component={CadastrarAdmin} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="PerfilCompleto" component={PerfilCompleto} />
-        <Stack.Screen name="Admin" component={Admin} />
+        <Stack.Screen name="Administradores" component={Administradores} />
         <Stack.Screen name="LoginParceiro" component={LoginParceiro} />
         <Stack.Screen name="CadastroContaParceiro" component={CadastroContaParceiro} />
         <Stack.Screen name="TelaParceiro" component={TelaParceiro} />
         <Stack.Screen name="Tasks" component={Tasks} />
         <Stack.Screen name="CadastroTrack" component={CadastroTrack} />
+        <Stack.Screen name="CadastroTrackMaster" component={CadastroTrackMaster} />
         <Stack.Screen name="InformacoesTracks" component={InformacoesTracks} />
         <Stack.Screen name="AdicionarTask" component={AdicionarTask} />
         <Stack.Screen name="TelaListaParceiro" component={TelaListaParceiro} />
@@ -64,6 +78,16 @@ export default function App() {
         <Stack.Screen name="TracksParceiro" component={TracksParceiro} />
         <Stack.Screen name="InformacoesTracksParceiros" component={InformacoesTracksParceiros} />
         <Stack.Screen name="TaskExpertisesParceiros" component={TaskExpertisesParceiros} />
+        <Stack.Screen name="ConsultorLista" component={ConsultorLista} />
+        <Stack.Screen name="Consultores" component={Consultores} />
+        <Stack.Screen name="Parceiros" component={Parceiros} />
+        <Stack.Screen name="InformacoesTracksMaster" component={InformacoesTracksMaster} />
+        <Stack.Screen name="AdicionarExpertiseMaster" component={AdicionarExpertiseMaster} />
+        <Stack.Screen name="TaskExpertisesMaster" component={TaskExpertisesMaster} />
+        <Stack.Screen name="AdicionarTaskMaster" component={AdicionarTaskMaster} />
+        <Stack.Screen name="AdicionarConsultor" component={AdicionarConsultor} />
+        <Stack.Screen name="AdicionarAdministrador" component={AdicionarAdministrador} />
+        <Stack.Screen name="InformacoesParceiroMaster" component={InformacoesParceiroMaster} />
   
       </Stack.Navigator>
     </NavigationContainer>

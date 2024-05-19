@@ -4,15 +4,17 @@ async function registerTask(taskData){
     try {
         const existingTask = await Task.findOne({_id: taskData._id});
         if(existingTask){
-            return false;
+            return false; // Indica que a tarefa já existe
         }
         const newTask = new Task(taskData);
         await newTask.save();
+        return true; // Indica que o registro foi bem-sucedido
     } catch (error) {
-        console.error('Error registering task:',error);
-        throw new Error('Failed to register task.')
+        console.error('Error registering task:', error);
+        throw new Error('Failed to register task.');
     }
 }
+
 
 async function listTask() {
     try {

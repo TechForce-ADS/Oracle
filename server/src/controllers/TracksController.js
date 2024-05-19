@@ -26,7 +26,9 @@ router.post('/registerExpertiseTrack', async(req, res) => {
         const track = req.body.track;
         const registerUC = new registerExpertiseTrackUC(expertiseName, track, expertiseCompleted) ;
         const newRegister = await registerUC.create();
-        console.log(newRegister);
+        if (newRegister){
+            res.status(201).json(newRegister);
+          }
     } catch (error) {
         console.error('Error register expertise:', error);
         res.status(500).json({ error: 'Internal server error.' });

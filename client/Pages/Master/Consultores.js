@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, ScrollView, TouchableOpacity, StyleSheet, Text, TextInput, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';;
-import Ver from '../img/click.png';
-import Search from '../img/search.png';
-import User from '../img/User.png';
-import {ip} from "@env";
-import NavbarAdmin from '../Components/NavbarAdmin';
+import Ver from '../../img/click.png';
+import Search from '../../img/search.png';
+import User from '../../img/User.png';
+import { ip } from "@env";
+import NavbarAdmin from '../../Components/NavbarMaster';
 
 
 
@@ -52,11 +52,13 @@ const Admin = ({ navigation }) => {
 
     }, [])
   );
-
-  const filteredAdmins = admins.filter(admin => {
-    const fullName = `${admin.name}`.toLowerCase();
-    return fullName.includes(searchText.toLowerCase());
-  });
+  const filteredAdmins = admins
+    .filter(admin => !admin.isAdminMain)
+    .filter(admin => admin.isConsultant)
+    .filter(admin => {
+      const fullName = `${admin.name}`.toLowerCase();
+      return fullName.includes(searchText.toLowerCase());
+    });
 
   const sortedAdmins = filteredAdmins.slice().sort((a, b) => {
     const nameA = `${a.name}`.toLowerCase();
@@ -94,7 +96,12 @@ const Admin = ({ navigation }) => {
                 <Image source={User} />
               </View>
               <View style={styles.TextName}>
-                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily:'Poppins_300Light' }}>{admin.name}</Text>
+                <Text style={{ fontSize: 16, textTransform: 'uppercase', color: '#FFF', letterSpacing: 1, fontFamily: 'Poppins_300Light' }}>{admin.name}</Text>
+                <Text style={{ fontSize: 12, color: '#FFF', letterSpacing: 1, fontFamily: 'Poppins_700Bold' }}>
+                  {admin.isConsultant ? 'Consultor' : 'Adminstrador'}
+                </Text>
+
+
               </View>
               <View style={{ width: 30, height: '100%', marginTop: 10 }}>
                 <TouchableOpacity key={admin._id} onPress={() => editarAdmin(admin)}>
@@ -102,8 +109,15 @@ const Admin = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
             </View>
+            
           </TouchableOpacity>
+          
         ))}
+        <View style={styles.Botao}>
+              <TouchableOpacity style={styles.EditarBTN} onPress={() => navigation.navigate('AdicionarConsultor')}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}> + Adicionar Consultor</Text>
+              </TouchableOpacity>
+            </View>
       </ScrollView>
     </View>
   );
@@ -116,17 +130,49 @@ const styles = StyleSheet.create({
     width: 105,
     height: 100,
     borderRadius: 15,
-    resizeMode:'cover'
+    resizeMode: 'cover'
+  },
+
+  Botao:{
+    width:'100%',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+   
+  },
+
+  content: {
+    backgroundColor: '#584848',
+    width: 350,
+    height: 350,
+    borderRadius: 22,
+    padding: 12,
+    borderWidth: 1.3,
+    borderColor: '#7b7574',
+    overflow: 'hidden'
+
+  },
+
+ 
+
+  EditarBTN: {
+    height: 45,
+    width: "80%",
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    display: 'flex',
+    marginTop: 10,
+    borderRadius: 5,
   },
 
 
-  TextName:{
+  TextName: {
     width: 200,
     height: '100%',
-    display:'flex',
-    justifyContent:'space-evenly',
-    fontFamily:'Poppins_700Bold'
-  
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    fontFamily: 'Poppins_700Bold'
+
   },
 
 
@@ -157,11 +203,11 @@ const styles = StyleSheet.create({
 
 
   Icons: {
-  
+
     width: 35,
     height: 35,
     resizeMode: 'contain',
-    
+
   },
 
   SearchIcon: {
