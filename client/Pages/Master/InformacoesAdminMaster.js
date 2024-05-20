@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
-import Navbar from '../../Components/NavbarParceiro';
+import Navbar from '../../Components/NavbarMaster';
 import User from '../../img/User.png';
 import { ip } from "@env";
 import { useFocusEffect } from '@react-navigation/native';
 
 
-export default function InformacoesParceiroConsultor({ navigation, route }) {
-  const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
-  const [partnerExpertises, setPartnerExpertises] = useState([]);
-  const idPartner = partnerData._id;
+export default function Informacoes({ navigation, route }) {
+  const [adminData, setAdminData] = useState(route.params?.adminToSee || {});
+
   const [expanded, setExpanded] = useState(false);
   const [fonteLoaded] = useFonts({
     Poppins_100Thin,
@@ -24,41 +23,42 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
     setExpanded(!expanded);
   };
 
- 
-
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchPartnerExpertises(idPartner);
-    }, [idPartner])
-  );
+  const editarAdmin = (admin) => {
+    navigation.navigate('EditarAdminMaster', { adminToEdit: admin });
+  };
 
 
-  const fetchPartnerExpertises = async (partnerId) => {
+  const excluirAdmin = (_id) => {
+    Alert.alert(
+      'Você tem certeza?',
+      'Esta ação não poderá ser revertida!',
+      [
+        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
+        { text: 'Excluir', onPress: () => excluirConfirmed(_id)  },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const excluirConfirmed = async (_id) => {
     try {
-      const response = await fetch(`http://${ip}:3001/api/expertise/partnerExpertises/${partnerId}`);
-      if (!response.ok) {
-        throw new Error('Erro ao buscar expertises do parceiro');
-      }
-      const data = await response.json();
-      setPartnerExpertises(data);
+      await fetch(`http://${ip}:3001/api/admin/delete/${_id}`, {
+        method: 'DELETE',
+      });
+      
+      navigation.navigate('Administradores');
+      setAdminData({});
+  
     } catch (error) {
-      console.error('Erro ao buscar expertises do parceiro:', error);
-      Alert.alert('Erro', 'Não foi possível carregar as expertises do parceiro');
+      console.error('Erro ao excluir parceiro:', error);
+      Alert.alert("Erro", "Algo deu errado ao tentar excluir o parceiro.");
     }
   };
 
- 
-
-  const renderExpertises = () => {
-    return partnerExpertises.map((expertise, index) => (
-      <View key={index} style={styles.expertise}>
-        <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.title}</Text>
-      
-      </View>
-    ));
-  };
-
   
+
+
+
 
 
   return (
@@ -68,24 +68,29 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.User}>
           <Image source={User} />
-          <Text style={styles.NomePrincipal}> {partnerData.nameFantasia} </Text>
-          <Text style={styles.SubTitulo}> {partnerData.nivel}</Text>
+          <Text style={styles.NomePrincipal}> {adminData.name} </Text>
+
         </View>
 
         <View>
           <Text style={{ color: "#FFFFFF", fontSize: 16, marginLeft: 2, fontFamily: 'Poppins_300Light' }}>Informações</Text>
           <TouchableOpacity
-            style={ styles.content}
+            style={expanded ? styles.expandedContent : styles.content}
             onPress={toggleExpand}
           >
 
-            <Text style={styles.heading}>Nome Empresa: <Text style={styles.Info}>{partnerData.nameFantasia} </Text></Text>
+            <Text style={styles.heading}>Nome: <Text style={styles.Info}>{adminData.name} </Text></Text>
+            <Text style={styles.heading}>Email: <Text style={styles.Info}> {adminData.email}</Text></Text>
 
-            <Text style={styles.heading}>Nome Responsavel: <Text style={styles.Info}>{partnerData.nameResponsavel} </Text></Text>
-            <Text style={styles.heading}>Email: <Text style={styles.Info}> {partnerData.email}</Text></Text>
-            <Text style={styles.heading}>CNPJ: : <Text style={styles.Info}>{partnerData.cnpj}</Text></Text>
 
-         
+            <View style={styles.botoes}>
+              <TouchableOpacity style={styles.EditarBTN} onPress={() => editarAdmin(adminData)}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Editar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.DeletarBTN} onPress={() => excluirAdmin(adminData._id)}>
+                <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Deletar</Text>
+              </TouchableOpacity>
+            </View>
 
           </TouchableOpacity>
         </View>
@@ -96,15 +101,8 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
           </View>
           <View style={{ width: 120, height: 2, backgroundColor: 'white', marginRight: 12, marginLeft: 12, }} />
         </View>
-        <View style={styles.botoes}>
-          {partnerExpertises.length > 0 ? (
-            renderExpertises()
-          ) : (
-            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma expertise encontrada.</Text>
-          )}
-         
-        </View>
-  
+        
+        
       </ScrollView>
     </View>
   );
@@ -150,7 +148,7 @@ const styles = StyleSheet.create({
   content: {
     backgroundColor: '#584848',
     width: 350,
-    height: 150,
+    height: 100,
     borderRadius: 22,
     padding: 12,
     borderWidth: 1.3,
@@ -160,18 +158,57 @@ const styles = StyleSheet.create({
   },
 
 
+  expandedContent: {
+    backgroundColor: '#584848',
+    width: 350,
+    height: 200,
+    borderRadius: 22,
+    padding: 20,
+    borderWidth: 1.3,
+    borderColor: '#7b7574',
+  },
+
   botoes: {
     width: '100%',
-    height: 300,
+    height: 10,
     marginTop: 5,
     display: 'flex',
     alignItems: 'center',
-   
+    justifyContent:'center',
     flexDirection: 'column',
     marginTop:50
   },
 
+  DeletarBTN: {
+    height: 35,
+    width: "70%",
+    backgroundColor: '#6b0600',
+    justifyContent: 'center',
+    display: 'flex',
+    marginTop: 10,
+    borderRadius: 5,
+  },
 
+  EditarBTN: {
+    height: 35,
+    width: "70%",
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    display: 'flex',
+    marginTop: 10,
+    borderRadius: 5,
+  },
+
+  expertiseBTN:{
+    height: 35,
+    width: "70%",
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    display: 'flex',
+    marginTop: 50,
+  
+    borderRadius: 5,
+  },
 
 
 

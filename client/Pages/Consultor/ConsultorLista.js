@@ -26,12 +26,12 @@ const ConsultorLista = ({ navigation }) => {
     setMenuAberto(false);
   };
 
-  const editarPartner = (partner) => {
-    navigation.navigate('EditarParceiro', { partnerToEdit: partner });
+  const editarPartner = () => {
+
   };
 
   const vizualizar = (partner) => {
-    navigation.navigate('Informacoes', { partnerToSee: partner });
+    navigation.navigate('InformacoesParceiroConsultor', { partnerToSee: partner });
   };
 
   useFocusEffect(
