@@ -1,8 +1,6 @@
 const { Partner } = require('../../models/models');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-
+const bcrypt = require('bcrypt')
+const nodemailer = require('nodemailer')
 
 async function registerPartner(partnerData) {
     try {
@@ -164,7 +162,7 @@ async function sendResetEmail(partner, token) {
     },
   });
 
-  const resetUrl = `http://localhost:3000/resetarSenhaPartner?token=${token}`;
+  const resetUrl = `myapp://resetarSenhaPartner?token=${token}`;
 
   const mailOptions = {
     from: 'brenertestando@gmail.com',
