@@ -2,10 +2,10 @@ POST http://localhost:3001/api/partners/register HTTP/1.1
 content-type: application/json
 
 {
-    "email":"joaoo@email.com",
-    "nameFantasia":"joaoo",
-    "nameResponsavel":"joaoo",
-    "cnpj":"8423323232721",
+    "email":"brenertestando@gmail.com",
+    "nameFantasia":"Breneer",
+    "nameResponsavel":"Freeire",
+    "cnpj":"3213213321",
     "password":"123"
 }
 

@@ -15,10 +15,12 @@
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "expo-font": "~11.10.3",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
     "mongoose": "^8.3.0",
-    "nodemon": "^3.1.0",
-    "expo-font": "~11.10.3"
+    "nodemailer": "^6.9.13",
+    "nodemon": "^3.1.0"
   }
 }

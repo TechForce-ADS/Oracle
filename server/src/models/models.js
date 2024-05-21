@@ -86,11 +86,19 @@ const partnerSchema = new mongoose.Schema({
     required: true,
     default: 'Iniciante',
   },
-
   observation: {
     type: String,
+  },
+  token: {
+    type: String,
+    default: false
+  },
+  emailConfirmed: {
+    type: Boolean,
+    default: false
   }
 });
+
   
 
 const adminSchema = new mongoose.Schema({

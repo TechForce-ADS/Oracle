@@ -1,5 +1,8 @@
 const { Partner } = require('../../models/models');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+
 
 async function registerPartner(partnerData) {
     try {
@@ -133,6 +136,68 @@ async function updatePartnerExpertise(partnerId, expertiseKey, value) {
 }
 
 
+async function findPartnerByEmail(email) {
+  try {
+    return await Partner.findOne({ email });
+  } catch (error) {
+    console.error('Error finding partner by email:', error);
+    throw new Error('Failed to find partner by email');
+  }
+}
+
+async function saveResetToken(partner, token) {
+  try {
+    partner.token = token;
+    await partner.save();
+  } catch (error) {
+    console.error('Error saving reset token:', error);
+    throw new Error('Failed to save reset token');
+  }
+}
+
+async function sendResetEmail(partner, token) {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'brenertestando@gmail.com',
+      pass: 'bkrbnkfcqydvnapa',
+    },
+  });
+
+  const resetUrl = `http://localhost:3000/resetarSenhaPartner?token=${token}`;
+
+  const mailOptions = {
+    from: 'brenertestando@gmail.com',
+    to: partner.email,
+    subject: 'Recuperação de senha',
+    text: `Para redefinir sua senha, acesse o seguinte link: ${resetUrl}`,
+  };
+
+  return transporter.sendMail(mailOptions);
+}
+
+async function findPartnerByIdAndToken(partnerId, token) {
+  try {
+    return await Partner.findOne({ _id: partnerId, token });
+  } catch (error) {
+    console.error('Error finding partner by id and token:', error);
+    throw new Error('Failed to find partner by id and token');
+  }
+}
+
+async function updatePassword(partner, newPassword) {
+  try {
+    const salt = await bcrypt.genSalt(10);
+    partner.senha = await bcrypt.hash(newPassword, salt);
+    partner.token = null;
+    await partner.save();
+  } catch (error) {
+    console.error('Error updating password:', error);
+    throw new Error('Failed to update password');
+  }
+}
+
+
   
 module.exports = {
     registerPartner,
@@ -142,5 +207,10 @@ module.exports = {
     deletePartner,
     loginPartner,
     updatePartnerExpertise,
-    listOnePartner
+    listOnePartner,
+    findPartnerByEmail,
+    saveResetToken,
+    sendResetEmail,
+    findPartnerByIdAndToken,
+    updatePassword,
 };

@@ -6,6 +6,8 @@ const {getPartnerCount} = require('../data/repositories/PartnerRepository.js');
 const {updatePartner} = require('../data/repositories/PartnerRepository.js');
 const {listOnePartner} = require('../data/repositories/PartnerRepository.js')
 const {updatePartnerExpertise} = require('../data/repositories/PartnerRepository.js');
+const RecoverPasswordUC = require('../useCases/partner/RecoverPasswordUC');
+const ResetPasswordUC = require('../useCases/partner/ResetPasswordUC');
 const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
 const bcrypt = require('bcrypt')
 
@@ -137,4 +139,31 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Erro interno do servidor' }); // Erro interno do servidor
   }
 });
+
+router.post('/recuperarSenhaPartner', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const recoverPasswordUC = new RecoverPasswordUC(email);
+    const result = await recoverPasswordUC.execute();
+    res.json(result);
+  } catch (error) {
+    console.error('Erro ao recuperar senha do parceiro:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+router.post('/resetarSenhaPartner', async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    const resetPasswordUC = new ResetPasswordUC(token, newPassword);
+    const result = await resetPasswordUC.execute();
+    res.json(result);
+  } catch (error) {
+    console.error('Erro ao redefinir senha do parceiro:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
 module.exports = router;
