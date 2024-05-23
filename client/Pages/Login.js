@@ -33,19 +33,7 @@ const Login = ({ navigation }) => {
   if (!fonteLoaded) {
     return null;
   }
-
-  const handleEmailChange = (text) => {
-    setEmail(text);
-  };
-
-  const handlePasswordChange = (text) => {
-    setPassword(text);
-  };
-
-  const toggleErrorModal = () => {
-    setErrorModalVisible(!errorModalVisible);
-  };
-
+  
   const handleLogin = async () => {
     try {
       const response = await fetch(`http://${IP}:3001/api/admin/login`, {
@@ -62,16 +50,16 @@ const Login = ({ navigation }) => {
           id: adminData._id,
           name: adminData.name,
           email: adminData.email,
-          isAdminMain: adminData.isAdminMain,
-          isConsultant: adminData.isConsultant
+          isConsultant: adminData.isConsultant,
+          isAdminMain: adminData.isAdminMain
         };
-  
-        console.log(loggedAdmin);
-  
+
         if (loggedAdmin.isAdminMain) {
           navigation.navigate('Administradores');
+
         } else if (loggedAdmin.isConsultant) {
           navigation.navigate('ConsultorLista');
+          
         } else {
           navigation.navigate('TelaLista');
         }
@@ -86,6 +74,19 @@ const Login = ({ navigation }) => {
     }
   };
   
+
+
+  const handleEmailChange = (text) => {
+    setEmail(text);
+  };
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+  };
+
+  const toggleErrorModal = () => {
+    setErrorModalVisible(!errorModalVisible);
+  };
 
   return (
     <ScrollView>
