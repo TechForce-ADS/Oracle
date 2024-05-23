@@ -21,6 +21,13 @@ export default function TelaParceiro({ navigation, route }) {
     setExpanded(!expanded);
   };
 
+
+  const vizualizar = (expertise) => {
+    navigation.navigate('Tasks', { expertiseToSee: expertise });
+  };
+
+
+
   const editarPartner = (partner) => {
     navigation.navigate('EditarParceiro', { partnerToEdit: partner });
   };
@@ -70,7 +77,7 @@ export default function TelaParceiro({ navigation, route }) {
 
   const renderExpertises = () => {
     return partnerExpertises.map((expertise, index) => (
-      <TouchableOpacity key={index} style={styles.expertise} onPress={'a'}>
+      <TouchableOpacity key={index} style={styles.expertise} onPress={() => vizualizar(expertise)}>
         <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.expertiseName}</Text>
       </TouchableOpacity>
     ));
