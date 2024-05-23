@@ -1,16 +1,20 @@
 const {registerTask} = require('../../data/repositories/TasksRepository');
 
+
+
 class RegisterTaskUC{
     constructor(name, expertise) {
-        this.name = name;
         this.expertise = expertise;
+        this.name = name;
+        
     }
 
     async create(){
         try {
             const taskData = {
-                name: this.name,
                 expertise: this.expertise,
+                name: this.name,
+                
                 
             };
 
