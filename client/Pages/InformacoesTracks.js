@@ -4,7 +4,7 @@ import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Pop
 import Navbar from '../Components/Navbar';
 import * as Progress from 'react-native-progress';
 
-import { ip } from "@env";
+import {IP} from "@env";
 
 export default function InformacoesCurso({ navigation, route }) {
 
@@ -31,7 +31,7 @@ export default function InformacoesCurso({ navigation, route }) {
 
   const fetchTrackExpertises = async (track) => {
     try {
-        const response = await fetch(`http://${ip}:3001/api/tracks/trackExpertises/${track}`);
+        const response = await fetch(`http://${IP}:3001/api/tracks/trackExpertises/${track}`);
         if (!response.ok) {
             throw new Error('Erro ao buscar expertises do parceiro');
         }

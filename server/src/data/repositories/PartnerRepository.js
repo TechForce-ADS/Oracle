@@ -195,9 +195,64 @@ async function updatePassword(partner, newPassword) {
   }
 }
 
+async function registerPartnerInExpertise(partnerId, expertiseId) {
+  try {
+    const partner = await Partner.findById(partnerId);
+    if (!partner) {
+      throw new Error('Parceiro não encontrado.');
+    }
+    
+    if (partner.expertise_ids.includes(expertiseId)) {
+      throw new Error('Parceiro já cadastrado nesta expertise.');
+    }
 
-  
+    // Se o parceiro não estiver cadastrado nesta expertise, então adicionamos
+    partner.expertise_ids.push(expertiseId);
+    await partner.save();
+    
+    return partner;
+  } catch (error) {
+    console.error('Erro ao registrar parceiro na expertise:', error);
+    throw error; // Propagar o erro para a camada superior
+  }
+}
+
+// Função para obter as expertises de um parceiro
+async function getPartnerExpertises(partnerId) {
+  try {
+    const partner = await Partner.findById(partnerId).populate('expertise_ids').lean()
+     return partner.expertise_ids
+  } catch (error) {
+    console.error('Erro ao buscar expertises do parceiro:', error);
+    throw new Error('Falha ao buscar expertises do parceiro');
+  }
+}
+
+async function completeTask(partnerId, taskId) {
+  try {
+    const partner = await Partner.findById(partnerId);
+    if (!partner) {
+      throw new Error('Parceiro não encontrado.');
+    }
+    
+    if (partner.completedTasks.includes(taskId)) {
+      throw new Error('tarefa já completa');
+    }
+
+    partner.completedTasks.push(taskId);
+    await partner.save();
+    
+    return partner;
+  } catch (error) {
+    console.error('Erro ao completar tarefa', error);
+    throw error; 
+  }
+}
+
 module.exports = {
+  completeTask,
+    registerPartnerInExpertise,
+    getPartnerExpertises,
     registerPartner,
     getPartnerCount,
     listPartners,

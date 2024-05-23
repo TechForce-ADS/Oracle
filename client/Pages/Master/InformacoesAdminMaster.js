@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } fr
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../../Components/NavbarMaster';
 import User from '../../img/User.png';
-import { ip } from "@env";
+import {IP} from "@env";
 import { useFocusEffect } from '@react-navigation/native';
 
 
@@ -42,7 +42,7 @@ export default function Informacoes({ navigation, route }) {
 
   const excluirConfirmed = async (_id) => {
     try {
-      await fetch(`http://${ip}:3001/api/admin/delete/${_id}`, {
+      await fetch(`http://${IP}:3001/api/admin/delete/${_id}`, {
         method: 'DELETE',
       });
       

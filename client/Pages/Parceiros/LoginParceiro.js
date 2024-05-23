@@ -2,9 +2,6 @@
   import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
   import Modal from 'react-native-modal';
   import Logo from '../../img/LogoN.png';
-
-
-
   import {
     useFonts, Poppins_100Thin,
     Poppins_200ExtraLight,
@@ -14,7 +11,7 @@
   } from '@expo-google-fonts/poppins'
   import {IP} from "@env";
   import Navbar from '../../Components/Navbar';
-
+  import { setLoggedPartner } from './Partner';
 
   const LoginParceiro = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -62,6 +59,8 @@
         if (response.ok) {
         
           const partnerData = await response.json(); 
+          setLoggedPartner(partnerData);
+         
           navigation.navigate('TelaParceiro', { partnerToSee: partnerData });
         } else { 
           setErrorMessage('Usuário ou senha incorretos');
@@ -245,3 +244,4 @@
   })
 
   export default LoginParceiro;
+  

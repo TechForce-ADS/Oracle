@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } fr
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../Components/Navbar';
 import User from '../img/User.png';
-import { ip } from "@env";
+import {IP} from "@env";
 import { useFocusEffect } from '@react-navigation/native';
 
 
@@ -43,7 +43,7 @@ export default function Informacoes({ navigation, route }) {
 
   const fetchPartnerExpertises = async (partnerId) => {
     try {
-      const response = await fetch(`http://${ip}:3001/api/expertise/partnerExpertises/${partnerId}`);
+      const response = await fetch(`http://${IP}:3001/api/expertise/partnerExpertises/${partnerId}`);
       if (!response.ok) {
         throw new Error('Erro ao buscar expertises do parceiro');
       }
@@ -69,7 +69,7 @@ export default function Informacoes({ navigation, route }) {
 
   const excluirConfirmed = async (_id) => {
     try {
-      await fetch(`http://${ip}:3001/api/partners/delete/${_id}`, {
+      await fetch(`http://${IP}:3001/api/partners/delete/${_id}`, {
         method: 'DELETE',
       });
       
@@ -109,7 +109,7 @@ export default function Informacoes({ navigation, route }) {
   const excluirExpertiseConfirmed = async (_id) => {
     try {
         console.log('Confirmando exclusão da expertise com ID:', _id);
-        await fetch(`http://${ip}:3001/api/expertiseRegistration/deleteExpertiseRegister/${_id}`, {
+        await fetch(`http://${IP}:3001/api/expertiseRegistration/deleteExpertiseRegister/${_id}`, {
             method: 'DELETE',
         });
         console.log('Exclusão bem-sucedida.');

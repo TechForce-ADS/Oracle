@@ -1,52 +1,84 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
-import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
+import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins';
 import Navbar from '../../Components/NavbarParceiro';
+import Modal from 'react-native-modal';
 import * as Progress from 'react-native-progress';
-
-import { ip } from "@env";
+import {IP} from "@env";
+import { loggedPartner } from './Partner';
 
 export default function InformacoesCurso({ navigation, route }) {
-
-
   const [expertiseData, setExpertiseData] = useState(route.params?.trackToSee || {});
-
   const [taskData, setTaskData] = useState(false);
-
-
+  const [ModalVisible, setModalVisible] = useState(false);
+  const [Message, setMessage] = useState('');
+ 
   
   useEffect(() => {
     fetchTaskExpertises(expertiseData._id); 
-   
   }, []);
   
-
   const fetchTaskExpertises = async (expertiseId) => {
     try {
-      const response = await fetch(`http://${ip}:3001/api/task/tasksExpertises/${expertiseId}`);
+      const response = await fetch(`http://${IP}:3001/api/task/tasksExpertises/${expertiseId}`);
       if (!response.ok) {
         throw new Error('Error fetching partner tasks');
       }
-      const data = await response.json();
+      const data = await response.json(); 
       setTaskData(data);
     } catch (error) {
       console.error('Error fetching partner tasks:', error);
-      Alert.alert('Error', 'Unable to load partner tasks');
+      setMessage('Error fetching partner tasks');
+      toggleModal();
     }
   };
-  
 
-const renderExpertises = () => {
-  if (Array.isArray(taskData)) {
-    return taskData.map((task, index) => (
-      <TouchableOpacity key={index} style={styles.expertise}>
-        <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
-      </TouchableOpacity>
-    ));
-  } else {
-    return <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>;
-  }
-};
+  const registerExpertise = async () => {
+    const partnerId = loggedPartner.id; 
+    try {
+      console.log("id parceiro: " + partnerId)
+      console.log("id expertise: " + expertiseData._id)
+      const response = await fetch(`http://${IP}:3001/api/partners/registerExpertise`, {  
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          partnerId,
+          expertiseId: expertiseData._id
+        })
+      });
+
+      if (response.ok) {
+        setMessage('você ingressou na expertise');
+        toggleModal();
+      } else {
+        throw new Error('Erro ao ingressar na expertise');
+        setMessage('Já cadastrado na expertise');
+        toggleModal();
+      }
+    } catch (error) {
+      console.error('Error registering track:', error);
+      setMessage('Já cadastrado na expertise');
+      toggleModal();
+    }
+  };
+
+  const renderExpertises = () => {
+    if (Array.isArray(taskData)) {
+      return taskData.map((task, index) => (
+        <TouchableOpacity key={index} style={styles.expertise}>
+          <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
+        </TouchableOpacity>
+      ));
+    } else {
+      return <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>;
+    }
+  };
+
+  const toggleModal = () => {
+    setModalVisible(!ModalVisible);
+  };
 
   return (
     <View style={styles.container}>
@@ -54,12 +86,9 @@ const renderExpertises = () => {
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.heading}><Text style={styles.Info}></Text></Text>
-        {/* <View style={styles.ProgressBar}>
-          <Progress.Bar progress={0.8} width={250} color='#FF4700' backgroundColor='#FFF' /><Text style={{ fontFamily: 'Poppins_300Light', color: '#fff', fontSize: 16 }}>  80 %</Text>
-        </View> */}
-      <View style={styles.ProgressBar}>
-        <Text>{expertiseData.title}</Text>
-      </View>
+        <View style={styles.ProgressBar}>
+          <Text>{expertiseData.title}</Text>
+        </View>
         {taskData.length > 0 ? (
           renderExpertises()
         ) : (
@@ -67,16 +96,24 @@ const renderExpertises = () => {
         )}
 
         <View style={styles.Botao}>  
-          <TouchableOpacity style={styles.EditarBTN}>
-            <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Engressar na Expertise</Text>
-          </TouchableOpacity> 
+          <TouchableOpacity style={styles.EditarBTN} onPress={registerExpertise}>
+            <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Ingressar na Expertise</Text>
+          </TouchableOpacity>
         </View>
+        <Modal isVisible={ModalVisible} onBackdropPress={toggleModal} style={styles.Modal}>
+        <View style={styles.ModalContent}>
+          <Text style={styles.ModalMessage}>{Message}</Text>
+          <TouchableOpacity style={styles.ModalCloseButton} onPress={toggleModal}>
+            <Text style={styles.ModalCloseButtonText}>Fechar</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
       </ScrollView>
     </View>
+
+    
   );
 }
-
-
 
 const styles = StyleSheet.create({
 
@@ -135,15 +172,12 @@ const styles = StyleSheet.create({
 
   },
 
-
-
   Info: {
     color: '#fff',
     fontSize: 18,
     marginBottom: 8,
     fontFamily: 'Poppins_300Light',
   },
-
 
   DeletarBTN: {
     height: 35,
@@ -155,7 +189,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-
   EditarBTN: {
     height: 45,
     width: "75%",
@@ -166,14 +199,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-
-
   heading: {
     color: '#000',
     marginBottom: 8,
     fontFamily: 'Poppins_300Light'
   },
-
 
   ProgressBar: {
     width: '100%',
@@ -183,7 +213,6 @@ const styles = StyleSheet.create({
     alignItems: 'center'
 
   },
-
 
   expertise: {
     backgroundColor: '#584848',
@@ -196,6 +225,37 @@ const styles = StyleSheet.create({
     display:'flex',
     justifyContent:'center',
     alignItems:'center'
+  },
+
+  ModalContent: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    width: 300,
+    marginTop: -30
+  },
+
+  ModalMessage: {
+    color: 'black' //
+  },
+
+  ModalCloseButton: {
+    backgroundColor: '#B70D0D',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 10
+  },
+
+  ModalCloseButtonText: {
+    color: '#FFF',
+    fontWeight: 'bold'
+  },
+
+  Modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
 });

@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } fr
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../../Components/NavbarMaster';
 import { useFocusEffect } from '@react-navigation/native';
-import { ip } from "@env";
+import {IP} from "@env";
 
 export default function InformacoesCurso({ navigation, route }) {
 
@@ -18,7 +18,7 @@ export default function InformacoesCurso({ navigation, route }) {
     React.useCallback(() => {
         const fetchTrackExpertises = async (track) => {
             try {
-                const response = await fetch(`http://${ip}:3001/api/tracks/trackExpertises/${track}`);
+                const response = await fetch(`http://${IP}:3001/api/tracks/trackExpertises/${track}`);
                 if (!response.ok) {
                     throw new Error('Erro ao buscar expertises do parceiro');
                 }

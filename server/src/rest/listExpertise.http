@@ -1,0 +1,3 @@
+GET http://localhost:3001/api/partners/664f7d236ee2d923be5b8bef/expertises HTTP/1.1
+content-type: application/json
+

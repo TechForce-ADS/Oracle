@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, Alert } from 'react-native';
 import Navbar from '../Components/Navbar';
 
-import { ip } from "@env";
+import {IP} from "@env";
 
 
 const Expertise = ({ route, navigation}) => {
@@ -12,7 +12,7 @@ const Expertise = ({ route, navigation}) => {
     const idPartner = partnerData._id;
     const registerExpertise = async (partnerId, expertiseId) => {
         try {
-            const response = await fetch(`http://${ip}:3001/api/expertise/registerPartnersExpertise`, {
+            const response = await fetch(`http://${IP}:3001/api/expertise/registerPartnersExpertise`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const Expertise = ({ route, navigation}) => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`http://${ip}:3001/api/expertise/expertisesList`);
+                const response = await fetch(`http://${IP}:3001/api/expertise/expertisesList`);
                 if (!response.ok) {
                     throw new Error('Erro ao buscar partners');
                 }

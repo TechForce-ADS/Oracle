@@ -96,10 +96,16 @@ const partnerSchema = new mongoose.Schema({
   emailConfirmed: {
     type: Boolean,
     default: false
-  }
-});
-
-  
+  },
+  completedTasks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Task'
+  }],
+  expertise_ids: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'TrackRegistration'
+  }]
+}); 
 
 const adminSchema = new mongoose.Schema({
   name: {
@@ -131,17 +137,6 @@ const trackSchema = new mongoose.Schema({
   },
 
 });
-
-
-const expertiseSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  }
-
-});
-
-
 
 const taskSchema = new mongoose.Schema({
   name: {
@@ -219,8 +214,6 @@ const TrackRegistration = mongoose.model('TrackRegistration', trackRegistrationS
 
 const Track = mongoose.model('Track', trackSchema);
 
-const Expertise = mongoose.model('Expertise', expertiseSchema);
-
 const Admin = mongoose.model('Admin', adminSchema);
 
 const Partner = mongoose.model('Partner', partnerSchema);
@@ -235,7 +228,6 @@ module.exports = {
   Track, trackSchema,
   CourseRegistration, courseRegistrationSchema,
   TrackRegistration, trackRegistrationSchema,
-  Expertise, expertiseSchema,
   Task, taskSchema,
   ExpertiseRegistration, expertiseRegistrationSchema
 };

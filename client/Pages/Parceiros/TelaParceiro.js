@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import Navbar from '../../Components/NavbarParceiro';
 import User from '../../img/User.png';
-import { ip } from "@env";
-
+import {IP} from "@env";
+import { loggedPartner } from './Partner';
 
 export default function TelaParceiro({ navigation, route }) {
 
@@ -37,12 +37,9 @@ export default function TelaParceiro({ navigation, route }) {
     );
   };
 
-
-
-
   const excluirConfirmed = async (_id) => {
     try {
-      await fetch(`http://${ip}:3001/api/partners/delete/${_id}`, {
+      await fetch(`http://${IP}:3001/api/partners/delete/${_id}`, {
         method: 'DELETE',
       });
       
@@ -56,31 +53,29 @@ export default function TelaParceiro({ navigation, route }) {
 
  const fetchPartnerExpertises = async (partnerId) => {
     try {
-      const response = await fetch(`http://${ip}:3001/api/expertise/partnerExpertises/${partnerId}`);
+      console.log(partnerId)
+      const response = await fetch(`http://${IP}:3001/api/partners/${partnerId}/expertises`);
       if (!response.ok) {
         throw new Error('Erro ao buscar expertises do parceiro');
       }
       const data = await response.json();
+      console.log(data)
       setPartnerExpertises(data);
+      console.log("partnenExpertises: "+ partnerExpertises)
     } catch (error) {
       console.error('Erro ao buscar expertises do parceiro:', error);
       Alert.alert('Erro', 'Não foi possível carregar as expertises do parceiro');
     }
   };
 
-  
-  
-
   const renderExpertises = () => {
     return partnerExpertises.map((expertise, index) => (
-      <View key={index} style={styles.expertise}>
-        <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.title}</Text>
-        {/* <TouchableOpacity onPress={() => excluirExpertise(expertise._id)}>
-          <Text style={{ color: '#FF0000', fontFamily: 'Poppins_300Light', fontSize: 16, marginLeft: 10 }}>Excluir</Text>
-        </TouchableOpacity> */}
-      </View>
+      <TouchableOpacity key={index} style={styles.expertise} onPress={'a'}>
+        <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.expertiseName}</Text>
+      </TouchableOpacity>
     ));
   };
+
 
 
   return (

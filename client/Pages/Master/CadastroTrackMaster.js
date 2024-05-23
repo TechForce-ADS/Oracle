@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView, Alert } from 'react-native';
-import { ip } from "@env";
+import {IP} from "@env";
 import Navbar from '../../Components/NavbarMaster';
 
 
@@ -16,7 +16,7 @@ const InformacoesTracks = ({ navigation }) => {
  
     const handleRegister = async () => {
         try {
-            const response = await fetch(`http://${ip}:3001/api/tracks/registerTrack`, {
+            const response = await fetch(`http://${IP}:3001/api/tracks/registerTrack`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

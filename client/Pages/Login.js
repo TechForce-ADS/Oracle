@@ -11,7 +11,7 @@ import {
   Poppins_500Medium,
   Poppins_700Bold
 } from '@expo-google-fonts/poppins'
-import {ip} from "@env";
+import {IP} from "@env";
 
 
 const Login = ({ navigation }) => {
@@ -36,7 +36,7 @@ const Login = ({ navigation }) => {
   
   const handleLogin = async () => {
     try {
-      const response = await fetch(`http://${ip}:3001/api/admin/login`, {
+      const response = await fetch(`http://${IP}:3001/api/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

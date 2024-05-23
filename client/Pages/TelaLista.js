@@ -6,7 +6,7 @@ import Ver from '../img/click.png';
 import MenuIcon from '../img/menu.png';
 import Search from '../img/search.png';
 import User from '../img/User.png';
-import { ip } from "@env";
+import {IP} from "@env";
 import Navbar from '../Components/Navbar';
 
 const PAGE_SIZE = 5;
@@ -38,7 +38,7 @@ const TelaLista = ({ navigation }) => {
     React.useCallback(() => {
       async function fetchData() {
         try {
-          const response = await fetch(`http://${ip}:3001/api/partners/partnerList`);
+          const response = await fetch(`http://${IP}:3001/api/partners/partnerList`);
           if (!response.ok) {
             throw new Error('Erro ao buscar partners');
           }

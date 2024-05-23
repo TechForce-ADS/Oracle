@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView, Alert } from 'react-native';
-import { ip } from "@env";
+import {IP} from "@env";
 import Navbar from '../Components/Navbar';
 
 
@@ -19,7 +19,7 @@ const AdicionarExpertise = ({ navigation, route }) => {
  
     const handleRegister = async () => {
         try {
-            const response = await fetch(`http://${ip}:3001/api/tracks/registerExpertiseTrack`, {
+            const response = await fetch(`http://${IP}:3001/api/tracks/registerExpertiseTrack`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

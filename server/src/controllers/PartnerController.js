@@ -1,18 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {listPartners} = require('../data/repositories/PartnerRepository.js');
-const {deletePartner} = require('../data/repositories/PartnerRepository.js');
-const {getPartnerCount} = require('../data/repositories/PartnerRepository.js');
-const {updatePartner} = require('../data/repositories/PartnerRepository.js');
-const {listOnePartner} = require('../data/repositories/PartnerRepository.js')
-const {updatePartnerExpertise} = require('../data/repositories/PartnerRepository.js');
+const {completeTask,updatePartnerExpertise, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises} = require('../data/repositories/PartnerRepository.js');
 const RecoverPasswordUC = require('../useCases/partner/RecoverPasswordUC');
 const ResetPasswordUC = require('../useCases/partner/ResetPasswordUC');
 const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
 const bcrypt = require('bcrypt')
-
 const RegisterPartnerUC = require('../useCases/partner/RegisterPartnerUC.js');
-const { Partner, partnerSchema } = require('../models/models.js');
 
 router.post('/updateExpertise/:_id', async (req, res) => {
   try {
@@ -162,6 +155,40 @@ router.post('/resetarSenhaPartner', async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error('Erro ao redefinir senha do parceiro:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+router.post('/registerExpertise', async (req, res) => {
+  const { partnerId, expertiseId } = req.body;
+  try {
+    await registerPartnerInExpertise(partnerId, expertiseId);
+    res.status(200).send('Parceiro cadastrado na expertise com sucesso.');
+  } catch (error) {
+    console.error('Erro ao cadastrar parceiro na expertise:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+// Rota para listar as expertises de um parceiro
+router.get('/:partnerId/expertises', async (req, res) => {
+  const { partnerId } = req.params;
+  try {
+    const expertises = await getPartnerExpertises(partnerId);
+    res.status(200).json(expertises);
+  } catch (error) {
+    console.error('Erro ao buscar expertises do parceiro:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+router.post('/completeTask', async (req, res) => {
+  const { partnerId, taskId } = req.body;
+  try {
+    await completeTask(partnerId, taskId);
+    res.status(200).send('Tarefa completa.');
+  } catch (error) {
+    console.error('Erro ao completar tarefa', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
 });
