@@ -3,6 +3,18 @@ const router = express.Router();
 const { listTrack, updateCourse, deleteCourse, listTasksExpertise } = require('../data/repositories/TasksRepository');
 const RegisterTaskUC = require('../useCases/tasks/RegisterTaskUC');
 
+router.get('/tasksExpertises/:expertiseId', async (req, res) => {
+  try {
+    const expertiseId = req.params.expertiseId; 
+    const taskExpertises = await listTasksExpertise(expertiseId);
+    res.status(200).json(taskExpertises);
+  } catch (error) {
+    console.error('Error getting tasks by expertise:', error);
+    res.status(500).json({ error: 'Internal server error.' });
+  }
+});
+
+
 
 router.post('/registerExpertiseTask', async(req, res) => {
     try {
@@ -20,16 +32,7 @@ router.post('/registerExpertiseTask', async(req, res) => {
     }
 });
 
-router.get('/tasksExpertises/:expertiseId', async (req, res) => {
-    try {
-      const expertiseId = req.params.expertiseId; 
-      const taskExpertises = await listTasksExpertise(expertiseId);
-      res.status(200).json(taskExpertises);
-    } catch (error) {
-      console.error('Error getting tasks by expertise:', error);
-      res.status(500).json({ error: 'Internal server error.' });
-    }
-  });
+
   
 
 
