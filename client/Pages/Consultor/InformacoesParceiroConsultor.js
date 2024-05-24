@@ -1,41 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
-import Navbar from '../../Components/NavbarParceiro';
+import Navbar from '../../Components/NavbarConsultor';
 import User from '../../img/User.png';
 import {IP} from "@env";
 import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function InformacoesParceiroConsultor({ navigation, route }) {
+
   const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {});
+  const [expanded, setExpanded] = useState(false);
   const [partnerExpertises, setPartnerExpertises] = useState([]);
   const idPartner = partnerData._id;
-  const [expanded, setExpanded] = useState(false);
-  const [fonteLoaded] = useFonts({
-    Poppins_100Thin,
-    Poppins_200ExtraLight,
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_500Medium
-  });
 
   const toggleExpand = () => {
     setExpanded(!expanded);
   };
 
  
-
   useFocusEffect(
     React.useCallback(() => {
       fetchPartnerExpertises(idPartner);
+  
     }, [idPartner])
   );
+
+  
+  const vizualizar = (expertise) => {
+    navigation.navigate('TasksConsultor', { expertiseToSee: expertise, partnerToSee:partnerData });
+  };
 
 
   const fetchPartnerExpertises = async (partnerId) => {
     try {
-      const response = await fetch(`http://${IP}:3001/api/expertise/partnerExpertises/${partnerId}`);
+      const response = await fetch(`http://${IP}:3001/api/partners/${partnerId}/expertises`);
       if (!response.ok) {
         throw new Error('Erro ao buscar expertises do parceiro');
       }
@@ -47,19 +46,17 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
     }
   };
 
- 
 
+ 
   const renderExpertises = () => {
     return partnerExpertises.map((expertise, index) => (
-      <View key={index} style={styles.expertise}>
-        <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.title}</Text>
-      
-      </View>
+      <TouchableOpacity key={index} style={styles.expertise} onPress={() => vizualizar(expertise)}>
+        <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{expertise.expertiseName}</Text>
+      </TouchableOpacity>
     ));
   };
 
   
-
 
   return (
     <View style={styles.container}>
@@ -75,17 +72,23 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
         <View>
           <Text style={{ color: "#FFFFFF", fontSize: 16, marginLeft: 2, fontFamily: 'Poppins_300Light' }}>Informações</Text>
           <TouchableOpacity
-            style={ styles.content}
+            style={expanded ? styles.expandedContent : styles.content}
             onPress={toggleExpand}
           >
 
             <Text style={styles.heading}>Nome Empresa: <Text style={styles.Info}>{partnerData.nameFantasia} </Text></Text>
-
             <Text style={styles.heading}>Nome Responsavel: <Text style={styles.Info}>{partnerData.nameResponsavel} </Text></Text>
             <Text style={styles.heading}>Email: <Text style={styles.Info}> {partnerData.email}</Text></Text>
             <Text style={styles.heading}>CNPJ: : <Text style={styles.Info}>{partnerData.cnpj}</Text></Text>
 
-         
+            <View style={styles.botoes}>
+              <TouchableOpacity style={styles.EditarBTN} onPress={() => editarPartner(partnerData)}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Editar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.DeletarBTN} onPress={() => excluirPartner(partnerData._id)}>
+                <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Deletar</Text>
+              </TouchableOpacity>
+            </View>
 
           </TouchableOpacity>
         </View>
@@ -104,11 +107,12 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
           )}
          
         </View>
-  
+        
       </ScrollView>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   
   User: {

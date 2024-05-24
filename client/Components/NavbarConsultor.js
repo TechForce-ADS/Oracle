@@ -55,7 +55,7 @@ const Navbar = () => {
       <Animated.View style={[styles.menu, { transform: [{ translateX: menuOffset }], height: menuAberto ? screenHeight : 50 }]}>
         <Image source={Logo} style={styles.logo} />
         
-        <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('ConsultorLista')}>Parceiros</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Tracks')}>Tracks</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Dashboard')}>Dashboard</Text>
 

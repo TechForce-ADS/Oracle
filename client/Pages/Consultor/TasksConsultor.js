@@ -1,20 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, ScrollView, StyleSheet,  CheckBox, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Navbar from '../../Components/NavbarParceiro';
+import Navbar from '../../Components/NavbarConsultor';
 import * as Progress from 'react-native-progress';
 import { useFocusEffect } from '@react-navigation/native';
 import { ip } from "@env";
-import { loggedPartner } from './Partner';
 
-const Tasks = ({ route }) => {
+
+const TasksConsultor = ({ route }) => {
   const [expertiseData, setExpertiseData] = useState(route.params?.expertiseToSee || {});
+  const [partnerData, setPartnerData] = useState(route.params?.partnerToSee || {})
   const [taskData, setTaskData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [message, setMessage] = useState('');
   const [taskCompletionStatus, setTaskCompletionStatus] = useState({});
 
   useEffect(() => {
+    console.log(partnerData._id);
     const fetchTaskCompletionStatus = async () => {
       try {
         const storedStatus = await AsyncStorage.getItem('taskCompletionStatus');
@@ -44,7 +46,7 @@ const Tasks = ({ route }) => {
   useEffect(() => {
     const completionStatus = {};
     taskData.forEach(task => {
-      completionStatus[task._id] = loggedPartner.completedTasks.includes(task._id);
+      completionStatus[task._id] = partnerData.completedTasks.includes(task._id);
     });
     setTaskCompletionStatus(completionStatus);
   }, [taskData]);
@@ -72,7 +74,7 @@ const Tasks = ({ route }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          partnerId: loggedPartner.id,
+          partnerId: partnerData._id,
           taskId: taskId,
         }),
       });
@@ -134,12 +136,14 @@ const Tasks = ({ route }) => {
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
       <Navbar />
+      <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize:16, marginTop:12 }}>{expertiseData.expertiseName}</Text>
       <Progress.Bar
         progress={calculateProgress()}
         width={350}
-        color="#3b5998"
+        color="#720404"
         style={{ marginTop: 20 }}
       />
+      <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize:16}}>{(calculateProgress() * 100).toFixed(2)}%</Text>
       <ScrollView>
         <View style={{ width: 350, height: 2, backgroundColor: '#fff', marginTop: 40, marginBottom: 40 }}>
           {taskData.length > 0 ? (
@@ -217,4 +221,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Tasks;
+export default TasksConsultor;

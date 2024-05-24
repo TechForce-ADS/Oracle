@@ -47,6 +47,8 @@ import InformacoesParceiroConsultor from './Pages/Consultor/InformacoesParceiroC
 import ResetarSenhaPartner from './Pages/Parceiros/ResetarSenhaPartner';
 import EnviarToken from './Pages/EnviarToken'
 import ResetarSenha from './Pages/ResetarSenha'
+import TasksConsultor from './Pages/Consultor/TasksConsultor'
+import AppNavigator from './Pages/AppNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -99,6 +101,9 @@ export default function App() {
         <Stack.Screen name="ResetarSenhaPartner" component={ResetarSenhaPartner} />
         <Stack.Screen name="EnviarToken" component={EnviarToken} />
         <Stack.Screen name="ResetarSenha" component={ResetarSenha} />
+        <Stack.Screen name="AppNavigator" component={AppNavigator} />
+        <Stack.Screen name="TasksConsultor" component={TasksConsultor} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
