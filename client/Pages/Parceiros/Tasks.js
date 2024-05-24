@@ -3,16 +3,15 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 import Checkbox from '../../Components/checkboxList';
 import Navbar from '../../Components/NavbarParceiro';
 import * as Progress from 'react-native-progress';
+import { useFocusEffect } from '@react-navigation/native';
+import {IP} from "@env";
+
 
 const Tasks = ({ route }) => {
-
-   const handleCheckboxChange = (isChecked) => {
-     console.log('Checkbox marcado:', isChecked);
-   }
   const [expertiseData, setExpertiseData] = useState(route.params?.expertiseToSee || {});
   const [taskData, setTaskData] = useState([]);
-  const [ModalVisible, setModalVisible] = useState(false);
-  const [Message, setMessage] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [message, setMessage] = useState('');
 
   const fetchTaskExpertises = async (expertiseId) => {
     try {
@@ -20,7 +19,7 @@ const Tasks = ({ route }) => {
       if (!response.ok) {
         throw new Error('Error fetching partner tasks');
       }
-      const data = await response.json(); 
+      const data = await response.json();
       setTaskData(data);
     } catch (error) {
       console.error('Error fetching partner tasks:', error);
@@ -29,22 +28,23 @@ const Tasks = ({ route }) => {
     }
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      if (expertiseData && expertiseData._id) {
+        fetchTaskExpertises(expertiseData._id);
+      }
+    }, [expertiseData])
+  );
   useEffect(() => {
-    fetchTaskExpertises(expertiseData._id); 
-    console.log(taskData)
-    console.log(expertiseData._id)
-  }, []);
-
-
-
-
+    console.log(taskData);
+  }, [taskData]);
 
   const toggleModal = () => {
-    setModalVisible(!ModalVisible);
+    setModalVisible(!modalVisible);
   };
 
   const renderExpertises = () => {
-    if (Array.isArray(taskData)) {
+    if (Array.isArray(taskData) && taskData.length > 0) {
       return taskData.map((task, index) => (
         <TouchableOpacity key={index} style={styles.expertise}>
           <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
@@ -59,14 +59,13 @@ const Tasks = ({ route }) => {
     <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
       <Navbar />
       <ScrollView>
-        
-        <View style={{ width: 350, height: 2, backgroundColor: '#fff', marginTop: 40, marginBottom: 40 }}> 
-        {taskData.length > 0 ? (
-          renderExpertises()
-        ) : (
-          <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>
-        )}</View>
-       
+        <View style={{ width: 350, height: 2, backgroundColor: '#fff', marginTop: 40, marginBottom: 40 }}>
+          {taskData.length > 0 ? (
+            renderExpertises()
+          ) : (
+            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>
+          )}
+        </View>
       </ScrollView>
     </View>
   );

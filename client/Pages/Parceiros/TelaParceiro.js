@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import Navbar from '../../Components/NavbarParceiro';
+import { useFocusEffect } from '@react-navigation/native';
 import User from '../../img/User.png';
 import {IP} from "@env";
 import { loggedPartner } from './Partner';
@@ -12,10 +13,12 @@ export default function TelaParceiro({ navigation, route }) {
   const [partnerExpertises, setPartnerExpertises] = useState([]);
   const idPartner = partnerData._id;
 
-  useEffect(() => {
-
-    fetchPartnerExpertises(idPartner);
-  }, [idPartner]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchPartnerExpertises(idPartner);
+  
+    }, [idPartner])
+  );
 
   const toggleExpand = () => {
     setExpanded(!expanded);
