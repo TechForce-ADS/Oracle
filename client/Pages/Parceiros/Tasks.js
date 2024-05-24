@@ -48,7 +48,9 @@ const Tasks = ({ route }) => {
       }
 
       const data = await response.json();
-      console.log('Response:', data);
+      setTaskData(prevData => prevData.map(task => 
+        task._id === taskId ? { ...task, completed: true } : task
+      ));
     } catch (error) {
       console.error('Error:', error);
       Alert.alert('Error', 'There was an error updating the task status.');
@@ -72,14 +74,18 @@ const Tasks = ({ route }) => {
 
   const renderExpertises = () => {
     if (Array.isArray(taskData) && taskData.length > 0) {
-      return taskData.map((task, index) => (
-        <TouchableOpacity key={index} style={styles.expertise}>
-          <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
-          <CheckBox
-            onValueChange={() => handleCheckboxChange(task._id)}
-          />
-        </TouchableOpacity>
-      ));
+      return taskData.map((task, index) => {
+        const isCompleted = loggedPartner.completedTasks.includes(task._id);
+        return (
+          <TouchableOpacity key={index} style={styles.expertise}>
+            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
+            <CheckBox
+              value={isCompleted}
+              onValueChange={() => handleCheckboxChange(task._id)}
+            />
+          </TouchableOpacity>
+        );
+      });
     } else {
       return <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>;
     }
