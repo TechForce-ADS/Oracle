@@ -2,6 +2,6 @@ POST http://localhost:3001/api/partners/completeTask HTTP/1.1
 Content-Type: application/json
 
 {
-    "partnerId": "664f7d236ee2d923be5b8bef",
+    "partnerId": "6650c4a3453dd92322893933",
     "taskId": "664f9242d86c1828369b0a06"
 }

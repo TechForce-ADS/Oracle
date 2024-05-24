@@ -1,9 +1,18 @@
 const { findPartnerByEmail, saveResetToken, sendResetEmail } = require('../../data/repositories/PartnerRepository');
-const jwt = require('jsonwebtoken');
 
 class RecoverPasswordUC {
   constructor(email) {
     this.email = email;
+  }
+
+  generateToken(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      token += characters[randomIndex];
+    }
+    return token;
   }
 
   async execute() {
@@ -13,11 +22,7 @@ class RecoverPasswordUC {
       throw new Error('Usuário não encontrado');
     }
 
-    const token = jwt.sign(
-      { partnerId: partner._id },
-      'd#7Hj&f$23sPc89!TqA',
-      { expiresIn: '1h' }
-    );
+    const token = this.generateToken(10);
 
     await saveResetToken(partner, token);
     await sendResetEmail(partner, token);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {completeTask,updatePartnerExpertise, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises} = require('../data/repositories/PartnerRepository.js');
+const {completeTask,updatePartnerExpertise, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises, findPartnerByEmailAndToken, updatePartnerPassword} = require('../data/repositories/PartnerRepository.js');
 const RecoverPasswordUC = require('../useCases/partner/RecoverPasswordUC');
 const ResetPasswordUC = require('../useCases/partner/ResetPasswordUC');
 const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
@@ -146,15 +146,20 @@ router.post('/recuperarSenhaPartner', async (req, res) => {
   }
 });
 
-router.post('/resetarSenhaPartner', async (req, res) => {
-  const { token, newPassword } = req.body;
+router.post('/resetPassword', async (req, res) => {
+  const { email, newPassword, confirmPassword, token } = req.body;
+  const userRepository = { findPartnerByEmailAndToken, updatePartnerPassword };
+  const resetPasswordUC = new ResetPasswordUC(userRepository);
 
   try {
-    const resetPasswordUC = new ResetPasswordUC(token, newPassword);
-    const result = await resetPasswordUC.execute();
-    res.json(result);
+    const result = await resetPasswordUC.execute(email, newPassword, confirmPassword, token);
+    if (result.success) {
+      res.status(200).json({ success: true, message: result.message });
+    } else {
+      res.status(400).json({ success: false, error: result.message });
+    }
   } catch (error) {
-    console.error('Erro ao redefinir senha do parceiro:', error);
+    console.error('Erro ao resetar a senha:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
 });

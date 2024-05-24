@@ -133,7 +133,6 @@ async function updatePartnerExpertise(partnerId, expertiseKey, value) {
   }
 }
 
-
 async function findPartnerByEmail(email) {
   try {
     return await Partner.findOne({ email });
@@ -162,38 +161,37 @@ async function sendResetEmail(partner, token) {
     },
   });
 
-  const resetUrl = `myapp://resetarSenhaPartner?token=${token}`;
-
   const mailOptions = {
     from: 'brenertestando@gmail.com',
     to: partner.email,
     subject: 'Recuperação de senha',
-    text: `Para redefinir sua senha, acesse o seguinte link: ${resetUrl}`,
+    text: `Seu token para redefinição de senha é: ${token}`,
   };
 
   return transporter.sendMail(mailOptions);
 }
 
-async function findPartnerByIdAndToken(partnerId, token) {
+async function findPartnerByEmailAndToken(email, token) {
   try {
-    return await Partner.findOne({ _id: partnerId, token });
+    return await Partner.findOne({ email, token });
   } catch (error) {
-    console.error('Error finding partner by id and token:', error);
-    throw new Error('Failed to find partner by id and token');
+    console.error('Error finding partner by email and token:', error);
+    throw new Error('Failed to find partner by email and token');
   }
 }
 
-async function updatePassword(partner, newPassword) {
+// Função para atualizar a senha do parceiro
+async function updatePartnerPassword(email, newPassword) {
   try {
     const salt = await bcrypt.genSalt(10);
-    partner.senha = await bcrypt.hash(newPassword, salt);
-    partner.token = null;
-    await partner.save();
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    return await Partner.updateOne({ email }, { $set: { password: hashedPassword, token: null } });
   } catch (error) {
-    console.error('Error updating password:', error);
-    throw new Error('Failed to update password');
+    console.error('Error updating partner password:', error);
+    throw new Error('Failed to update partner password');
   }
 }
+
 
 async function registerPartnerInExpertise(partnerId, expertiseId) {
   try {
@@ -250,7 +248,9 @@ async function completeTask(partnerId, taskId) {
 }
 
 module.exports = {
-  completeTask,
+    findPartnerByEmailAndToken,
+    updatePartnerPassword,
+    completeTask,
     registerPartnerInExpertise,
     getPartnerExpertises,
     registerPartner,
@@ -264,6 +264,4 @@ module.exports = {
     findPartnerByEmail,
     saveResetToken,
     sendResetEmail,
-    findPartnerByIdAndToken,
-    updatePassword,
 };

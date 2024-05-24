@@ -117,7 +117,7 @@
           </TouchableOpacity>
 
           <Text
-            onPress={() => navigation.navigate('ForgotPasswordScreen')}
+            onPress={() => navigation.navigate('EnviarToken')}
             style={{ color: '#8F8C8C', fontSize: 10, fontWeight: '200', marginTop: 5 }}>
             Esqueceu sua senha?
           </Text>

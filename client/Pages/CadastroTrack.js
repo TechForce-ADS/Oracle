@@ -51,7 +51,7 @@ const InformacoesTracks = ({ navigation }) => {
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
                     <View style={{ width: 100, height: 2, backgroundColor: 'white', }} />
                     <View>
-                        <Text style={{ width: 175, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Novo Curso</Text>
+                        <Text style={{ width: 175, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>Nova Track</Text>
                     </View>
                     <View style={{ width: 100, height: 2, backgroundColor: 'white', }} />
                 </View>

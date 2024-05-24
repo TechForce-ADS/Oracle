@@ -129,12 +129,6 @@ const Login = ({ navigation }) => {
         <TouchableOpacity style={styles.LogarBTN} onPress={handleLogin}>
           <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Entrar</Text>
         </TouchableOpacity>
-
-        <Text
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-          style={{ color: '#8F8C8C', fontSize: 10, fontWeight: '200', marginTop: 5 }}>
-          Esqueceu sua senha?
-        </Text>
         <Text
           style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
           Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastroConta')}> Criar uma conta</Text>

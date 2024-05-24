@@ -1,24 +1,20 @@
-const { findPartnerByIdAndToken, updatePassword } = require('../../data/repositories/PartnerRepository');
-const jwt = require('jsonwebtoken');
-
 class ResetPasswordUC {
-  constructor(token, newPassword) {
-    this.token = token;
-    this.newPassword = newPassword;
+  constructor(userRepository) {
+    this.userRepository = userRepository;
   }
 
-  async execute() {
-    const decodedToken = jwt.verify(this.token, 'd#7Hj&f$23sPc89!TqA');
-
-    const partner = await findPartnerByIdAndToken(decodedToken.partnerId, this.token);
-
-    if (!partner) {
-      throw new Error('Token inválido');
+  async execute(email, newPassword, confirmPassword, token) {
+    if (newPassword !== confirmPassword) {
+      return { success: false, message: 'A nova senha e a confirmação de senha não coincidem.' };
     }
 
-    await updatePassword(partner, this.newPassword);
+    const user = await this.userRepository.findPartnerByEmailAndToken(email, token);
+    if (!user) {
+      return { success: false, message: 'Email e/ou token inválidos.' };
+    }
 
-    return { message: 'Senha redefinida com sucesso' };
+    await this.userRepository.updatePartnerPassword(email, newPassword);
+    return { success: true, message: 'Senha resetada com sucesso!' };
   }
 }
 

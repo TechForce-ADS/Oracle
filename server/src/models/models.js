@@ -93,10 +93,6 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     default: false
   },
-  emailConfirmed: {
-    type: Boolean,
-    default: false
-  },
   completedTasks: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Task'
