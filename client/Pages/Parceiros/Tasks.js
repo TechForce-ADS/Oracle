@@ -78,12 +78,14 @@ const Tasks = ({ route }) => {
         const isCompleted = loggedPartner.completedTasks.includes(task._id);
         return (
           <TouchableOpacity key={index} style={styles.expertise}>
-            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
-            <CheckBox
-              value={isCompleted}
-              onValueChange={() => handleCheckboxChange(task._id)}
-            />
-          </TouchableOpacity>
+  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16, marginRight: 10 }}>{task.name}</Text>
+    <CheckBox
+      value={isCompleted}
+      onValueChange={() => handleCheckboxChange(task._id)}
+    />
+  </View>
+</TouchableOpacity>
         );
       });
     } else {
