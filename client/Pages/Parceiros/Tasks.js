@@ -5,7 +5,7 @@ import Navbar from '../../Components/NavbarParceiro';
 import * as Progress from 'react-native-progress';
 import { useFocusEffect } from '@react-navigation/native';
 import {IP} from "@env";
-
+import { loggedPartner } from './Partner';
 
 const Tasks = ({ route }) => {
   const [expertiseData, setExpertiseData] = useState(route.params?.expertiseToSee || {});
@@ -25,6 +25,33 @@ const Tasks = ({ route }) => {
       console.error('Error fetching partner tasks:', error);
       setMessage('Error fetching partner tasks');
       toggleModal();
+    }
+  };
+
+  const handleCheckboxChange = async (taskId) => {
+
+
+    try {
+      const response = await fetch(`http://${IP}:3001/api/partners/completeTask`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          partnerId: loggedPartner.id,
+          taskId: taskId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Response:', data);
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Error', 'There was an error updating the task status.');
     }
   };
 
@@ -48,7 +75,9 @@ const Tasks = ({ route }) => {
       return taskData.map((task, index) => (
         <TouchableOpacity key={index} style={styles.expertise}>
           <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
-          <CheckBox/>
+          <CheckBox
+            onValueChange={() => handleCheckboxChange(task._id)}
+          />
         </TouchableOpacity>
       ));
     } else {
