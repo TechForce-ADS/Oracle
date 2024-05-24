@@ -63,15 +63,12 @@ export default function TelaParceiro({ navigation, route }) {
 
  const fetchPartnerExpertises = async (partnerId) => {
     try {
-      console.log(partnerId)
       const response = await fetch(`http://${IP}:3001/api/partners/${partnerId}/expertises`);
       if (!response.ok) {
         throw new Error('Erro ao buscar expertises do parceiro');
       }
       const data = await response.json();
-      console.log(data)
       setPartnerExpertises(data);
-      console.log("partnenExpertises: "+ partnerExpertises)
     } catch (error) {
       console.error('Erro ao buscar expertises do parceiro:', error);
       Alert.alert('Erro', 'Não foi possível carregar as expertises do parceiro');

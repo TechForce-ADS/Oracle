@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, CheckBox } from 'react-native';
 import Checkbox from '../../Components/checkboxList';
 import Navbar from '../../Components/NavbarParceiro';
 import * as Progress from 'react-native-progress';
@@ -48,6 +48,7 @@ const Tasks = ({ route }) => {
       return taskData.map((task, index) => (
         <TouchableOpacity key={index} style={styles.expertise}>
           <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
+          <CheckBox/>
         </TouchableOpacity>
       ));
     } else {
