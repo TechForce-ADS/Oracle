@@ -5,6 +5,7 @@ const setLoggedPartner = (partnerData) => {
     id: partnerData._id,
     nameFantasia: partnerData.nameFantasia,
     email: partnerData.email,
+    completedTasks:partnerData.completedTasks
   };
 };
 

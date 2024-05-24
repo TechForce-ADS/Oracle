@@ -12,6 +12,19 @@ const Tasks = ({ route }) => {
   const [taskData, setTaskData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [message, setMessage] = useState('');
+  const [taskCompletionStatus, setTaskCompletionStatus] = useState({});
+
+  useEffect(() => 
+    {
+    const completionStatus = {};
+    taskData.forEach(task => 
+      {
+      completionStatus[task._id] = loggedPartner.completedTasks.includes(task._id);
+    }
+  );
+    setTaskCompletionStatus(completionStatus);
+  },
+   [taskData, loggedPartner.completedTasks]);
 
   const fetchTaskExpertises = async (expertiseId) => {
     try {
@@ -29,8 +42,6 @@ const Tasks = ({ route }) => {
   };
 
   const handleCheckboxChange = async (taskId) => {
-
-
     try {
       const response = await fetch(`http://${IP}:3001/api/partners/completeTask`, {
         method: 'POST',
@@ -47,8 +58,12 @@ const Tasks = ({ route }) => {
         throw new Error('Network response was not ok');
       }
 
-      const data = await response.json();
-      console.log('Response:', data);
+      // Update task completion status locally
+      setTaskCompletionStatus(prevStatus => ({
+        ...prevStatus,
+        [taskId]: true
+      }));
+
     } catch (error) {
       console.error('Error:', error);
       Alert.alert('Error', 'There was an error updating the task status.');
@@ -72,14 +87,20 @@ const Tasks = ({ route }) => {
 
   const renderExpertises = () => {
     if (Array.isArray(taskData) && taskData.length > 0) {
-      return taskData.map((task, index) => (
-        <TouchableOpacity key={index} style={styles.expertise}>
-          <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16 }}>{task.name}</Text>
-          <CheckBox
-            onValueChange={() => handleCheckboxChange(task._id)}
-          />
-        </TouchableOpacity>
-      ));
+      return taskData.map((task, index) => {
+        
+        return (
+          <TouchableOpacity key={index} style={styles.expertise}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16, marginRight: 10 }}>{task.name}</Text>
+              <CheckBox
+                value={taskCompletionStatus[task._id] || false} // Use completion status from state
+                onValueChange={() => handleCheckboxChange(task._id)}
+              />
+            </View>
+          </TouchableOpacity>
+        );
+      });
     } else {
       return <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>;
     }
