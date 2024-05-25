@@ -53,6 +53,13 @@ import TracksConsultorParceiro from './Pages/Consultor/TracksConsultorParceiro'
 import InformacoesTracksConsultorParceiro from './Pages/Consultor/InformacoesTracksConsultorParceiro'
 import TaskExpertisesConsultorParceiros from './Pages/Consultor/TaskExpertisesConsultorParceiros'
 import DashboardConsultor from './Pages/Consultor/DashboardConsultor'
+import TracksConsultor from './Pages/Consultor/TracksConsultor'
+import TaskExpertisesConsultor from './Pages/Consultor/TaskExpertisesConsultor'
+import InformacoesTracksConsultor from './Pages/Consultor/InformacoesTracksConsultor'
+import AdicionarExpertiseConsultor from './Pages/Consultor/AdicionarExpertiseConsultor'
+import AdicionarTaskConsultor from './Pages/Consultor/AdicionarTaskConsultor'
+import CadastroTrackConsultor from './Pages/Consultor/CadastroTrackConsultor'
+import EditarParceiroConsultor from './Pages/Consultor/EditarParceiroConsultor'
 
 
 const Stack = createNativeStackNavigator();
@@ -112,6 +119,13 @@ export default function App() {
         <Stack.Screen name="InformacoesTracksConsultorParceiro" component={InformacoesTracksConsultorParceiro} />
         <Stack.Screen name="TaskExpertisesConsultorParceiros" component={TaskExpertisesConsultorParceiros} />
         <Stack.Screen name="DashboardConsultor" component={DashboardConsultor} />
+        <Stack.Screen name="TracksConsultor" component={TracksConsultor} />
+        <Stack.Screen name="TaskExpertisesConsultor" component={TaskExpertisesConsultor} />
+        <Stack.Screen name="InformacoesTracksConsultor" component={InformacoesTracksConsultor} />
+        <Stack.Screen name="AdicionarExpertiseConsultor" component={AdicionarExpertiseConsultor} />
+        <Stack.Screen name="AdicionarTaskConsultor" component={AdicionarTaskConsultor} />
+        <Stack.Screen name="CadastroTrackConsultor" component={CadastroTrackConsultor} />
+        <Stack.Screen name="EditarParceiroConsultor" component={EditarParceiroConsultor} />
 
       </Stack.Navigator>
     </NavigationContainer>

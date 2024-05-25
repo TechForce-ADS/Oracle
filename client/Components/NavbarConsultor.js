@@ -4,12 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
 import Logo from '../img/LogoSemFundo.png';
 import MenuIcon from '../img/menu.png';
-import SearchIcon from '../img/search.png';
 
 const Navbar = () => {
   const [menuAberto, setMenuAberto] = useState(false);
   const [menuOffset] = useState(new Animated.Value(-300));
-  const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation();
 
   const toggleMenu = () => {
@@ -57,8 +55,9 @@ const Navbar = () => {
         
        
         <Text style={styles.menuText} onPress={() => navigation.navigate('DashboardConsultor')}>Dashboard</Text>
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Tracks')}>Tracks</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('TracksConsultor')}>Tracks</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('ConsultorLista')}>Parceiros</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Login')}>Log out</Text>
 
       </Animated.View>
     </View>

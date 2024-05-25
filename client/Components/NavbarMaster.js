@@ -63,6 +63,7 @@ const Navbar = () => {
         <Text style={styles.menuText} onPress={() => navigation.navigate('Parceiros')}>Parceiros</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Consultores')}>Consultores</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Administradores')}>Administradores</Text>       
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Login')}>Log out</Text>       
 
       </Animated.View>
     </View>

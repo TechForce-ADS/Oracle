@@ -51,7 +51,7 @@ const { Partner, TrackRegistration } = require('../../models/models');
         const expertiseParticipationData = expertiseRegistrationCounts.map(expertise => ({
           expertiseName: expertise._id,
           count: expertise.count,
-          percentage: (expertise.count / totalPartners) * 100
+          percentage: (expertise.count / totalPartners) * 100 
         }));
     
         return expertiseParticipationData;

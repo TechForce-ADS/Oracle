@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert, ScrollView } from 'react-native';
 import {IP} from "@env";
-import Navbar from '../Components/Navbar';
+import Navbar from '../../Components/NavbarConsultor';
 
 const EditarParceiro = ({ navigation, route }) => {
     const [menuAberto, setMenuAberto] = useState(false);
@@ -51,7 +51,7 @@ const EditarParceiro = ({ navigation, route }) => {
             const data = await response.json();
 
             if (response.ok) {
-                navigation.navigate('TelaLista');
+                navigation.navigate('ConsultorLista');
             } else {
                 // Handle update failure
                 Alert.alert('Error', data.error);

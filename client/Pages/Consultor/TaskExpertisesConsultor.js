@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
-import Navbar from '../../Components/NavbarMaster';
-import { useFocusEffect } from '@react-navigation/native';
+import Navbar from '../../Components/NavbarConsultor';
+import * as Progress from 'react-native-progress';
 
 import {IP} from "@env";
 
@@ -12,16 +12,16 @@ export default function InformacoesCurso({ navigation, route }) {
   const [expertiseData, setExpertiseData] = useState(route.params?.trackToSee || {});
   const [taskData, setTaskData] = useState(false);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      if (expertiseData._id) {
-        fetchTaskExpertises(expertiseData._id.trim()); 
-      } else {
-        console.error('Expertise ID not available');
-      }
-    }, [expertiseData])
-  );
-  
+
+
+  useEffect(() => {
+    if (expertiseData._id) {
+      fetchTaskExpertises(expertiseData._id.trim()); 
+    } else {
+      console.error('Error: expertiseData._id is undefined');
+    }
+  }, [expertiseData]);
+
   const fetchTaskExpertises = async (expertiseId) => {
     try {
       const response = await fetch(`http://${IP}:3001/api/task/tasksExpertises/${expertiseId}`);
@@ -35,6 +35,8 @@ export default function InformacoesCurso({ navigation, route }) {
       Alert.alert('Error', 'Unable to load partner tasks');
     }
   };
+  
+
 const renderExpertises = () => {
   if (Array.isArray(taskData)) {
     return taskData.map((task, index) => (
@@ -52,8 +54,13 @@ const renderExpertises = () => {
       <Navbar />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.Info}>{expertiseData.expertiseName}</Text>
-    
+        <Text style={styles.heading}><Text style={styles.Info}></Text></Text>
+        {/* <View style={styles.ProgressBar}>
+          <Progress.Bar progress={0.8} width={250} color='#FF4700' backgroundColor='#FFF' /><Text style={{ fontFamily: 'Poppins_300Light', color: '#fff', fontSize: 16 }}>  80 %</Text>
+        </View> */}
+      <View style={styles.ProgressBar}>
+        <Text>{expertiseData.title}</Text>
+      </View>
         {taskData.length > 0 ? (
           renderExpertises()
         ) : (
@@ -61,7 +68,7 @@ const renderExpertises = () => {
         )}
 
         <View style={styles.Botao}>  
-          <TouchableOpacity style={styles.EditarBTN} onPress={() => navigation.navigate('AdicionarTaskMaster', { expertiseToSee: expertiseData })}>
+          <TouchableOpacity style={styles.EditarBTN} onPress={() => navigation.navigate('AdicionarTaskConsultor', { expertiseToSee: expertiseData })}>
             <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}> + Adicionar Task</Text>
           </TouchableOpacity> 
         </View>
@@ -129,12 +136,15 @@ const styles = StyleSheet.create({
 
   },
 
+
+
   Info: {
     color: '#fff',
     fontSize: 18,
-    marginBottom: 18,
+    marginBottom: 8,
     fontFamily: 'Poppins_300Light',
   },
+
 
   DeletarBTN: {
     height: 35,
@@ -179,15 +189,14 @@ const styles = StyleSheet.create({
   expertise: {
     backgroundColor: '#584848',
     width: 350,
-    padding:8,
+    height: 50,
     borderRadius: 22,
     borderWidth: 1.3,
     borderColor: '#7b7574',
     marginTop: 20,
     display:'flex',
     justifyContent:'center',
-    alignItems:'center',
-    textAlign:'center'
+    alignItems:'center'
   },
 
 });

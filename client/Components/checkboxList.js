@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 
-function Checkbox({ label, onChange }) {
+function Checkbox({ label, onChange, defaultValue }) {
   const [checked, setChecked] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -23,16 +23,14 @@ function Checkbox({ label, onChange }) {
   return (
     <View style={styles.checkboxContainer}>
       <Pressable style={styles.checkbox} onPress={handleCheckboxChange}> 
-        {checked ? (
+        {defaultValue ? (
           <Ionicons name="checkbox-outline" size={24} color="white" />
         ) : (
           <Ionicons name="square-outline" size={24} color="white" />
         )}
         <Text style={styles.checkboxLabel}>{label}</Text>
       </Pressable>
-      {checked && selectedDate && (
-        <Text style={styles.dateText}>{selectedDate}</Text>
-      )}
+     
     </View>
   );
 }

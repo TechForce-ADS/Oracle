@@ -48,6 +48,34 @@ export default function InformacoesParceiro({ navigation, route }) {
   };
 
  
+  const excluirPartner = (_id) => {
+    Alert.alert(
+      'Você tem certeza?',
+      'Esta ação não poderá ser revertida!',
+      [
+        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
+        { text: 'Excluir', onPress: () => excluirConfirmed(_id)  },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const excluirConfirmed = async (_id) => {
+    try {
+      await fetch(`http://${IP}:3001/api/partners/delete/${_id}`, {
+        method: 'DELETE',
+      });
+      
+      navigation.navigate('Parceiros');
+      setPartnerData({});
+  
+    } catch (error) {
+      console.error('Erro ao excluir parceiro:', error);
+      Alert.alert("Erro", "Algo deu errado ao tentar excluir o parceiro.");
+    }
+  };
+
+  
 
   const renderExpertises = () => {
     return partnerExpertises.map((expertise, index) => (
@@ -146,7 +174,6 @@ const styles = StyleSheet.create({
   },
 
 
-
   content: {
     backgroundColor: '#584848',
     width: 350,
@@ -159,22 +186,15 @@ const styles = StyleSheet.create({
 
   },
 
-
   botoes: {
     width: '100%',
     height: 300,
     marginTop: 5,
     display: 'flex',
     alignItems: 'center',
-   
     flexDirection: 'column',
     marginTop:50
   },
-
-
-
-
-
 
   NomePrincipal: {
     color: '#fff',

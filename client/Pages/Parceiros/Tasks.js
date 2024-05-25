@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, ScrollView, StyleSheet,  CheckBox, Alert } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navbar from '../../Components/NavbarParceiro';
 import * as Progress from 'react-native-progress';
 import { useFocusEffect } from '@react-navigation/native';
 import { ip } from "@env";
-import { loggedPartner } from './Partner';
+import { loggedPartner, setLoggedPartner } from './Partner';
+import Checkbox from '../../Components/checkboxList'; // Atualize o caminho conforme necessário
 
 const Tasks = ({ route }) => {
   const [expertiseData, setExpertiseData] = useState(route.params?.expertiseToSee || {});
@@ -46,8 +47,9 @@ const Tasks = ({ route }) => {
     taskData.forEach(task => {
       completionStatus[task._id] = loggedPartner.completedTasks.includes(task._id);
     });
+    console.log('completed', completionStatus)
     setTaskCompletionStatus(completionStatus);
-  }, [taskData]);
+  }, [taskData, loggedPartner]);
 
   const fetchTaskExpertises = async (expertiseId) => {
     try {
@@ -63,8 +65,7 @@ const Tasks = ({ route }) => {
       toggleModal();
     }
   };
-
-  const handleCheckboxChange = async (taskId) => {
+  const handleCheckboxChange = async (taskId, newChecked) => {
     try {
       const response = await fetch(`http://${IP}:3001/api/partners/completeTask`, {
         method: 'POST',
@@ -74,19 +75,27 @@ const Tasks = ({ route }) => {
         body: JSON.stringify({
           partnerId: loggedPartner.id,
           taskId: taskId,
+          completed: newChecked
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
-      // Update task completion status locally
+      
+      // Atualiza o status da tarefa localmente
       setTaskCompletionStatus(prevStatus => ({
         ...prevStatus,
-        [taskId]: true
+        [taskId]: newChecked
       }));
-
+  
+      // Atualiza as informações do parceiro
+      const updatedPartnerData = {
+        ...loggedPartner,
+        completedTasks: newChecked ? [...loggedPartner.completedTasks, taskId] : loggedPartner.completedTasks.filter(task => task !== taskId)
+      };
+      setLoggedPartner(updatedPartnerData);
+  
     } catch (error) {
       console.error('Error:', error);
       Alert.alert('Error', 'There was an error updating the task status.');
@@ -114,13 +123,16 @@ const Tasks = ({ route }) => {
   const renderExpertises = () => {
     if (Array.isArray(taskData) && taskData.length > 0) {
       return taskData.map((task, index) => {
+        const dataValue = taskCompletionStatus[task._id]
         return (
           <View key={index} style={styles.expertise}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize: 16, marginRight: 10 }}>{task.name}</Text>
-              <CheckBox
-                value={taskCompletionStatus[task._id] || false} // Use completion status from state
-                onValueChange={() => handleCheckboxChange(task._id)}
+              <Checkbox
+                label=""
+                onChange={(newChecked) => handleCheckboxChange(task._id, newChecked)}
+                defaultValue={dataValue}
+                containerStyle={{ marginRight: 10 }}
               />
             </View>
           </View>
@@ -132,40 +144,58 @@ const Tasks = ({ route }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
+    <View style={styles.container}>
       <Navbar />
-      <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize:16, marginTop:12 }}>{expertiseData.expertiseName}</Text>
+      <Text style={styles.expertiseName}>{expertiseData.expertiseName}</Text>
       <Progress.Bar
         progress={calculateProgress()}
         width={350}
         color="#720404"
-        style={{ marginTop: 20 }}
+        style={styles.progressBar}
       />
-      <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize:16}}>{(calculateProgress() * 100).toFixed(2)}%</Text>
-      <ScrollView>
-        <View style={{ width: 350, height: 2, backgroundColor: '#fff', marginTop: 40, marginBottom: 40 }}>
-          {taskData.length > 0 ? (
-            renderExpertises()
-          ) : (
-            <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>
-          )}
-        </View>
+      <Text style={styles.progressText}>{(calculateProgress() * 100).toFixed(2)}%</Text>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.separator} />
+        {taskData.length > 0 ? (
+          renderExpertises()
+        ) : (
+          <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma task encontrada.</Text>
+        )}
       </ScrollView>
     </View>
   );
 };
 
-
 const styles = StyleSheet.create({
-
-  tarefas: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-
-
+  container: {
+    flex: 1,
+    backgroundColor: '#1c2120',
+    alignItems: 'center',
   },
-
+  expertiseName: {
+    color: '#FFF',
+    fontFamily: 'Poppins_300Light',
+    fontSize: 16,
+    marginTop: 12,
+  },
+  progressBar: {
+    marginTop: 20,
+  },
+  progressText: {
+    color: '#FFF',
+    fontFamily: 'Poppins_300Light',
+    fontSize: 16,
+  },
+  scrollViewContent: {
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  separator: {
+    width: 350,
+    height: 2,
+    backgroundColor: '#fff',
+    marginVertical: 40,
+  },
   expertise: {
     backgroundColor: '#584848',
     width: 350,
@@ -174,49 +204,9 @@ const styles = StyleSheet.create({
     borderWidth: 1.3,
     borderColor: '#7b7574',
     marginTop: 20,
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
-  },
-
-  titulo: {
-    width: '100%',
-    height: 100,
-    display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
-
+    alignItems: 'center',
   },
-
-  ProgressBar: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-
-  },
-
-  tarefa: {
-    backgroundColor: '#584848',
-    width: 350,
-    height: 60,
-    borderRadius: 22,
-    padding: 12,
-    borderWidth: 1.3,
-    borderColor: '#7b7574',
-    marginTop: 20,
-    display: 'flex',
-    flexDirection:'row',
-    justifyContent: 'space-between'
-  },
-
-  tituloTask: {
-    fontFamily: 'Poppins_300Light',
-    color: '#fff',
-    fontSize: 16
-  },
-
 });
 
 export default Tasks;

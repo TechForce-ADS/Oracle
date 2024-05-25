@@ -61,6 +61,7 @@ const Navbar = () => {
         <Text style={styles.menuText} onPress={() => navigation.navigate('Dashboard')}>Dashboard</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Login')}>Log out</Text>
   
 
       </Animated.View>

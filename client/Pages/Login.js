@@ -129,15 +129,19 @@ const Login = ({ navigation }) => {
         <TouchableOpacity style={styles.LogarBTN} onPress={handleLogin}>
           <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Entrar</Text>
         </TouchableOpacity>
-        <Text
-          style={{ color: '#8F8C8C', fontSize: 12, fontWeight: '200', marginTop: 25 }}>
-          Você não possui uma conta?<Text style={{ color: '#782e29', fontSize: 12, fontWeight: '200' }}  onPress={() => navigation.navigate('CadastroConta')}> Criar uma conta</Text>
-        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 50 }}>
+          <View style={{ width: 125, height: 2, backgroundColor: 'white', }} />
+          <View>
+            <Text style={{ width: 70, textAlign: 'center', fontFamily: 'Poppins_300Light', color: '#fff' }}>OPN</Text>
+          </View>
+          <View style={{ width: 125, height: 2, backgroundColor: 'white',}} />
+        </View>
+       
         <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('LoginParceiro')}>
-          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Sou Parceiro</Text>
+          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Sou OPN</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.LogarBTN} onPress={() => navigation.navigate('CadastroContaParceiro')}>
-          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Virar Parceiro</Text>
+          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily:'Poppins_700Bold'}}>Virar OPN</Text>
         </TouchableOpacity>
       </View>
 

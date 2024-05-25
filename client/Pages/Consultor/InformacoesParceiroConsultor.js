@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
-import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
 import Navbar from '../../Components/NavbarConsultor';
 import User from '../../img/User.png';
-import {IP} from "@env";
+import { ip } from "@env";
 import { useFocusEffect } from '@react-navigation/native';
-
 
 export default function InformacoesParceiroConsultor({ navigation, route }) {
 
@@ -14,30 +12,65 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
   const [partnerExpertises, setPartnerExpertises] = useState([]);
   const idPartner = partnerData._id;
 
+  
+ 
+  const editarPartner = (partner) => {
+    navigation.navigate('EditarParceiroConsultor', { partnerToEdit: partner });
+  };
+
+  const vizualizar = (expertise) => {
+    navigation.navigate('TasksConsultor', { expertiseToSee: expertise, partnerToSee: partnerData });
+  };
+
   const toggleExpand = () => {
     setExpanded(!expanded);
   };
 
- 
   useFocusEffect(
     React.useCallback(() => {
       fetchPartnerExpertises(idPartner);
-  
     }, [idPartner])
   );
 
   const adicionar = () => {
     navigation.navigate('TracksConsultorParceiro', { partnerToSee: partnerData });
   };
-  
-  const vizualizar = (expertise) => {
-    navigation.navigate('TasksConsultor', { expertiseToSee: expertise, partnerToSee:partnerData });
+
+ 
+
+  const excluirPartner = (_id) => {
+    Alert.alert(
+      'Você tem certeza?',
+      'Esta ação não poderá ser revertida!',
+      [
+        { text: 'Cancelar', onPress: () => console.log('Cancelar') },
+        { text: 'Excluir', onPress: () => excluirConfirmed(_id)  },
+      ],
+      { cancelable: true }
+    );
   };
 
+  const excluirConfirmed = async (_id) => {
+    try {
+      await fetch(`http://${IP}:3001/api/partners/delete/${_id}`, {
+        method: 'DELETE',
+      });
+      
+      navigation.navigate('ConsultorLista');
+      setPartnerData({});
+  
+    } catch (error) {
+      console.error('Erro ao excluir parceiro:', error);
+      Alert.alert("Erro", "Algo deu errado ao tentar excluir o parceiro.");
+    }
+  };
 
+  
+
+  
   const fetchPartnerExpertises = async (partnerId) => {
     try {
-      const response = await fetch(`http://192.168.15.99:3001/api/partners/${partnerId}/expertises`);
+      const response = await fetch(`http://${IP}:3001/api/partners/${partnerId}/expertises`);
       if (!response.ok) {
         throw new Error('Erro ao buscar expertises do parceiro');
       }
@@ -49,8 +82,6 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
     }
   };
 
-
- 
   const renderExpertises = () => {
     return partnerExpertises.map((expertise, index) => (
       <TouchableOpacity key={index} style={styles.expertise} onPress={() => vizualizar(expertise)}>
@@ -58,8 +89,6 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
       </TouchableOpacity>
     ));
   };
-
-  
 
   return (
     <View style={styles.container}>
@@ -108,16 +137,14 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
           ) : (
             <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light' }}>Nenhuma expertise encontrada.</Text>
           )}
-         
         </View>
-        <TouchableOpacity onPress={adicionar}  style={styles.editarBTN}>
-                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>+ Expertise</Text>
-            </TouchableOpacity>
+        <TouchableOpacity onPress={adicionar} style={styles.editarBTN}>
+          <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>+ Expertise</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   
   User: {
@@ -148,6 +175,16 @@ const styles = StyleSheet.create({
     zIndex: 2024,
 
 
+  },
+
+  expandedContent: {
+    backgroundColor: '#584848',
+    width: 350,
+    height: 400,
+    borderRadius: 22,
+    padding: 20,
+    borderWidth: 1.3,
+    borderColor: '#7b7574',
   },
 
   container: {
@@ -184,6 +221,27 @@ const styles = StyleSheet.create({
 
 
 
+
+
+  DeletarBTN: {
+    height: 35,
+    width: "70%",
+    backgroundColor: '#6b0600',
+    justifyContent: 'center',
+    display: 'flex',
+    marginTop: 10,
+    borderRadius: 5,
+  },
+
+  EditarBTN: {
+    height: 35,
+    width: "70%",
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    display: 'flex',
+    marginTop: 10,
+    borderRadius: 5,
+  },
 
 
 

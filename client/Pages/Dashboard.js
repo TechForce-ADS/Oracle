@@ -1,12 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert, ScrollView } from 'react-native';
 import { BarChart, PieChart } from 'react-native-chart-kit';
 import { useFocusEffect } from '@react-navigation/native';
-import {IP} from '@env';
-import Navbar from '../Components/Navbar';
+import { ip } from '@env';
+import Navbar from '../Components/NavbarMaster';
 
 const generateRandomColor = () => {
   return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`;
+};
+
+const Legend = ({ data }) => {
+  return (
+    <View style={styles.legendContainer}>
+      {data.map((item, index) => (
+        <View key={index} style={styles.legendItem}>
+          <View style={[styles.colorBox, { backgroundColor: item.color }]} />
+          <Text style={styles.legendText}>{item.population}% {item.name}</Text>
+        </View>
+      ))}
+    </View>
+  );
 };
 
 export default function Dashboard() {
@@ -55,105 +68,108 @@ export default function Dashboard() {
     }, [])
   );
 
-
   const colorPalette = [
     '#FF5733', '#FFC300', '#36DBCA', '#5F27CD', '#33FF57', '#FF33B8', '#33B8FF', '#AA33FF', '#33FFD8', '#A633FF'
   ];
 
+  const pieChartData = completedTasksPercentage.map((item, index) => ({
+    name: item.expertiseName,
+    population: parseFloat(item.percentage.toFixed(0)),
+    color: colorPalette[index % colorPalette.length],
+    legendFontColor: "#FFF",
+    legendFontSize: 13,
+  }));
+
   return (
     <View style={styles.container}>
       <Navbar />
-      <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>Quantidade de Administradores e Parceiros</Text>
-        <BarChart
-          data={{
-            labels: ['Administradores', 'Parceiros'],
-            datasets: [{
-              data: [parseInt(adminCount), parseInt(partnerCount)],
-            }],
-          }}
-          width={350}
-          height={220}
-          yAxisSuffix=""
-          yAxisInterval={1}
-          fromZero={true}
-          showValuesOnTopOfBars={true}
-          chartConfig={{
-            backgroundGradientFrom: '#ddd',
-            backgroundGradientTo: '#ddd',
-            color: (opacity = 2) => `rgba(249, 0, 9, ${opacity})`,
-            strokeWidth: 4,
-            formatYLabel: () => '',
-          }}
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
-        <View style={styles.barTotalContainer}>
-          <Text style={styles.barTotal}>{adminCount}</Text>
-          <Text style={styles.barTotal}>{partnerCount}</Text>
+      <ScrollView>
+        <View style={styles.chartContainer}>
+          <Text style={styles.chartTitle}>Quantidade de Administradores e Parceiros</Text>
+          <BarChart
+            data={{
+              labels: ['Administradores', 'Parceiros'],
+              datasets: [{
+                data: [parseInt(adminCount), parseInt(partnerCount)],
+              }],
+            }}
+            width={350}
+            height={220}
+            yAxisSuffix=""
+            yAxisInterval={1}
+            fromZero={true}
+            showValuesOnTopOfBars={true}
+            chartConfig={{
+              backgroundGradientFrom: '#ddd',
+              backgroundGradientTo: '#ddd',
+              color: (opacity = 2) => `rgba(249, 0, 9, ${opacity})`,
+              strokeWidth: 4,
+              formatYLabel: () => '',
+            }}
+            style={{
+              marginVertical: 8,
+              borderRadius: 16,
+            }}
+          />
+          <View style={styles.barTotalContainer}>
+            <Text style={styles.barTotal}>{adminCount}</Text>
+            <Text style={styles.barTotal}>{partnerCount}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>Numero de expertises completas</Text>
-        <BarChart
-          data={{
-            labels: ['Completas', 'Incompleto'],
-            datasets: [{
-              data: [completedCounts.trueCount, completedCounts.falseCount],
-            }],
-          }}
-          width={350}
-          height={220}
-          yAxisSuffix=""
-          yAxisInterval={1}
-          fromZero={true}
-          showValuesOnTopOfBars={true}
-          chartConfig={{
-            backgroundGradientFrom: '#ddd',
-            backgroundGradientTo: '#ddd',
-            color: (opacity = 2) => `rgba(0, 150, 249, ${opacity})`,
-            strokeWidth: 4,
-            formatYLabel: () => '', 
-          }}
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
-        <View style={styles.barTotalContainer}>
-          <Text style={styles.barTotal}>{completedCounts.trueCount}</Text>
-          <Text style={styles.barTotal}>{completedCounts.falseCount}</Text>
+        <View style={styles.chartContainer}>
+          <Text style={styles.chartTitle}>Número de expertises completas</Text>
+          <BarChart
+            data={{
+              labels: ['Completas', 'Incompleto'],
+              datasets: [{
+                data: [completedCounts.trueCount, completedCounts.falseCount],
+              }],
+            }}
+            width={350}
+            height={220}
+            yAxisSuffix=""
+            yAxisInterval={1}
+            fromZero={true}
+            showValuesOnTopOfBars={true}
+            chartConfig={{
+              backgroundGradientFrom: '#ddd',
+              backgroundGradientTo: '#ddd',
+              color: (opacity = 2) => `rgba(0, 150, 249, ${opacity})`,
+              strokeWidth: 4,
+              formatYLabel: () => '',
+            }}
+            style={{
+              marginVertical: 8,
+              borderRadius: 16,
+            }}
+          />
+          <View style={styles.barTotalContainer}>
+            <Text style={styles.barTotal}>{completedCounts.trueCount}</Text>
+            <Text style={styles.barTotal}>{completedCounts.falseCount}</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>Porcentagem de Parceiros por Expertise</Text>
-        <PieChart
-          data={completedTasksPercentage.map((item, index) => ({
-            name: item.expertiseName || '', 
-            population: item.percentage,
-            color: colorPalette[index % colorPalette.length], 
-            legendFontColor: "#FFF",
-            legendFontSize: 15,
-          }))}
-          width={350}
-          height={220}
-          chartConfig={{
-            backgroundGradientFrom: '#ddd',
-            backgroundGradientTo: '#ddd',
-            color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
-          }}
-          accessor="population"
-          backgroundColor="transparent"
-          paddingLeft="15"
-          absolute
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
-      </View>
+        <View style={styles.chartContainer}>
+          <Text style={styles.chartTitle}>Porcentagem de Parceiros por Expertise</Text>
+          <View style={styles.pieChartContainerLast}>
+            <PieChart
+              data={pieChartData}
+              width={200}
+              height={150}
+              chartConfig={{
+                backgroundGradientFrom: '#ddd',
+                backgroundGradientTo: '#ddd',
+                color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+              }}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              absolute
+              hasLegend={false} // Remove default legend
+            />
+          </View>
+          <Legend data={pieChartData} />
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -168,7 +184,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
-  chartTitle: { 
+  chartTitle: {
     fontSize: 16,
     color: '#FFF',
     marginBottom: 10,
@@ -184,5 +200,34 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#FFF',
     fontFamily: 'Poppins_400Regular',
+  },
+  pieChartContainer: {
+    alignItems: 'center', 
+    display: 'flex',
+  },
+  pieChartContainerLast: {
+    alignItems: 'center', 
+    display: 'flex',
+    justifyContent: 'center',
+    paddingLeft: 60,
+  },  
+  legendContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  colorBox: {
+    width: 16,
+    height: 16,
+    marginRight: 8,
+  },
+  legendText: {
+    fontSize: 13,
+    color: '#FFF',
   },
 });

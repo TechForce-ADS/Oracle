@@ -91,7 +91,7 @@ const CadastroContaParceiro = ({ navigation }) => {
       
         <View style={styles.ContainerLogin}>
           <View style={styles.Textos}>
-            <Text style={{ fontSize: 26, color: '#fff', fontFamily: 'Poppins_700Bold', textAlign: 'center' }}>Crie conta parceiro</Text>
+            <Text style={{ fontSize: 26, color: '#fff', fontFamily: 'Poppins_700Bold', textAlign: 'center' }}>Crie conta OPN</Text>
             <Text style={{ fontSize: 12, color: '#fff', fontFamily: 'Poppins_300Light', }}>Já possui uma conta? <Text onPress={() => navigation.navigate('LoginParceiro')}>Clique aqui</Text></Text>
           </View>
           <View style={styles.Labels}>
