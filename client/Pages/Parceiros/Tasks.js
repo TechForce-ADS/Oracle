@@ -134,12 +134,14 @@ const Tasks = ({ route }) => {
   return (
     <View style={{ flex: 1, backgroundColor: '#1c2120', alignItems: 'center' }}>
       <Navbar />
+      <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize:16, marginTop:12 }}>{expertiseData.expertiseName}</Text>
       <Progress.Bar
         progress={calculateProgress()}
         width={350}
-        color="#3b5998"
+        color="#720404"
         style={{ marginTop: 20 }}
       />
+      <Text style={{ color: '#FFF', fontFamily: 'Poppins_300Light', fontSize:16}}>{(calculateProgress() * 100).toFixed(2)}%</Text>
       <ScrollView>
         <View style={{ width: 350, height: 2, backgroundColor: '#fff', marginTop: 40, marginBottom: 40 }}>
           {taskData.length > 0 ? (
