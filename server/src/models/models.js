@@ -1,42 +1,5 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  number: {
-    type: String,
-    required: true,
-  },
-  sexo: {
-    type: String,
-    required: true,
-  },
-  cpf: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-});
-
-const User = mongoose.model('User', userSchema);
-
 
 const partnerSchema = new mongoose.Schema({
 
@@ -154,20 +117,6 @@ const taskSchema = new mongoose.Schema({
 
 });
 
-const courseRegistrationSchema = new mongoose.Schema({
-  partner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Partner'
-  },
-  course: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Course'
-  },
-  courseCompleted: {
-    type: Boolean,
-    required: true
-  },
-});
 
 
 const trackRegistrationSchema = new mongoose.Schema({//registro expertise na track
@@ -204,8 +153,6 @@ const expertiseRegistrationSchema = new mongoose.Schema({
 
 const ExpertiseRegistration = mongoose.model('ExpertiseRegistration', expertiseRegistrationSchema);
 
-const CourseRegistration = mongoose.model('CourseRegistration', courseRegistrationSchema);
-
 const TrackRegistration = mongoose.model('TrackRegistration', trackRegistrationSchema);
 
 const Track = mongoose.model('Track', trackSchema);
@@ -218,11 +165,9 @@ const Task = mongoose.model('Task', taskSchema);
 
 
 module.exports = {
-  User, userSchema,
   Partner, partnerSchema,
   Admin, adminSchema,
   Track, trackSchema,
-  CourseRegistration, courseRegistrationSchema,
   TrackRegistration, trackRegistrationSchema,
   Task, taskSchema,
   ExpertiseRegistration, expertiseRegistrationSchema

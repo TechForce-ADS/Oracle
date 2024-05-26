@@ -26,6 +26,9 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
     }, [idPartner])
   );
 
+  const adicionar = () => {
+    navigation.navigate('TracksConsultorParceiro', { partnerToSee: partnerData });
+  };
   
   const vizualizar = (expertise) => {
     navigation.navigate('TasksConsultor', { expertiseToSee: expertise, partnerToSee:partnerData });
@@ -34,7 +37,7 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
 
   const fetchPartnerExpertises = async (partnerId) => {
     try {
-      const response = await fetch(`http://${IP}:3001/api/partners/${partnerId}/expertises`);
+      const response = await fetch(`http://192.168.15.99:3001/api/partners/${partnerId}/expertises`);
       if (!response.ok) {
         throw new Error('Erro ao buscar expertises do parceiro');
       }
@@ -107,7 +110,9 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
           )}
          
         </View>
-        
+        <TouchableOpacity onPress={adicionar}  style={styles.editarBTN}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>+ Expertise</Text>
+            </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -122,6 +127,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
+  
+
 
   scrollContainer: {
     flexGrow: 1,
@@ -223,4 +230,16 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center'
   },
+
+
+  editarBTN: {
+    height: 45,
+    width: "40%",
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    display: 'flex',
+    borderRadius: 5,
+    
+},
+
 });

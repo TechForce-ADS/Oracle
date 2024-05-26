@@ -20,9 +20,6 @@ connect()
     const tracksController = require('./src/controllers/TracksController');
     app.use('/api/tracks', tracksController);
 
-    const userController = require('./src/controllers/UserController');
-    app.use('/api/users', userController);
-
     const partnerController = require('./src/controllers/PartnerController');
     app.use('/api/partners', partnerController);
 
