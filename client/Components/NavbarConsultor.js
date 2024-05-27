@@ -55,9 +55,10 @@ const Navbar = () => {
       <Animated.View style={[styles.menu, { transform: [{ translateX: menuOffset }], height: menuAberto ? screenHeight : 50 }]}>
         <Image source={Logo} style={styles.logo} />
         
-        <Text style={styles.menuText} onPress={() => navigation.navigate('ConsultorLista')}>Parceiros</Text>
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Tracks')}>Tracks</Text>
+       
         <Text style={styles.menuText} onPress={() => navigation.navigate('DashboardConsultor')}>Dashboard</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Tracks')}>Tracks</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('ConsultorLista')}>Parceiros</Text>
 
       </Animated.View>
     </View>
@@ -75,28 +76,7 @@ const styles = StyleSheet.create({
     zIndex: 2000,
   },
 
-  logo: {
-    width: 100,
-    height: 25,
-    resizeMode: 'contain',
-    marginLeft: 20,
-  },
-
-  menuButton: {
-    backgroundColor: '#50100c',
-    width: 70,
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft:200,
-    zIndex: 2001,
-  },
-
-  menuIcon: {
-    width: 30,
-    height: 30,
-  },
-
+ 
   menu: {
     position: 'absolute',
     top: 0,
@@ -106,6 +86,27 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     zIndex: 1,
+  },
+  searchButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginLeft: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  searchIcon: {
+    width: 20,
+    height: 20,
+    tintColor: '#50100c',
+  },
+
+  filterButton: {
+    backgroundColor: '#50100c',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginRight: 10,
   },
 
   menuText: {
@@ -132,27 +133,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
-  searchButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginLeft: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
+ 
+
+  logo: {
+    width: 100,
+    height: 25,
+    resizeMode: 'contain',
+    marginLeft: 20,
   },
 
-  searchIcon: {
-    width: 20,
-    height: 20,
-    tintColor: '#50100c',
-  },
-
-  filterButton: {
+  menuButton: {
     backgroundColor: '#50100c',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginRight: 10,
+    width: 70,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft:200,
+    zIndex: 2001,
   },
+
+  menuIcon: {
+    width: 30,
+    height: 30,
+  },
+
 
   filterButtonText: {
     color: 'white',
