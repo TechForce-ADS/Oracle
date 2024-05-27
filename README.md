@@ -165,7 +165,6 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
 # Calendário da Sprint
 
-![CALENDÁRIO](https://github.com/TechForce-ADS/Oracle/assets/101806264/4b65fee6-79d2-431f-a314-2e0c466578ec)
 
 
 # Backlog do Produto 
