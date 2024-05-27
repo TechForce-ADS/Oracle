@@ -12,18 +12,6 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation();
 
-  const toggleMenu = () => {
-    if (menuAberto) {
-      handleCloseMenu();
-    } else {
-      Animated.timing(menuOffset, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      setMenuAberto(true);
-    }
-  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -40,6 +28,21 @@ const Navbar = () => {
       setMenuAberto(false);
     });
   };
+
+  const toggleMenu = () => {
+    if (menuAberto) {
+      handleCloseMenu();
+    } else {
+      Animated.timing(menuOffset, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+      setMenuAberto(true);
+    }
+  };
+
+ 
   
 
   const screenHeight = Dimensions.get('window').height;
@@ -54,10 +57,11 @@ const Navbar = () => {
       
       <Animated.View style={[styles.menu, { transform: [{ translateX: menuOffset }], height: menuAberto ? screenHeight : 50 }]}>
         <Image source={Logo} style={styles.logo} />
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
-        <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Tracks')}>Tracks</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Dashboard')}>Dashboard</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Cadastro')}>Cadastrar novo Parceiro</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('TelaLista')}>Parceiros</Text>
+  
 
       </Animated.View>
     </View>
@@ -65,6 +69,33 @@ const Navbar = () => {
 }
 
 const styles = StyleSheet.create({
+
+
+  menuIcon: {
+    width: 30,
+    height: 30,
+  },
+
+  menu: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '70%',
+    backgroundColor: '#50100c',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    zIndex: 1,
+  },
+
+  menuText: {
+    color: 'white',
+    fontFamily: 'Poppins_300Light',
+    fontSize: 16,
+    paddingVertical: 10,
+    marginTop:12,
+  },
+
+
   header: {
     backgroundColor: '#50100c',
     width: 420,
@@ -92,29 +123,21 @@ const styles = StyleSheet.create({
     zIndex: 2001,
   },
 
-  menuIcon: {
-    width: 30,
-    height: 30,
-  },
 
-  menu: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '70%',
+  filterButton: {
     backgroundColor: '#50100c',
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    zIndex: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginRight: 10,
   },
 
-  menuText: {
+  filterButtonText: {
     color: 'white',
     fontFamily: 'Poppins_300Light',
     fontSize: 16,
-    paddingVertical: 10,
-    marginTop:12,
   },
+
 
   searchBar: {
     flex: 1,
@@ -146,19 +169,6 @@ const styles = StyleSheet.create({
     tintColor: '#50100c',
   },
 
-  filterButton: {
-    backgroundColor: '#50100c',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-
-  filterButtonText: {
-    color: 'white',
-    fontFamily: 'Poppins_300Light',
-    fontSize: 16,
-  },
 });
 
 export default Navbar;
