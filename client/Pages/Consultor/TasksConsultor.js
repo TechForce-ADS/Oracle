@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navbar from '../../Components/NavbarConsultor';
 import * as Progress from 'react-native-progress';
 import { useFocusEffect } from '@react-navigation/native';
-import { ip } from "@env";
+import { IP } from "@env";
 
 
 const TasksConsultor = ({ route }) => {

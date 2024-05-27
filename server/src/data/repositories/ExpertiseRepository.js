@@ -1,5 +1,6 @@
 const {Expertise} = require('../../models/models');
 const {ExpertiseRegistration} = require('../../models/models')
+const { TrackRegistration } = require('../../models/models');
 
 async function registerPartnersExpertise(registrationData){
     try {
@@ -25,6 +26,17 @@ async function getPartnerExpertises(partnerId) {
         throw new Error('Failed to get partner expertises.');
     }
 }
+
+async function getExpertiseCompletedCounts() {
+    try {
+      const trueCount = await TrackRegistration.countDocuments({ expertiseCompleted: true });
+      const falseCount = await TrackRegistration.countDocuments({ expertiseCompleted: false });
+      return { trueCount, falseCount };
+    } catch (error) {
+      console.error('Error getting expertise completed counts:', error);
+      throw new Error('Failed to get expertise completed counts.');
+    }
+  }
 
 async function listPartnersExpertises(){
     try {
@@ -127,5 +139,6 @@ module.exports = {
     listPartnersExpertises,
     deleteExpertiseRegistration,
     getPartnerExpertises,
+    getExpertiseCompletedCounts,
     deleteRegister
 }

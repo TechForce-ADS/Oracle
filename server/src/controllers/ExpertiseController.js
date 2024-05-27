@@ -6,6 +6,7 @@ const {updateExpertise} = require('../data/repositories/ExpertiseRepository');
 const {listOnePartner} = require("../data/repositories/PartnerRepository")
 const {getPartnerExpertises} = require("../data/repositories/ExpertiseRepository")
 const {deleteRegister} = require("../data/repositories/ExpertiseRepository")
+const { getExpertiseCompletedCounts } = require('../data/repositories/ExpertiseRepository');
 
 const registerExpertiseUC = require('../useCases/expertises/RegisterExpertiseUC');
 
@@ -39,6 +40,17 @@ router.delete('/deleteExpertiseRegister/:_id', async(req, res) => {
         
     }
 })
+
+router.get('/completedCounts', async (req, res) => {
+    try {
+      const counts = await getExpertiseCompletedCounts();
+      res.status(200).json(counts);
+    } catch (error) {
+      console.error('Error getting expertise completed counts:', error);
+      res.status(500).json({ error: 'Internal server error.' });
+    }
+  });
+  
 
 router.post('/registerExpertise', async(req, res) =>{
     try {

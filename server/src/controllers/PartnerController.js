@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {completeTask,updatePartnerExpertise, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises, findPartnerByEmailAndToken, updatePartnerPassword} = require('../data/repositories/PartnerRepository.js');
+const {completeTask, updatePartnerExpertise, getTrackParticipationPercentage, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises, findPartnerByEmailAndToken, updatePartnerPassword} = require('../data/repositories/PartnerRepository.js');
 const RecoverPasswordUC = require('../useCases/partner/RecoverPasswordUC');
 const ResetPasswordUC = require('../useCases/partner/ResetPasswordUC');
 const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
@@ -20,6 +20,17 @@ router.post('/updateExpertise/:_id', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+router.get('/trackParticipationPercentage', async (req, res) => {
+  try {
+    const percentageData = await getTrackParticipationPercentage();
+    res.status(200).json(percentageData);
+  } catch (error) {
+    console.error('Error getting track participation percentage:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 router.get('/partnerListOne', async (req, res) => {
   try {
