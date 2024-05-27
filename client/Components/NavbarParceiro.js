@@ -12,18 +12,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation();
 
-  const toggleMenu = () => {
-    if (menuAberto) {
-      handleCloseMenu();
-    } else {
-      Animated.timing(menuOffset, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      setMenuAberto(true);
-    }
-  };
+
 
   useFocusEffect(
     React.useCallback(() => {
@@ -42,6 +31,22 @@ const Navbar = () => {
   };
 
 
+
+  const toggleMenu = () => {
+    if (menuAberto) {
+      handleCloseMenu();
+    } else {
+      Animated.timing(menuOffset, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+      setMenuAberto(true);
+    }
+  };
+
+
+
   const screenHeight = Dimensions.get('window').height;
 
   return (
@@ -55,9 +60,10 @@ const Navbar = () => {
       <Animated.View style={[styles.menu, { transform: [{ translateX: menuOffset }], height: menuAberto ? screenHeight : 50 }]}>
         <Image source={Logo} style={styles.logo} />
 
-        <Text style={styles.menuText} onPress={() => navigation.navigate('TelaListaParceiro')}>Parceiros</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('TracksParceiro')}>Tracks</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('TelaParceiro')}>Perfil</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('TelaListaParceiro')}>Parceiros</Text>
+      
 
       </Animated.View>
     </View>
@@ -74,6 +80,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     zIndex: 2000,
   },
+
+
+  menu: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '70%',
+    backgroundColor: '#50100c',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    zIndex: 1,
+  },
+
+  menuText: {
+    color: 'white',
+    fontFamily: 'Poppins_300Light',
+    fontSize: 16,
+    paddingVertical: 10,
+    marginTop: 12,
+  },
+
+
 
   logo: {
     width: 100,
@@ -97,23 +125,26 @@ const styles = StyleSheet.create({
     height: 30,
   },
 
-  menu: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '70%',
-    backgroundColor: '#50100c',
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    zIndex: 1,
+  
+
+  searchIcon: {
+    width: 20,
+    height: 20,
+    tintColor: '#50100c',
   },
 
-  menuText: {
+  filterButton: {
+    backgroundColor: '#50100c',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+
+  filterButtonText: {
     color: 'white',
     fontFamily: 'Poppins_300Light',
     fontSize: 16,
-    paddingVertical: 10,
-    marginTop: 12,
   },
 
   searchBar: {
@@ -140,25 +171,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  searchIcon: {
-    width: 20,
-    height: 20,
-    tintColor: '#50100c',
-  },
-
-  filterButton: {
-    backgroundColor: '#50100c',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-
-  filterButtonText: {
-    color: 'white',
-    fontFamily: 'Poppins_300Light',
-    fontSize: 16,
-  },
 });
 
 export default Navbar;
