@@ -164,22 +164,27 @@ O objetivo do sistema centralizar e automatizar atividades com relaçã à gest�
 
 
 # Calendário da Sprint
-
+ - 1° SPRINT: 25/03 - 14/04
+ - 2° SPRINT: 15/04 - 05/05
+ - 3° SPRINT: 06/05 - 26/05
+ - 4° SPRINT - 27/05 - 16/06
+ - FEIRA TECNOLÓGICA - 27/06
 
 
 # Backlog do Produto 
+![1](https://github.com/TechForce-ADS/Oracle/assets/92901837/f7447621-9d44-42cd-86a0-d8dc6455f29f)
 
-![1](https://github.com/TechForce-ADS/Oracle/assets/101806264/d1811e78-bd2e-4267-914f-e89b08a2a6b3)
+
 
 # User Stories
+![RANK](https://github.com/TechForce-ADS/Oracle/assets/92901837/e92a2766-a556-4881-82e9-9282754f6f41)
 
-![user-stories-oracle](https://github.com/TechForce-ADS/Oracle/assets/92901837/5e4af7b4-381f-4909-977a-641fb67b3cf2)
 
 
 
 # Épico e Sprints
 
-![2](https://github.com/TechForce-ADS/Oracle/assets/101806264/07e4564a-d9c8-4bb7-9ab6-675812cb4ac8)
+![2](https://github.com/TechForce-ADS/Oracle/assets/92901837/bb5e2d56-e129-40c4-99b9-e6b555b61b9d)
 
 
 > Sprint Backlog:
@@ -222,17 +227,23 @@ desempenho
 - User Storie: Como administrador, gostaria de pesquisar parceiros que o nome comecem com a letra 'D'
 
  ### Sprint 3</a> - 06/05 - 26/05</p>
- > <p>:x: Tela de login com diferenciação por níveis  </p>
+  <p>:white_check_mark: Tela de login com diferenciação por níveis  </p>
  - User Storie: Como administrador master, quero que cada um dos meus administradores tenham permissões
 diferentes
- > <p>:x:  Relatórios sobre parceiros por produto implementado</p>
- - User Storie: Como administrador, quero ter relatórios detalhados para ver externamente da aplicação
- > <p>:x: Modelagem de Banco de Dados</p>
+ <P>:white_check_mark: Sistema das Tracks, expertises e tasks   </P>
+ <P>:white_check_mark: Atualização do desenvolvimento dos parceiros  </P>
+ <P>:white_check_mark: Reconfiguração do menu  </P>
+ <P>:white_check_mark: Autenticação por email  </P>
+ <P>:white_check_mark: Gestão de desempenho com dados de cada parceiro   </P>
+ <P>:white_check_mark: Adição de Dashboards   </P>
+ <p>:x: Modelagem de Banco de Dados</p>
 - User Storie: Como administrador, gostaria de visualizar como o banco de dados foi pensado
- > <p>:x: Autenticação por email</p> 
+
 
  
  ### Sprint 4</a> - 27/05 - 15/06</p>
+  > <p>:x:  Relatórios sobre parceiros por produto implementado</p>
+ - User Storie: Como administrador, quero ter relatórios detalhados para ver externamente da aplicação
  > <p>:x: Manual do Usuário </p>
  - User Storie: Como administrador, preciso de ajuda para entender como funciona a aplicação
  > <p>:x: Documentação Técnica da Estrutura do Sistema </p>
@@ -248,9 +259,8 @@ durante a API
  
 # Tecnologia Utilizadas
 
-![4](https://github.com/TechForce-ADS/Oracle/assets/101806264/32c291f8-acab-4764-a512-16cf6d668342)
+![3](https://github.com/TechForce-ADS/Oracle/assets/92901837/21afa24c-623b-4eb9-8ca6-9b00757c3f72)
 
- 
 
 ## 
 
