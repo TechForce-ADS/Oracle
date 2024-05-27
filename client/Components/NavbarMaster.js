@@ -12,19 +12,6 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation();
 
-  const toggleMenu = () => {
-    if (menuAberto) {
-      handleCloseMenu();
-    } else {
-      Animated.timing(menuOffset, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      setMenuAberto(true);
-    }
-  };
-
   useFocusEffect(
     React.useCallback(() => {
       handleCloseMenu();
@@ -42,6 +29,22 @@ const Navbar = () => {
   };
   
 
+
+  const toggleMenu = () => {
+    if (menuAberto) {
+      handleCloseMenu();
+    } else {
+      Animated.timing(menuOffset, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+      setMenuAberto(true);
+    }
+  };
+
+
+
   const screenHeight = Dimensions.get('window').height;
 
   return (
@@ -55,11 +58,11 @@ const Navbar = () => {
       <Animated.View style={[styles.menu, { transform: [{ translateX: menuOffset }], height: menuAberto ? screenHeight : 50 }]}>
         <Image source={Logo} style={styles.logo} />
         
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Parceiros')}>Parceiros</Text>
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Administradores')}>Administradores</Text>
-        <Text style={styles.menuText} onPress={() => navigation.navigate('Consultores')}>Consultores</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('TracksMaster')}>Tracks</Text>
         <Text style={styles.menuText} onPress={() => navigation.navigate('Dashboard')}>Dashboard</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Parceiros')}>Parceiros</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Consultores')}>Consultores</Text>
+        <Text style={styles.menuText} onPress={() => navigation.navigate('Administradores')}>Administradores</Text>       
 
       </Animated.View>
     </View>
@@ -67,6 +70,58 @@ const Navbar = () => {
 }
 
 const styles = StyleSheet.create({
+
+
+  menu: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '70%',
+    backgroundColor: '#50100c',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    zIndex: 1,
+  },
+
+  menuText: {
+    color: 'white',
+    fontFamily: 'Poppins_300Light',
+    fontSize: 16,
+    paddingVertical: 10,
+    marginTop:12,
+  },
+  
+
+  searchBar: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingHorizontal: 8,
+    marginLeft: 16,
+    marginRight: 5,
+  },
+
+  input: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
+
+  searchButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginLeft: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  searchIcon: {
+    width: 20,
+    height: 20,
+    tintColor: '#50100c',
+  },
+
   header: {
     backgroundColor: '#50100c',
     width: 420,
@@ -97,55 +152,6 @@ const styles = StyleSheet.create({
   menuIcon: {
     width: 30,
     height: 30,
-  },
-
-  menu: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '70%',
-    backgroundColor: '#50100c',
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    zIndex: 1,
-  },
-
-  menuText: {
-    color: 'white',
-    fontFamily: 'Poppins_300Light',
-    fontSize: 16,
-    paddingVertical: 10,
-    marginTop:12,
-  },
-
-  searchBar: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    paddingHorizontal: 8,
-    marginLeft: 16,
-    marginRight: 5,
-  },
-
-  input: {
-    flex: 1,
-    paddingHorizontal: 10,
-  },
-
-  searchButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginLeft: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  searchIcon: {
-    width: 20,
-    height: 20,
-    tintColor: '#50100c',
   },
 
   filterButton: {
