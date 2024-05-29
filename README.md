@@ -236,14 +236,15 @@ diferentes
  <P>:white_check_mark: Autenticação por email  </P>
  <P>:white_check_mark: Gestão de desempenho com dados de cada parceiro   </P>
  <P>:white_check_mark: Adição de Dashboards   </P>
- <p>:x: Modelagem de Banco de Dados</p>
-- User Storie: Como administrador, gostaria de visualizar como o banco de dados foi pensado
+
 
 
  
  ### Sprint 4</a> - 27/05 - 15/06</p>
   > <p>:x:  Relatórios sobre parceiros por produto implementado</p>
  - User Storie: Como administrador, quero ter relatórios detalhados para ver externamente da aplicação
+ -  <p>:x: Modelagem de Banco de Dados</p>
+- User Storie: Como administrador, gostaria de visualizar como o banco de dados foi pensado
  > <p>:x: Manual do Usuário </p>
  - User Storie: Como administrador, preciso de ajuda para entender como funciona a aplicação
  > <p>:x: Documentação Técnica da Estrutura do Sistema </p>
