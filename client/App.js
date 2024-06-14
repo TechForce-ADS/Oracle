@@ -44,10 +44,9 @@ import InformacoesParceiroMaster from './Pages/Master/InformacoesParceiroMaster'
 import InformacoesAdminMaster from './Pages/Master/InformacoesAdminMaster'
 import InformacoesConsultorMaster from './Pages/Master/InformacoesConsultorMaster'
 import InformacoesParceiroConsultor from './Pages/Consultor/InformacoesParceiroConsultor'
-// import ResetarSenhaPartner from './Pages/Parceiros/ResetarSenhaPartner';
-// import EnviarToken from './Pages/EnviarToken'
-// import ResetarSenha from './Pages/ResetarSenha'
-// import AppNavigator from './Pages/AppNavigator';
+/* import ResetarSenhaPartner from './Pages/Parceiros/ResetarSenhaPartner'; */
+import EnviarToken from './Pages/EnviarToken'
+import ResetarSenha from './Pages/ResetarSenha'
 import TasksConsultor from './Pages/Consultor/TasksConsultor'
 import TracksConsultorParceiro from './Pages/Consultor/TracksConsultorParceiro'
 import InformacoesTracksConsultorParceiro from './Pages/Consultor/InformacoesTracksConsultorParceiro'
@@ -60,6 +59,7 @@ import AdicionarExpertiseConsultor from './Pages/Consultor/AdicionarExpertiseCon
 import AdicionarTaskConsultor from './Pages/Consultor/AdicionarTaskConsultor'
 import CadastroTrackConsultor from './Pages/Consultor/CadastroTrackConsultor'
 import EditarParceiroConsultor from './Pages/Consultor/EditarParceiroConsultor'
+import AutenticarSenhaPartner from './Pages/Parceiros/AutenticarSenhaPartner';
 
 
 const Stack = createNativeStackNavigator();
@@ -110,10 +110,9 @@ export default function App() {
         <Stack.Screen name="InformacoesAdminMaster" component={InformacoesAdminMaster} />
         <Stack.Screen name="InformacoesConsultorMaster" component={InformacoesConsultorMaster} />
         <Stack.Screen name="InformacoesParceiroConsultor" component={InformacoesParceiroConsultor} />
-        {/* <Stack.Screen name="ResetarSenhaPartner" component={ResetarSenhaPartner} />
+        {/* <Stack.Screen name="ResetarSenhaPartner" component={ResetarSenhaPartner} /> */}
         <Stack.Screen name="EnviarToken" component={EnviarToken} />
         <Stack.Screen name="ResetarSenha" component={ResetarSenha} />
-        <Stack.Screen name="AppNavigator" component={AppNavigator} /> */}
         <Stack.Screen name="TasksConsultor" component={TasksConsultor} />
         <Stack.Screen name="TracksConsultorParceiro" component={TracksConsultorParceiro} />
         <Stack.Screen name="InformacoesTracksConsultorParceiro" component={InformacoesTracksConsultorParceiro} />
@@ -126,7 +125,7 @@ export default function App() {
         <Stack.Screen name="AdicionarTaskConsultor" component={AdicionarTaskConsultor} />
         <Stack.Screen name="CadastroTrackConsultor" component={CadastroTrackConsultor} />
         <Stack.Screen name="EditarParceiroConsultor" component={EditarParceiroConsultor} />
-
+        <Stack.Screen name="AutenticarSenhaPartner" component={AutenticarSenhaPartner} />
       </Stack.Navigator>
     </NavigationContainer>
   );

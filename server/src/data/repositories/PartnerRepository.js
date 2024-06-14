@@ -2,22 +2,52 @@ const { Partner, TrackRegistration } = require('../../models/models');
   const bcrypt = require('bcrypt')
   const nodemailer = require('nodemailer')
 
+
   async function registerPartner(partnerData) {
-      try {
-        const existingPartner = await Partner.findOne({ cnpj: partnerData.cnpj});
-        if (existingPartner) {  
-          return false
-        }
-        const newPartner = new Partner(partnerData);
-        
-        await newPartner.save();
-    
-        return newPartner;
-      } catch (error) {
-        console.error('Error registering partner:', error);
-        throw new Error('Failed to register partner');
-      } 
+    try {
+      // Verificar se já existe um parceiro com o mesmo CNPJ
+      const existingPartnerByCnpj = await Partner.findOne({ cnpj: partnerData.cnpj });
+      if (existingPartnerByCnpj) {
+        return { success: false, error: 'Já existe um parceiro com este CNPJ.' };
+      }
+  
+      // Verificar se já existe um parceiro com o mesmo email
+      const existingPartnerByEmail = await Partner.findOne({ email: partnerData.email });
+      if (existingPartnerByEmail) {
+        return { success: false, error: 'Este email já está registrado. Por favor, utilize outro email.' };
+      }
+  
+      // Gerar token de autenticação
+      const token = generateAuthToken();
+  
+      // Adicionar o token aos dados do parceiro
+      const newPartner = new Partner({
+        ...partnerData,
+        token: token,
+      });
+  
+      await newPartner.save();
+  
+      // Enviar e-mail com o token de autenticação
+      await sendAuthEmail(newPartner);
+  
+      return { success: true, partner: newPartner };
+    } catch (error) {
+      console.error('Error registering partner:', error);
+      throw new Error('Failed to register partner');
     }
+  }
+  
+  function generateAuthToken() {
+    // Gera um token de 10 caracteres alfanuméricos
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for (let i = 0; i < 10; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      token += characters[randomIndex];
+    }
+    return token;
+  }
 
     async function getTrackParticipationPercentage() {
       try {
@@ -113,23 +143,30 @@ const { Partner, TrackRegistration } = require('../../models/models');
       }
     }
     
-  async function loginPartner(partnerData) {
-    try {
-      const partner = await Partner.findOne({ email: partnerData.email })
-      if(partner){
-        if (await bcrypt.compare(partnerData.password,partner.password)){
-          return partner
-        }else{
-          return false
+    async function loginPartner(email, password) {
+      try {
+        const partner = await Partner.findOne({ email });
+    
+        if (!partner) {
+          return false; // Usuário não encontrado
         }
-      }else{
-        return false
+    
+        if (!partner.tokenAutentication) {
+          return 'Token não validado. Por favor, valide o token no seu email.'; // Token não validado
+        }
+    
+        const passwordMatch = await bcrypt.compare(password, partner.password);
+    
+        if (!passwordMatch) {
+          return false; // Senha incorreta
+        }
+    
+        return partner; // Retorna o parceiro logado
+      } catch (error) {
+        console.error('Error logging partner:', error);
+        throw new Error('Failed to login partner');
       }
-    } catch (error) {
-      console.error('Error logging partner:', error);
-      throw new Error('Failed to login partner');
     }
-  }
 
   async function getPartnerCount() {
     try {
@@ -193,13 +230,14 @@ const { Partner, TrackRegistration } = require('../../models/models');
         pass: 'bkrbnkfcqydvnapa',
       },
     });
-
+    
     const mailOptions = {
-      from: 'brenertestando@gmail.com',
+      from: '"Oracle" <brenertestando@gmail.com>',
       to: partner.email,
       subject: 'Recuperação de senha',
-      text: 'Seu token para redefinição de senha é: ${token}',
+      text: `Seu token para redefinição de senha é: ${token}`,
     };
+    
 
     return transporter.sendMail(mailOptions);
   }
@@ -211,6 +249,25 @@ const { Partner, TrackRegistration } = require('../../models/models');
       console.error('Error finding partner by email and token:', error);
       throw new Error('Failed to find partner by email and token');
     }
+  }
+
+  async function sendAuthEmail(partner) {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'brenertestando@gmail.com', // Atualize com suas credenciais de e-mail
+        pass: 'bkrbnkfcqydvnapa', // Atualize com sua senha de e-mail
+      },
+    });
+  
+    const mailOptions = {
+      from: '"Oracle" <brenertestando@gmail.com>',
+      to: partner.email,
+      subject: 'Token de Autenticação',
+      text: `Seu token de autenticação é: ${partner.token}`,
+    };
+  
+    await transporter.sendMail(mailOptions);
   }
   
   async function updatePartnerPassword(email, newPassword) {
@@ -277,6 +334,23 @@ const { Partner, TrackRegistration } = require('../../models/models');
     }
   }
 
+  async function authenticatePartner(email, token) {
+    try {
+      const partner = await Partner.findOne({ email, token });
+      if (partner) {
+        partner.tokenAutentication = true;
+        partner.token = null;
+        await partner.save();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error('Erro ao autenticar parceiro:', error);
+      throw new Error('Erro ao autenticar parceiro');
+    }
+  }
+
   module.exports = {
       findPartnerByEmailAndToken,
       updatePartnerPassword,
@@ -295,4 +369,5 @@ const { Partner, TrackRegistration } = require('../../models/models');
       findPartnerByEmail,
       saveResetToken,
       sendResetEmail,
+      authenticatePartner
   };

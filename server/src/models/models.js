@@ -56,6 +56,10 @@ const partnerSchema = new mongoose.Schema({
     type: String,
     default: false
   },
+  tokenAutentication: {
+    type: Boolean,
+    default: false
+  },
   completedTasks: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Task'

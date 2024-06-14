@@ -63,7 +63,7 @@ const ResetarSenha = ({ navigation }) => {
             onChangeText={setPassword}
             secureTextEntry={true}
           />
-          <Text style={styles.label}> - Confirma Senha - </Text>
+          <Text style={styles.label}> - Confirmar Senha - </Text>
           <TextInput
             style={styles.inputNome}
             placeholder='Confirmar Senha'

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {completeTask, updatePartnerExpertise, getTrackParticipationPercentage, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises, findPartnerByEmailAndToken, updatePartnerPassword} = require('../data/repositories/PartnerRepository.js');
+const {completeTask, updatePartnerExpertise, getTrackParticipationPercentage, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises, findPartnerByEmailAndToken, updatePartnerPassword, authenticatePartner} = require('../data/repositories/PartnerRepository.js');
 const RecoverPasswordUC = require('../useCases/partner/RecoverPasswordUC');
 const ResetPasswordUC = require('../useCases/partner/ResetPasswordUC');
 const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
@@ -44,17 +44,21 @@ router.get('/partnerListOne', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  const salt = await bcrypt.genSalt(10)
+  const salt = await bcrypt.genSalt(10);
   try {
     const email = req.body.email;
     const nameFantasia = req.body.nameFantasia;
     const nameResponsavel = req.body.nameResponsavel;
     const cnpj = req.body.cnpj;
-    const password = await bcrypt.hash(req.body.password,salt)
-    const registerUC = new RegisterPartnerUC(email,nameFantasia,nameResponsavel,cnpj,password); 
-    const newPartner= await registerUC.create();
-    if (newPartner){
+    const password = await bcrypt.hash(req.body.password, salt);
+
+    const registerUC = new RegisterPartnerUC(email, nameFantasia, nameResponsavel, cnpj, password);
+    const newPartner = await registerUC.create();
+
+    if (newPartner) {
       res.status(201).json(newPartner);
+    } else {
+      res.status(400).json({ error: 'Erro ao registrar parceiro' });
     }
   } catch (error) {
     console.error('Error registering partner:', error);
@@ -131,18 +135,26 @@ router.put("/update/:_id", async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const loginPartnerUC = new LoginPartnerUC(email, password); 
-    const loggedPartner = await loginPartnerUC.login();
-    if (loggedPartner) {
-      res.status(200).json(loggedPartner); // Login bem-sucedido
+    const loginPartnerUC = new LoginPartnerUC(email, password);
+    const loginResult = await loginPartnerUC.login();
+
+    if (loginResult.error) {
+      // Se houver um erro específico, como token não validado
+      res.status(400).json({ error: loginResult.error });
+    } else if (loginResult) {
+      // Se o login for bem-sucedido
+      res.status(200).json(loginResult);
     } else {
-      res.status(400).json({ error: 'Usuário ou senha incorretos' }); // Usuário ou senha incorretos
+      // Usuário ou senha incorretos
+      res.status(400).json({ error: 'Usuário ou senha incorretos' });
     }
   } catch (error) {
     console.error('Erro ao fazer login:', error);
-    res.status(500).json({ error: 'Erro interno do servidor' }); // Erro interno do servidor
+    res.status(500).json({ error: 'Erro interno do servidor' });
   }
 });
+
+
 
 router.post('/recuperarSenhaPartner', async (req, res) => {
   const { email } = req.body;
@@ -205,6 +217,21 @@ router.post('/completeTask', async (req, res) => {
     res.status(200).send('Tarefa completa.');
   } catch (error) {
     console.error('Erro ao completar tarefa', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+router.post('/authenticate', async (req, res) => {
+  const { email, token } = req.body;
+  try {
+    const authenticated = await authenticatePartner(email, token);
+    if (authenticated) {
+      res.status(200).json({ success: true, message: 'Autenticação realizada com sucesso' });
+    } else {
+      res.status(400).json({ success: false, error: 'Email e/ou token inválidos' });
+    }
+  } catch (error) {
+    console.error('Erro ao autenticar parceiro:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
 });

@@ -1,2 +1,2 @@
-DELETE http://localhost:3001/api/partners/delete/6637c3885e0b20bfd4cc3ef2 HTTP/1.1
+DELETE http://localhost:3001/api/partners/delete/666b62fbe3c9f5a6d9df70e3 HTTP/1.1
 Content-Type: application/json

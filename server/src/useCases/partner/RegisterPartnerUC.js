@@ -1,7 +1,7 @@
-const {registerPartner} = require('../../data/repositories/PartnerRepository.js');
+const { registerPartner } = require('../../data/repositories/PartnerRepository.js');
 
 class RegisterPartnerUC {
-  constructor(email,nameFantasia,nameResponsavel,cnpj,password) {
+  constructor(email, nameFantasia, nameResponsavel, cnpj, password) {
     this.email = email;
     this.nameFantasia = nameFantasia;
     this.nameResponsavel = nameResponsavel;
@@ -13,13 +13,12 @@ class RegisterPartnerUC {
     try {
       const partnerData = {
         email: this.email,
-        nameFantasia:this.nameFantasia,
-        nameResponsavel:this.nameResponsavel,
-        cnpj:this.cnpj,
-        password:this.password,
-     
+        nameFantasia: this.nameFantasia,
+        nameResponsavel: this.nameResponsavel,
+        cnpj: this.cnpj,
+        password: this.password,
       };
-      
+
       return await registerPartner(partnerData);
     } catch (error) {
       console.error('Error registering partner:', error);

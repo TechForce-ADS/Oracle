@@ -5,7 +5,7 @@ content-type: application/json
     "email":"brenertestando@gmail.com",
     "nameFantasia":"Brener",
     "nameResponsavel":"Freire",
-    "cnpj":"3213213214",
+    "cnpj":"3213213213",
     "password":"123"
 }
 
