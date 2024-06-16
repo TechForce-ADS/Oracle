@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 
 import Modal from 'react-native-modal';
 import { useFonts, Poppins_100Thin, Poppins_300Light, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import { IP } from "@env";
-import { Alert } from 'react-native';
 
 const CadastroContaParceiro = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -12,7 +11,9 @@ const CadastroContaParceiro = ({ navigation }) => {
   const [cnpj, setCnpj] = useState('');
   const [password, setPassword] = useState('');
   const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const [fonteLoaded] = useFonts({
     Poppins_100Thin,
@@ -48,6 +49,10 @@ const CadastroContaParceiro = ({ navigation }) => {
     setErrorModalVisible(!errorModalVisible);
   };
 
+  const toggleSuccessModal = () => {
+    setSuccessModalVisible(!successModalVisible);
+  };
+
   const handleRegister = async () => {
     try {
       const response = await fetch(`http://${IP}:3001/api/partners/register`, {
@@ -58,18 +63,26 @@ const CadastroContaParceiro = ({ navigation }) => {
         body: JSON.stringify({ email, nameFantasia, nameResponsavel, cnpj, password }),
       });
 
-      
+      const data = await response.json();
+
       if (!response.ok) {
-        setErrorMessage('Email ou CNPJ já existente');
-        toggleErrorModal(); // Exibe o modal de erro
+        // Caso a requisição falhe (status HTTP fora de 200-299)
+        throw new Error(data.error || 'Erro desconhecido ao registrar parceiro');
       } else {
-        navigation.navigate('AutenticarSenhaPartner');
+        // Caso a requisição seja bem-sucedida
+        setSuccessMessage('Token enviado para o email.');
+        toggleSuccessModal();
       }
     } catch (error) {
-      console.error('Error registering:', error);
-      setErrorMessage('Erro interno do servidor');
+      console.error('Error registering:', error.message);
+      setErrorMessage(error.message || 'Erro interno do servidor');
       toggleErrorModal();
     }
+  };
+
+  const handleSuccessModalClose = () => {
+    toggleSuccessModal();
+    navigation.navigate('AutenticarSenhaPartner');
   };
 
   return (
@@ -143,6 +156,14 @@ const CadastroContaParceiro = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </Modal>
+        <Modal isVisible={successModalVisible} onBackdropPress={toggleSuccessModal} style={styles.successModal}>
+          <View style={styles.successModalContent}>
+            <Text style={styles.successModalMessage}>{successMessage}</Text>
+            <TouchableOpacity style={styles.successModalCloseButton} onPress={handleSuccessModalClose}>
+              <Text style={styles.successModalCloseButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </View>
     </ScrollView>
   );
@@ -212,7 +233,29 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: 'bold'
   },
-  errorModal: {
+  successModalContent: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    width: 300,
+    marginTop: -30
+  },
+  successModalMessage: {
+    color: 'black'
+  },
+  successModalCloseButton: {
+    backgroundColor: '#2ECC71',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 10
+  },
+  successModalCloseButtonText: {
+    color: '#FFF',
+    fontWeight: 'bold'
+  },
+  successModal: {
     justifyContent: 'center',
     alignItems: 'center'
   },

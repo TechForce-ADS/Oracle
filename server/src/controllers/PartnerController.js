@@ -46,23 +46,24 @@ router.get('/partnerListOne', async (req, res) => {
 router.post('/register', async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   try {
-    const email = req.body.email;
-    const nameFantasia = req.body.nameFantasia;
-    const nameResponsavel = req.body.nameResponsavel;
-    const cnpj = req.body.cnpj;
-    const password = await bcrypt.hash(req.body.password, salt);
+    const { email, nameFantasia, nameResponsavel, cnpj, password } = req.body;
 
-    const registerUC = new RegisterPartnerUC(email, nameFantasia, nameResponsavel, cnpj, password);
-    const newPartner = await registerUC.create();
+    // Hash da senha
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    if (newPartner) {
-      res.status(201).json(newPartner);
+    // Criação de um novo parceiro
+    const registerUC = new RegisterPartnerUC(email, nameFantasia, nameResponsavel, cnpj, hashedPassword);
+    const registrationResult = await registerUC.create();
+
+    // Verifica o resultado do registro
+    if (registrationResult.success) {
+      res.status(200).json({ message: 'Parceiro registrado com sucesso', partner: registrationResult.partner });
     } else {
-      res.status(400).json({ error: 'Erro ao registrar parceiro' });
+      res.status(409).json({ error: registrationResult.error });
     }
   } catch (error) {
     console.error('Error registering partner:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Erro interno do servidor' });
   }
 });
 
