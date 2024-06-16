@@ -59,6 +59,7 @@ import AdicionarExpertiseConsultor from './Pages/Consultor/AdicionarExpertiseCon
 import AdicionarTaskConsultor from './Pages/Consultor/AdicionarTaskConsultor'
 import CadastroTrackConsultor from './Pages/Consultor/CadastroTrackConsultor'
 import EditarParceiroConsultor from './Pages/Consultor/EditarParceiroConsultor'
+import Relatorio from './Pages/Consultor/Relatorio'
 import AutenticarSenhaPartner from './Pages/Parceiros/AutenticarSenhaPartner';
 
 
@@ -126,6 +127,7 @@ export default function App() {
         <Stack.Screen name="CadastroTrackConsultor" component={CadastroTrackConsultor} />
         <Stack.Screen name="EditarParceiroConsultor" component={EditarParceiroConsultor} />
         <Stack.Screen name="AutenticarSenhaPartner" component={AutenticarSenhaPartner} />
+        <Stack.Screen name="Relatorio" component={Relatorio} />
       </Stack.Navigator>
     </NavigationContainer>
   );

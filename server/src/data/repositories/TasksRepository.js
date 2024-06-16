@@ -22,7 +22,18 @@ async function listTask() {
         console.error('Error listing task:', error);
         throw new Error('Failed to list task.');
     }
+    
 }
+const listTasksByIds = async (taskIds) => {
+    try {
+        const tasks = await Task.find({ _id: { $in: taskIds } });
+        return tasks;
+    } catch (error) {
+        console.error('Error listing tasks:', error);
+        throw new Error('Failed to list tasks.');
+    }
+}
+
 
 async function updateTask(taskId, updateData){
     try {
@@ -74,5 +85,6 @@ module.exports = {
     listTask,
     deleteTask,
     updateTask,
-    listTasksExpertise
+    listTasksExpertise,
+    listTasksByIds
 }

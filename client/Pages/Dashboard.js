@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Text, Alert, ScrollView } from 'react-native';
 import { BarChart, PieChart } from 'react-native-chart-kit';
 import { useFocusEffect } from '@react-navigation/native';
-import { ip } from '@env';
+import { IP} from '@env';
 import Navbar from '../Components/NavbarMaster';
 
 const generateRandomColor = () => {

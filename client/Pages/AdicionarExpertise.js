@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, TextInput, ScrollView, Alert } from 'react-native';
-import {IP} from "@env";
+import{IP}from "@env";
 import Navbar from '../Components/Navbar';
 
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, ScrollView, StyleSheet, Text } from 'react-native';
 import User from '../img/User.png';
-import {IP} from "@env";
+import{IP}from "@env";
 import Navbar from '../Components/Navbar';
 
 

@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';;
 import Ver from '../../img/click.png';
 import Search from '../../img/search.png';
 import User from '../../img/User.png';
-import {IP} from "@env";
+import{IP}from "@env";
 import NavbarAdmin from '../../Components/NavbarMaster';
 
 

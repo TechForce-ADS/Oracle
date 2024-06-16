@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, TextInput, ScrollView, Alert, StyleSheet } from 'react-native';
-import { IP } from "@env";
+import { IP} from "@env";
 import Navbar from '../Components/Navbar';
 
 const EnviarToken = ({ navigation }) => {

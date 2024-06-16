@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import Navbar from '../../Components/NavbarConsultor';
 import User from '../../img/User.png';
-import { ip } from "@env";
+import { IP } from "@env";
 import { useFocusEffect } from '@react-navigation/native';
 
 export default function InformacoesParceiroConsultor({ navigation, route }) {
@@ -12,14 +12,18 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
   const [partnerExpertises, setPartnerExpertises] = useState([]);
   const idPartner = partnerData._id;
 
-  
- 
+
+
   const editarPartner = (partner) => {
     navigation.navigate('EditarParceiroConsultor', { partnerToEdit: partner });
   };
 
   const vizualizar = (expertise) => {
     navigation.navigate('TasksConsultor', { expertiseToSee: expertise, partnerToSee: partnerData });
+  };
+
+  const relatorio = (expertise) => {
+    navigation.navigate('Relatorio', { expertiseToSee: expertise, partnerToSee: partnerData });
   };
 
   const toggleExpand = () => {
@@ -36,7 +40,7 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
     navigation.navigate('TracksConsultorParceiro', { partnerToSee: partnerData });
   };
 
- 
+
 
   const excluirPartner = (_id) => {
     Alert.alert(
@@ -44,7 +48,7 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
       'Esta ação não poderá ser revertida!',
       [
         { text: 'Cancelar', onPress: () => console.log('Cancelar') },
-        { text: 'Excluir', onPress: () => excluirConfirmed(_id)  },
+        { text: 'Excluir', onPress: () => excluirConfirmed(_id) },
       ],
       { cancelable: true }
     );
@@ -55,19 +59,19 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
       await fetch(`http://${IP}:3001/api/partners/delete/${_id}`, {
         method: 'DELETE',
       });
-      
+
       navigation.navigate('ConsultorLista');
       setPartnerData({});
-  
+
     } catch (error) {
       console.error('Erro ao excluir parceiro:', error);
       Alert.alert("Erro", "Algo deu errado ao tentar excluir o parceiro.");
     }
   };
 
-  
 
-  
+
+
   const fetchPartnerExpertises = async (partnerId) => {
     try {
       const response = await fetch(`http://${IP}:3001/api/partners/${partnerId}/expertises`);
@@ -120,6 +124,9 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
               <TouchableOpacity style={styles.DeletarBTN} onPress={() => excluirPartner(partnerData._id)}>
                 <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Deletar</Text>
               </TouchableOpacity>
+              <TouchableOpacity onPress={relatorio} style={styles.editarBTN}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Gerar Relatorio</Text>
+              </TouchableOpacity>
             </View>
 
           </TouchableOpacity>
@@ -146,7 +153,7 @@ export default function InformacoesParceiroConsultor({ navigation, route }) {
   );
 }
 const styles = StyleSheet.create({
-  
+
   User: {
     width: '90%',
     height: 150,
@@ -154,7 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center'
   },
-  
+
 
 
   scrollContainer: {
@@ -214,9 +221,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
     display: 'flex',
     alignItems: 'center',
-   
+
     flexDirection: 'column',
-    marginTop:50
+    marginTop: 50
   },
 
 
@@ -284,9 +291,9 @@ const styles = StyleSheet.create({
     borderWidth: 1.3,
     borderColor: '#7b7574',
     marginTop: 20,
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
 
@@ -297,7 +304,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     display: 'flex',
     borderRadius: 5,
-    
-},
+
+  },
 
 });

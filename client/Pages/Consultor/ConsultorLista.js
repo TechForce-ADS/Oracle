@@ -6,7 +6,7 @@ import Ver from '../../img/click.png';
 
 import Search from '../../img/search.png';
 import User from '../../img/User.png';
-import {IP} from "@env";
+import{IP}from "@env";
 import Navbar from '../../Components/NavbarConsultor';
 
 const PAGE_SIZE = 5;

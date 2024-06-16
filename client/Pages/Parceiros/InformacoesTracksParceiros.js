@@ -4,7 +4,7 @@ import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Pop
 import Navbar from '../../Components/NavbarParceiro';
 import * as Progress from 'react-native-progress';
 import { loggedPartner } from './Partner';
-import {IP} from "@env";
+import{IP}from "@env";
 
 export default function InformacoesCurso({ navigation, route }) {
 

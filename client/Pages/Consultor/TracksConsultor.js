@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { View, Image, TouchableOpacity, ScrollView, StyleSheet, Text, Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import {IP} from "@env";
+import{IP}from "@env";
 
 import Navbar from '../../Components/NavbarConsultor';
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text, Alert } from 'react-native';
 import Navbar from '../Components/Navbar';
 
-import {IP} from "@env";
+import{IP}from "@env";
 
 
 const Expertise = ({ route, navigation}) => {

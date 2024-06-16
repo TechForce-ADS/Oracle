@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, TextInput, Alert, ScrollView } from 'react-native';
-import {IP} from "@env";
+import{IP}from "@env";
 import Navbar from '../../Components/NavbarConsultor';
 
 const EditarParceiro = ({ navigation, route }) => {

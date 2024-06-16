@@ -9,7 +9,7 @@
     Poppins_500Medium,
     Poppins_700Bold
   } from '@expo-google-fonts/poppins'
-  import {IP} from "@env";
+  import{IP}from "@env";
   import Navbar from '../../Components/Navbar';
   import { setLoggedPartner } from './Partner';
 

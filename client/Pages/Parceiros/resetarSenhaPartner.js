@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import {IP} from "@env";
+import{IP}from "@env";
 
 const ResetarSenhaPartner = () => {
   const [password, setPassword] = useState('');

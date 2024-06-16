@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { IP } from "@env";
+import { IP} from "@env";
 
 const AutenticarSenhaPartner = ({ navigation }) => {
   const [email, setEmail] = useState('');

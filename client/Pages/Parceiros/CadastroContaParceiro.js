@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { useFonts, Poppins_100Thin, Poppins_300Light, Poppins_700Bold } from '@expo-google-fonts/poppins';
+import { Alert } from 'react-native';
 import { IP } from "@env";
 
 const CadastroContaParceiro = ({ navigation }) => {
