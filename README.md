@@ -241,15 +241,17 @@ diferentes
 
  
  ### Sprint 4</a> - 27/05 - 15/06</p>
-  > <p>:x:  Relatórios sobre parceiros por produto implementado</p>
+   <p>:white_check_mark:  Relatórios sobre parceiros por produto implementado</p>
  - User Storie: Como administrador, quero ter relatórios detalhados para ver externamente da aplicação
- -  <p>:x: Modelagem de Banco de Dados</p>
+  <p>:white_check_mark: Modelagem de Banco de Dados</p>
 - User Storie: Como administrador, gostaria de visualizar como o banco de dados foi pensado
- > <p>:x: Manual do Usuário </p>
+
+  <p>:white_check_mark: Função "esqueci minha senha" </p>
+  <p>:white_check_mark: Manual do Usuário </p>
  - User Storie: Como administrador, preciso de ajuda para entender como funciona a aplicação
- > <p>:x: Documentação Técnica da Estrutura do Sistema </p>
+ <p>:white_check_mark: Documentação Técnica da Estrutura do Sistema </p>
   - User Storie: Como administrador, preciso ter acesso a um documento que mostre as tecnologias usadas
- > <p>:x: Documentação API </p>
+  <p>:white_check_mark: Documentação API </p>
  - User Storie: Como administrador, necessito de uma documentação que contemple tudo que foi feito
 durante a API 
  ### Feira de Soluções 27/06
@@ -278,7 +280,8 @@ durante a API
 > - Slack (Comunicação do PO com a empresa)
 
 
-
+Documentação Técnica da API 
+[Documentação Técnica.pdf](https://github.com/user-attachments/files/15860962/Documentacao.Tecnica.pdf)
 
 
 # Sprint
@@ -287,5 +290,6 @@ durante a API
 - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Primeira Sprint
  - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Prototipo - Segunda Versão
  - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Segunda Sprint
-
+ - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Terceira Sprint
+ - >  <a href="https://github.com/TechForce-ADS/Oracle/blob/main/Sprints-Prototipo.md"> Quarta Sprint
 
