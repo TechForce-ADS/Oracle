@@ -39,7 +39,12 @@
 
 https://github.com/TechForce-ADS/Oracle/assets/92901837/790ec769-2670-4602-af24-3f405ae7a081
 
+# Terceira Sprint
+- Vídeo da Terceira Sprint
+  https://youtu.be/6XaTw4M_7_Y 
 
+# Quarta Sprint
+- Vídeo da Quarta Sprint
 
 
 
