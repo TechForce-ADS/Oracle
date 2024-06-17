@@ -33,6 +33,8 @@ Projeto de API - 5° Semestre de 2024 da Fatec São José dos Campos - ORACLE
 - <a href ="#user-stories"> User Stories </a>
 - <a href ="#épico-e-sprints"> Épico e Sprints </a>
 - <a href ="#tecnologia-utilizadas"> Tecnologias Utilizadas </a>
+- <a href ="#documentação-técnica-da-api"> Documentação Técnica da API  </a>
+- <a href ="#modelagem-de-banco-de-dados"> Modelagem de Banco de Dados</a>
 - <a href ="#sprint"> Sprints </a>
 
 
@@ -280,8 +282,13 @@ durante a API
 > - Slack (Comunicação do PO com a empresa)
 
 
-Documentação Técnica da API 
+# Documentação Técnica da API 
+- Clique aqui para acessar a documentação da nossa API!
 [Documentação Técnica.pdf](https://github.com/user-attachments/files/15860962/Documentacao.Tecnica.pdf)
+
+# Modelagem de Banco de dados 
+![modelagem_Dados](https://github.com/TechForce-ADS/Oracle/assets/92901837/c80fc7cf-f0cd-4f3a-b33e-874d83511bd4)
+
 
 
 # Sprint
