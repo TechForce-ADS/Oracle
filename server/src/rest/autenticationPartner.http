@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/partners/authenticate
+content-type: application/json
+
+{
+  "email": "brenertestando@gmail.com",
+  "token": "OVivGkCGGB"
+}
