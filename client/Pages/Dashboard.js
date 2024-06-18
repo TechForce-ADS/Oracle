@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, Text, Alert, ScrollView } from 'react-native';
 import { BarChart, PieChart } from 'react-native-chart-kit';
 import { useFocusEffect } from '@react-navigation/native';
-import { IP} from '@env';
+import { IP } from '@env';
 import Navbar from '../Components/NavbarMaster';
 
-const generateRandomColor = () => {
-  return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`;
-};
+
 
 const Legend = ({ data }) => {
   return (
@@ -25,40 +23,33 @@ const Legend = ({ data }) => {
 export default function Dashboard() {
   const [adminCount, setAdminCount] = useState(0);
   const [partnerCount, setPartnerCount] = useState(0);
+  const [consultantCount, setConsultantCount] = useState(0);
   const [completedCounts, setCompletedCounts] = useState({ trueCount: 0, falseCount: 0 });
   const [completedTasksPercentage, setCompletedTasksPercentage] = useState([]);
+  const [topPartners, setTopPartners] = useState([]);
 
   useFocusEffect(
     useCallback(() => {
       async function fetchData() {
         try {
-          const adminResponse = await fetch(`http://${IP}:3001/api/admin/adminCount`);
-          if (!adminResponse.ok) {
-            throw new Error('Error fetching admin count');
-          }
-          const adminCount = await adminResponse.json();
+          const [adminCount,consultantCount ,partnerCount, counts, completedTasksPercentage, topPartners] = await Promise.all([
+            fetch(`http://${IP}:3001/api/admin/adminCount`).then(res => res.json()),
+            fetch(`http://${IP}:3001/api/admin/consultantCount`).then(res => res.json()),
+            fetch(`http://${IP}:3001/api/partners/partnerCount`).then(res => res.json()),
+            fetch(`http://${IP}:3001/api/expertise/completedCounts`).then(res => res.json()),
+            fetch(`http://${IP}:3001/api/partners/trackParticipationPercentage`).then(res => res.json()),
+            fetch(`http://${IP}:3001/api/partners/topPartners`).then(res => res.json()),
+          ]);
+
           setAdminCount(adminCount);
-
-          const partnerResponse = await fetch(`http://${IP}:3001/api/partners/partnerCount`);
-          if (!partnerResponse.ok) {
-            throw new Error('Error fetching partner count');
-          }
-          const partnerCount = await partnerResponse.json();
+          setConsultantCount(consultantCount);
           setPartnerCount(partnerCount);
-
-          const expertiseResponse = await fetch(`http://${IP}:3001/api/expertise/completedCounts`);
-          if (!expertiseResponse.ok) {
-            throw new Error('Error fetching expertise completed counts');
-          }
-          const counts = await expertiseResponse.json();
           setCompletedCounts(counts);
-
-          const completedTasksResponse = await fetch(`http://${IP}:3001/api/partners/trackParticipationPercentage`);
-          if (!completedTasksResponse.ok) {
-            throw new Error('Error fetching completed tasks percentage');
-          }
-          const completedTasksPercentage = await completedTasksResponse.json();
           setCompletedTasksPercentage(completedTasksPercentage);
+          setTopPartners(topPartners);
+
+
+   
         } catch (error) {
           console.error('Failed to load dashboard:', error);
           Alert.alert('Error', 'Failed to load dashboard');
@@ -88,9 +79,9 @@ export default function Dashboard() {
           <Text style={styles.chartTitle}>Quantidade de Administradores e Parceiros</Text>
           <BarChart
             data={{
-              labels: ['Administradores', 'Parceiros'],
+              labels: ['Administradores', 'Parceiros', 'Consultores'],
               datasets: [{
-                data: [parseInt(adminCount), parseInt(partnerCount)],
+                data: [(parseInt(adminCount) - parseInt(consultantCount)), parseInt(partnerCount),parseInt(consultantCount)],
               }],
             }}
             width={350}
@@ -100,9 +91,9 @@ export default function Dashboard() {
             fromZero={true}
             showValuesOnTopOfBars={true}
             chartConfig={{
-              backgroundGradientFrom: '#ddd',
-              backgroundGradientTo: '#ddd',
-              color: (opacity = 2) => `rgba(249, 0, 9, ${opacity})`,
+              backgroundGradientFrom: '#fff',
+              backgroundGradientTo: '#fff',
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               strokeWidth: 4,
               formatYLabel: () => '',
             }}
@@ -114,6 +105,7 @@ export default function Dashboard() {
           <View style={styles.barTotalContainer}>
             <Text style={styles.barTotal}>{adminCount}</Text>
             <Text style={styles.barTotal}>{partnerCount}</Text>
+            <Text style={styles.barTotal}>{consultantCount}</Text>
           </View>
         </View>
         <View style={styles.chartContainer}>
@@ -132,9 +124,9 @@ export default function Dashboard() {
             fromZero={true}
             showValuesOnTopOfBars={true}
             chartConfig={{
-              backgroundGradientFrom: '#ddd',
-              backgroundGradientTo: '#ddd',
-              color: (opacity = 2) => `rgba(0, 150, 249, ${opacity})`,
+              backgroundGradientFrom: '#fff',
+              backgroundGradientTo: '#fff',
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               strokeWidth: 4,
               formatYLabel: () => '',
             }}
@@ -150,7 +142,7 @@ export default function Dashboard() {
         </View>
         <View style={styles.chartContainer}>
           <Text style={styles.chartTitle}>Porcentagem de Parceiros por Expertise</Text>
-          <View style={styles.pieChartContainerLast}>
+          <View style={styles.pieChartContainer}>
             <PieChart
               data={pieChartData}
               width={200}
@@ -158,7 +150,7 @@ export default function Dashboard() {
               chartConfig={{
                 backgroundGradientFrom: '#ddd',
                 backgroundGradientTo: '#ddd',
-                color: (opacity = 2) => `rgba(0, 0, 0, ${opacity})`,
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               }}
               accessor="population"
               backgroundColor="transparent"
@@ -168,6 +160,34 @@ export default function Dashboard() {
             />
           </View>
           <Legend data={pieChartData} />
+        </View>
+        <View style={styles.chartContainer}>
+          <Text style={styles.chartTitle}>Top 5 Parceiros com Mais Tarefas Completas</Text>
+          <BarChart
+            data={{
+              labels: topPartners.map(partner => partner.nameFantasia),
+              datasets: [{
+                data: topPartners.map(partner => partner.completedTasks.length),
+              }],
+            }}
+            width={350}
+            height={220}
+            yAxisSuffix=""
+            yAxisInterval={1}
+            fromZero={true}
+            showValuesOnTopOfBars={true}
+            chartConfig={{
+              backgroundGradientFrom: '#fff',
+              backgroundGradientTo: '#fff',
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              strokeWidth: 4,
+              formatYLabel: () => '',
+            }}
+            style={{
+              marginVertical: 8,
+              borderRadius: 16,
+            }}
+          />
         </View>
       </ScrollView>
     </View>
@@ -202,15 +222,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_400Regular',
   },
   pieChartContainer: {
-    alignItems: 'center', 
+    alignItems: 'center',
     display: 'flex',
   },
-  pieChartContainerLast: {
-    alignItems: 'center', 
-    display: 'flex',
-    justifyContent: 'center',
-    paddingLeft: 60,
-  },  
   legendContainer: {
     flexDirection: 'column',
     alignItems: 'center',

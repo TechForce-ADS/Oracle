@@ -29,6 +29,9 @@ export default function Informacoes({ navigation, route }) {
   };
 
 
+  const relatorio = (expertise) => {
+    navigation.navigate('RelatorioMaster', { expertiseToSee: expertise, partnerToSee: partnerData });
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -114,6 +117,9 @@ export default function Informacoes({ navigation, route }) {
               </TouchableOpacity>
               <TouchableOpacity style={styles.DeletarBTN} onPress={() => excluirPartner(partnerData._id)}>
                 <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Deletar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={relatorio} style={styles.EditarBTN}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Gerar Relatorio</Text>
               </TouchableOpacity>
             </View>
 

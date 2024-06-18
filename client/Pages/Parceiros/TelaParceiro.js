@@ -270,4 +270,16 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center'
   },
+
+  botoes: {
+    width: '100%',
+    height: 200,
+    marginTop: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent:'center',
+    flexDirection: 'column',
+    marginTop:50
+  },
+
 });

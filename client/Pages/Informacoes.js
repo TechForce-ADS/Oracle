@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { useFonts, Poppins_100Thin, Poppins_200ExtraLight, Poppins_300Light, Poppins_400Regular, Poppins_500Medium } from '@expo-google-fonts/poppins'
-import Navbar from '../Components/Navbar';
+import Navbar from '../Components/NavbarAdmin';
 import User from '../img/User.png';
 import{IP}from "@env";
 import { useFocusEffect } from '@react-navigation/native';
@@ -31,6 +31,11 @@ export default function Informacoes({ navigation, route }) {
   const registerExpertise = (partner) => {
     navigation.navigate('Expertises', { partnerExpertise: partner });
     
+  };
+
+
+  const relatorio = (expertise) => {
+    navigation.navigate('RelatorioAdmin', { expertiseToSee: expertise, partnerToSee: partnerData });
   };
 
 
@@ -151,6 +156,9 @@ export default function Informacoes({ navigation, route }) {
               </TouchableOpacity>
               <TouchableOpacity style={styles.DeletarBTN} onPress={() => excluirPartner(partnerData._id)}>
                 <Text style={{ color: '#fff', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Deletar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={relatorio} style={styles.EditarBTN}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: 16, fontFamily: 'Poppins_700Bold' }}>Gerar Relatorio</Text>
               </TouchableOpacity>
             </View>
 

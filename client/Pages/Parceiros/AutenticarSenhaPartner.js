@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { IP} from "@env";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal } from 'react-native';
+import { IP } from "@env";
 
 const AutenticarSenhaPartner = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [successModalVisible, setSuccessModalVisible] = useState(false);
 
   const handleEmailChange = (text) => {
     setEmail(text);
@@ -12,6 +17,14 @@ const AutenticarSenhaPartner = ({ navigation }) => {
 
   const handleTokenChange = (text) => {
     setToken(text);
+  };
+
+  const toggleErrorModal = () => {
+    setErrorModalVisible(!errorModalVisible);
+  };
+
+  const toggleSuccessModal = () => {
+    setSuccessModalVisible(!successModalVisible);
   };
 
   const handleSubmit = () => {
@@ -24,26 +37,29 @@ const AutenticarSenhaPartner = ({ navigation }) => {
     })
     .then(response => response.json())
     .then(data => {
-      if (data.tokenAuthenticated) {
-        setErrorMessage('Token validado com sucesso');
-        toggleErrorModal();
-        // Navegação para a próxima tela após autenticação bem-sucedida
+      if (data.success) {
+        setIsSuccess(true);
+        setSuccessMessage(data.message);
+        setErrorModalVisible(false);
+        setSuccessModalVisible(true);
         setTimeout(() => {
-          toggleErrorModal();
-          navigation.navigate('LoginParceiro'); // Substitua 'TelaPrincipal' pelo nome da sua tela principal
-        }, 2000); // tempo para exibir o pop-up
+          setSuccessModalVisible(false);
+          navigation.navigate('LoginParceiro'); // Navigate to the next screen
+        }, 2000); // Display the success message for 2 seconds before navigating to the next screen
       } else {
-        setErrorMessage('Token não válido. Por favor, verifique seu email.');
-        toggleErrorModal();
+        setIsSuccess(false);
+        setErrorMessage(data.error);
+        setErrorModalVisible(true);
       }
     })
     .catch(error => {
       console.error('Erro ao autenticar:', error);
+      setIsSuccess(false);
       setErrorMessage('Erro ao tentar autenticar. Por favor, tente novamente.');
-      toggleErrorModal();
+      setErrorModalVisible(true);
     });
   };
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Email</Text>
@@ -63,6 +79,38 @@ const AutenticarSenhaPartner = ({ navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Autenticar</Text>
       </TouchableOpacity>
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={errorModalVisible}
+        onRequestClose={toggleErrorModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.errorText}>{errorMessage}</Text>
+            {!isSuccess && (
+              <TouchableOpacity style={styles.closeButton} onPress={toggleErrorModal}>
+                <Text style={styles.closeButtonText}>Fechar</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={successModalVisible}
+        onRequestClose={toggleSuccessModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.successText}>{successMessage}</Text>
+            <TouchableOpacity style={styles.closeButton} onPress={toggleSuccessModal}>
+              <Text style={styles.closeButtonText}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -100,9 +148,47 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 18,
-  },
+},
   buttonText: {
     color: '#000',
+    fontSize: 16,
+    fontFamily: 'Poppins_700Bold',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    padding: 20,
+    backgroundColor: '#FFF',
+    borderRadius: 18,
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#000',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  successText: {
+    fontSize: 16,
+    color: '#000',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  closeButton: {
+    width: '80%',
+    height: 50,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 18,
+  },
+  closeButtonText: {
+    color: '#FFF',
     fontSize: 16,
     fontFamily: 'Poppins_700Bold',
   },

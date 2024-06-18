@@ -2,6 +2,7 @@ const express = require('express');
 const RegisterAdminUC = require('../useCases/admin/RegisterAdminUC')
 const LoginAdminUC = require('../useCases/admin/LoginAdminUC')
 const {getAdminCount} = require('../data/repositories/AdminRepository.js');
+const {getConsultantCount} = require('../data/repositories/AdminRepository.js');
 const {updateAdmin} = require('../data/repositories/AdminRepository.js');
 const {deleteAdmin} = require('../data/repositories/AdminRepository.js');
 const router = express.Router();
@@ -52,6 +53,24 @@ router.get('/adminCount', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
+
+
+  router.get('/consultantCount', async (req, res) => {
+    try {
+      const admin = await getConsultantCount();
+      res.status(200).json(admin);
+    } catch (error) {
+      console.error('Error listing admin:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
+
+
+
+
+
 
 router.get('/adminList', async (req, res) => {
   try {

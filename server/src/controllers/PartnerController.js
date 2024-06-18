@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {completeTask, updatePartnerExpertise, getTrackParticipationPercentage, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises, findPartnerByEmailAndToken, updatePartnerPassword, authenticatePartner} = require('../data/repositories/PartnerRepository.js');
+const {completeTask, updatePartnerExpertise, getTrackParticipationPercentage, getTopPartners, listOnePartner,updatePartner,getPartnerCount, deletePartner, listPartners, registerPartnerInExpertise, getPartnerExpertises, findPartnerByEmailAndToken, updatePartnerPassword, authenticatePartner} = require('../data/repositories/PartnerRepository.js');
 const RecoverPasswordUC = require('../useCases/partner/RecoverPasswordUC');
 const ResetPasswordUC = require('../useCases/partner/ResetPasswordUC');
 const LoginPartnerUC = require('../useCases/partner/LoginPartnerUC.js')
@@ -234,6 +234,17 @@ router.post('/authenticate', async (req, res) => {
   } catch (error) {
     console.error('Erro ao autenticar parceiro:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+
+router.get('/topPartners', async (req, res) => {
+  try {
+    const topPartners = await getTopPartners();
+    res.json(topPartners);
+  } catch (error) {
+    console.error('Error getting top partners:', error);
+    res.status(500).json({ message: 'Erro ao obter top partners' });
   }
 });
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import Navbar from '../../Components/NavbarConsultor';
+import Navbar from '../Components/NavbarAdmin';
 import { IP } from "@env";
-import User from '../../img/User.png';
+import User from '../img/User.png';
+import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing'; // Importando expo-sharing para compartilhar o PDF
 
@@ -18,7 +19,7 @@ const Relatorio = ({ route }) => {
 
     const downloadPDF = async () => {
         try {
-            // Cria o HTML com as informações da página
+        
             const htmlContent = `
                 <html>
             <head>

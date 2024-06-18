@@ -45,6 +45,14 @@ async function registerAdmin(adminData) {
     }
   }
 
+  async function getConsultantCount() {
+    try {
+      return await Admin.countDocuments({ isConsultant: true });
+    } catch (error) {
+      console.error('Error listing admin:', error);
+      throw new Error('Failed to list admin');
+    }
+  }
   async function listAdmins() {
     try {
       const admins = await Admin.find({});
@@ -117,5 +125,6 @@ async function registerAdmin(adminData) {
     listAdmins,
     updateAdmin,
     loginAdmin,
-    deleteAdmin
+    deleteAdmin,
+    getConsultantCount
 }; 

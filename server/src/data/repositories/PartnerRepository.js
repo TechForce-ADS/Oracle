@@ -351,6 +351,27 @@ const { Partner, TrackRegistration } = require('../../models/models');
     }
   }
 
+
+  async function getTopPartners() {
+    try {
+      const topPartners = await Partner.aggregate([
+        { $match: { tokenAutentication: true } },
+        { $lookup: { from: 'tasks', localField: '_id', foreignField: 'partner_id', as: 'tasks' } },
+        { $addFields: { totalTasks: { $size: '$tasks' } } },
+        { $sort: { totalTasks: -1 } },
+        { $limit: 5 },
+      ]);
+      return topPartners;
+    } catch (error) {
+      console.error('Error getting top partners:', error);
+      throw new Error('Failed to get top partners');
+    }
+  }
+
+
+  
+
+
   module.exports = {
       findPartnerByEmailAndToken,
       updatePartnerPassword,
@@ -369,5 +390,7 @@ const { Partner, TrackRegistration } = require('../../models/models');
       findPartnerByEmail,
       saveResetToken,
       sendResetEmail,
-      authenticatePartner
+      authenticatePartner,
+      getTopPartners,
+    
   };

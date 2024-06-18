@@ -1,6 +1,3 @@
-GET http://localhost:3001/api/partners/partnerListOne HTTP/1.1
+GET http://localhost:3001/api/admin/consultantCount HTTP/1.1
 content-type: application/json
 
-{
-    "_id":"6632b54ec76270a48f69b54f"
-}
