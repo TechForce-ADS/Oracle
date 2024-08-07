@@ -45,8 +45,6 @@ https://github.com/TechForce-ADS/Oracle/assets/92901837/790ec769-2670-4602-af24-
 
 # Quarta Sprint
 - Vídeo da Quarta Sprint
-
-
-
+https://youtu.be/rYK9GxDWix8
 
 
